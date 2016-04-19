@@ -153,7 +153,6 @@ int whiteLineStrategy(int GP,int d){
 	int direction=360;
 	int startTime=GetSysTime();
 	while(GetSysTime()-startTime<200){
-		time = GetSysTime();
 		direction = backPosition();
 		move(direction,15,0);
 	}
