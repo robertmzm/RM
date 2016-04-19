@@ -30,6 +30,7 @@
 		*making changes from windows!!!!;
 	*0419:
 		*change all the direction in AttackStrategy();	
+		*enhance whitelineStratey();
 */
 #define STOP 360
 #define TESTSPEED 60
@@ -150,26 +151,11 @@ int getGreyPort(){
 int whiteLineStrategy(int GP,int d){
 	SetSysTime();
 	int direction=360;
-	int time=0;
-	if (GP){
-		while(time<200){
-			time = GetSysTime();
-			eyePort = getEyePort(10,60);
-			if(GP==2&&(eyePort<4||eyePort>25||(eyePort>11&&eyePort<18))){
-				direction = backPosition();
-			}
-			else if (GP==4&&((eyePort>4&&eyePort<11)||(eyePort>18&&eyePort<25))){
-				direction = backPosition();
-			}
-			else if (GP==1||GP==2){
-				direction = backPosition();
-			}
-			else{
-				return d;
-			}
-			move(direction,15,0);
-		}
-		
+	int startTime=GetSysTime();
+	while(GetSysTime()-startTime<200){
+		time = GetSysTime();
+		direction = backPosition();
+		move(direction,15,0);
 	}
 	return d;
 	
