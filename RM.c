@@ -149,7 +149,6 @@ int getGreyPort(){
 	return output;
 }
 int whiteLineStrategy(int GP,int d){
-	SetSysTime();
 	int direction=360;
 	int startTime=GetSysTime();
 	while(GetSysTime()-startTime<200){
