@@ -31,6 +31,7 @@
 	*0419:
 		*change all the direction in AttackStrategy();	
 		*enhance whitelineStratey();
+		*implement getTargetAngle();
 */
 #define STOP 360
 #define TESTSPEED 60
@@ -91,13 +92,17 @@ int main(void)
 			speed = 60;
 			direction = attackStrategy(eyePort,direction);
 		}
-		
 		else{
+			targetAngle = 0;
 			speed = 50;
 			direction =backPosition();
 		}
+
+		targetAngle = getTargetAngle(targetAngle);
+
 		greyPort = getGreyPort();
 		if(greyPort){
+			targetAngle = 0;
 			direction = whiteLineStrategy();
 		}
 		move(direction,speed,targetAngle);//give the direction and speed to <move>mothed in order to react
@@ -105,7 +110,24 @@ int main(void)
 	}
 }
 
+int getTargetAngle(int previousTarget){
+	int output = previousTarget;
+	int uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
+	int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+	int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
+	if(uBack>900&&uFront<1000&&uLeft+uBack>1200&&previousTarget==0){
+		if(uLeft<550){
+			output = 30;
+		}
+		else if(uRight<550){
+			output = 330;
+		}
+	}
+	return output;
+
+}
 
 int getShootTime(int lastShootTime){
 	int output = lastShootTime;
