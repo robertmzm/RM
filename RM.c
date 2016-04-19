@@ -27,7 +27,7 @@
         *start to use github in order to work on different device;
         *trying to make some changes from git;
         *making changes from mac!!!!!!!;
-	*making changes from windows!!!!;
+		*making changes from windows!!!!;
 	
 */
 #define STOP 360
