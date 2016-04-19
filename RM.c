@@ -26,6 +26,7 @@
         *implement getShootTime();
         *start to use github in order to work on different device;
         *trying to make some changes from git;
+        *making changes from mac!!!!!!!;
 	
 */
 #define STOP 360
