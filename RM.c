@@ -202,29 +202,7 @@ int getEyePort(int lowerThread,int higherThread){
 	//SetLCD5Char(0,100,eyeValue,YELLOW,BLACK);//display the value of the fly eye
 	return eyePort;	
 }
-/*
-int whiteLineStrategy(int d, int *i){
-	/*intake the direction the robot is going and an array contains indicators about touching white line
-	  *output:
-		the input direction if the direction is not going out of the white;
-		360(telling the robot to stop) if the direction is pointing out of the white line;
-	*//*
-	int output=d;
-	if (i[0] ==1 && (d<90||d>270) ){
-		output = STOP;
-	}
-	if (i[1] ==1 && d<360 && d>180 ){
-		output = STOP;
-	}
-	if (i[2] ==1 && d<270 && d>90 ){
-		output = STOP;
-	}
-	if (i[3]==1 && d<180 && d>0){
-		output = STOP;
-	}
-	return output;
-}
-*/
+
 
 
 
