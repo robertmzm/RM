@@ -1,27 +1,26 @@
-/**0224:
-#include <SetLCDClear.h>
-	*combine further() and closer() strategy into one function attackStrategy();
-	*tried smooth turn between different direction. worked but notas good as ideal;
+/*  *0224:
+		*combine further() and closer() strategy into one function attackStrategy();
+		*tried smooth turn between different direction. worked but notas good as ideal;
     *0226:
-	*add turning into move() instead of doing it explicitly;
+		*add turning into move() instead of doing it explicitly;
     *0304:
-	*implement displayAll();
-	*implement backPostion
+		*implement displayAll();
+		*implement backPostion
     *0312:
-	*implement wheels for function related for white line(did not work well);
-	*inhence the turning functionality in move();
+		*implement wheels for function related for white line(did not work well);
+		*inhence the turning functionality in move();
     *0315:
-	*try using andy's attack strategy in attackStrategy();
-	*add some more documentry for functions;
-	*define STOP as 360
+		*trying using andy's attack strategy in attackStrategy();
+		*add some more documentry for functions;
+		*define STOP as 360
     *0318:
-	*new idea for white line;
+		*new idea for white line;
     *0416:
         *lost all the files except for this only backup from 0318....damn...;
-	*adding this text directly from notepad,does it work?;
-	*just came back from notepad. yeah it works!!!;
-	*implement getAngleDif
-	*have to change AttackStrategy();
+		*adding this text directly from notepad,does it work?;
+		*just came back from notepad. yeah it works!!!;
+		*implement getAngleDif
+		*have to change AttackStrategy();
     *0418:
         *implement getShootTime();
         *start to use github in order to work on different device;
@@ -32,6 +31,10 @@
 		*change all the direction in AttackStrategy();	
 		*enhance whitelineStratey();
 		*implement getTargetAngle();
+		*optimize getGreyPort():
+			close gOutterLeft and gOutterBack when turning right;
+			close gOutterRight and gOutterBack when turning left;
+		
 */
 #define STOP 360
 #define TESTSPEED 60
@@ -140,7 +143,7 @@ int getShootTime(int lastShootTime){
 	return output;
 }
 
-int getGreyPort(){
+int getGreyPort(int targetAngle){
 	/*a function to determine if the robot touches the white line;
 	  *return the number of grey scale sensors touching the white line;
 	  */
@@ -154,19 +157,32 @@ int getGreyPort(){
 	int gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
 	int gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 	int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
-	
-	if (gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750){
-		output = 1;
+	if(targetAngle==0){
+		if (gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750){
+			output = 1;
+		}
+		else if (gOutterLeft<1650){
+			output = 2;
+		}
+		if (gOutterRight<1750){
+			output = 3;
+		}
+		
+		if (gOutterBack<1400){
+			output = 4;
+		}
 	}
-	else if (gOutterLeft<1650){
-		output = 2;
+	else if(targetAngle>180){
+		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750||
+			||gOutterRight<1750){
+			output = 1;
+		}
 	}
-	if (gOutterRight<1750){
-		output = 3;
-	}
-	
-	if (gOutterBack<1400){
-		output = 4;
+	else{
+		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750||
+			||gOutterLeft<1650){
+			output = 1;
+		}
 	}
 	return output;
 }
