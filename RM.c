@@ -28,7 +28,8 @@
         *trying to make some changes from git;
         *making changes from mac!!!!!!!;
 		*making changes from windows!!!!;
-	
+	*0419:
+		*change all the direction in AttackStrategy();	
 */
 #define STOP 360
 #define TESTSPEED 60
@@ -435,40 +436,47 @@ int attackStrategy(int p,int previousDirection){
 int closeStrategy(int p){
 	int output;
 	if (p==1||p==14){
-			output=210;
+			int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+			int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+			if(uLeft>uRight){
+				output = 250;
+			}
+			else{
+				output = 110;
+			}
 		}
 		else if(p ==2){
 			output=170;
 		}
 		else if(p ==3){
-			output = 0;
+			output = 180;
 		}
 		else if(p ==4){
-			output=0;
+			output=200;
 		}
 		else if(p ==5){
-			output=45;
+			output=220;
 		}
 		else if(p ==6){
-			output=135;
+			output=320;
 		}
 		else if(p ==7||p==8){
 			output=0;
 		}
 		else if (p==9){
-			output=180;
+			output=40;
 		}
 		else if(p ==10){
-			output=225;
+			output=140;
 		}
 		else if(p ==11){
-			output=90;
+			output=160;
 		}
 		else if(p ==12){
-			output=90;
+			output=180;
 		}
 		else if (p==13){
-			output=135;
+			output=190;
 		}
 	return output;
 }
