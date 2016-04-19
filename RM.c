@@ -463,32 +463,13 @@ int closeStrategy(int p){
 			output=170;
 		}
 		else if(p ==3){
-			output = 0;//it was 315
-			
-			
+			output = 0;
 		}
 		else if(p ==4){
-			output=0;/*
-			if(previousEyePort == 17&&previousDirection!=output){
-				output = (previousDirection+2)%360;
-				eyePort= 17;
-			}
-			else if(previousEyePort ==19&&previousDirection!=output){
-				output = previousDirection-1;
-				eyePort = 19;
-			}*/
-			
+			output=0;
 		}
 		else if(p ==5){
-			output=45;/*
-			if(previousEyePort ==18&&previousDirection!=output){
-				output = previousDirection +1;
-				eyePort = 18;
-			}
-			else if(previousEyePort == 20&&previousDirection!=output){
-				output = previousDirection -1;
-				eyePort = 20;
-			}*/
+			output=45;
 		}
 		else if(p ==6){
 			output=135;
