@@ -35,6 +35,7 @@
 			close gOutterLeft and gOutterBack when turning right;
 			close gOutterRight and gOutterBack when turning left;
 		*enhance whiteLineStrategy();
+		*add some features to displayAll();
 */
 #define STOP 360
 #define TESTSPEED 60
@@ -809,7 +810,8 @@ void displayAll(int i){
 		int backEyePort;
 		int uLeft,uRight,uFront,uBack;
 		int angle;
-		int gLeft,gRight,gFront,gBack;
+		int gFront,gInnerLeft,gOutterLeft,gInnerRight,gOutterRight,gInnerBack,gOutterBack;
+
 		
 		
 		angle = GetCompassB(_COMPASS_compass_);
@@ -821,7 +823,15 @@ void displayAll(int i){
 		backEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
 		frontEyePort =GetCompoI3(_COMPOUNDEYE3_leftEye_,8);		
 		backEyePort =GetCompoI3(_COMPOUNDEYE3_rightEye_,8);
-		
+		gFront = GetADScable10(_SCABLEAD_gFront_);
+		gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
+		gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
+		gInnerRight = GetADScable10(_SCABLEAD_gInnerRight_);
+		gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
+		gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
+		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
+
+
 		SetLCD5Char( 0 ,0 ,frontEyeValue ,YELLOW ,BLACK );
 		SetLCD5Char( 50 ,0 ,backEyeValue ,YELLOW ,BLACK );
 		SetLCD5Char( 100 ,0 ,frontEyePort ,YELLOW ,BLACK );
@@ -832,15 +842,18 @@ void displayAll(int i){
 		SetLCD5Char( 100 ,20 ,uRight ,RED ,BLACK );
 		SetLCD5Char( 150 ,20 ,uBack ,RED ,BLACK );
 		
-		SetLCD5Char( 0 ,40 ,gFront ,BLUE ,BLACK );
-		SetLCD5Char( 50 ,40 ,gLeft ,BLUE ,BLACK );
-		SetLCD5Char( 100 ,40 ,gRight ,BLUE ,BLACK );
-		SetLCD5Char( 150 ,40 ,gBack ,BLUE ,BLACK );
-		
-		SetLCD5Char( 0 ,60 ,angle ,GREEN ,BLACK );
-		SetLCD5Char( 50 ,60 ,1 ,GREEN ,BLACK );
-		SetLCD5Char( 100 ,60 ,1 ,GREEN ,BLACK );
-		SetLCD5Char( 150 ,60 ,1 ,GREEN ,BLACK );
+		SetLCD5Char( 70 ,40 ,gFront ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,60 ,gOutterLeft ,BLUE ,BLACK );
+		SetLCD5Char( 50 ,60 ,gInnerLeft ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,60 ,gInnerRight ,BLUE ,BLACK );
+		SetLCD5Char( 150 ,60 ,gOutterRight ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,80 ,gInnerBack ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,100 ,gOutterBack ,BLUE ,BLACK );		
+
+		SetLCD5Char( 0 ,40 ,angle ,GREEN ,BLACK );
+//		SetLCD5Char( 50 ,60 ,1 ,GREEN ,BLACK );
+//		SetLCD5Char( 100 ,60 ,1 ,GREEN ,BLACK );
+//		SetLCD5Char( 150 ,60 ,1 ,GREEN ,BLACK );
 	}
 	else if(i==2){
 		SetLCD5Char( 0 ,0 ,1 ,YELLOW ,BLACK );
