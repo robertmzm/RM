@@ -93,7 +93,7 @@ int main(void)
 		displayAll(display);
 		
 		
-		eyePort = getEyePort(eyeLowThread,eyeHightTread,targetAngle);//get the port of the fly eye giving lower thread 5 and higher thread 60
+		eyePort = getEyePort(lowEyeThread,highEyeThread,targetAngle);//get the port of the fly eye giving lower thread 5 and higher thread 60
 		if(eyePort){
 			speed = TESTSPEED;
 			direction = attackStrategy(eyePort,direction);
@@ -178,13 +178,13 @@ int getGreyPort(int targetAngle){
 	}
 	else if(targetAngle>180){
 		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750||
-			||gOutterRight<1750){
+			gOutterRight<1750){
 			output = 1;
 		}
 	}
 	else{
 		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750||
-			||gOutterLeft<1650){
+			gOutterLeft<1650){
 			output = 1;
 		}
 	}
