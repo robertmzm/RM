@@ -78,6 +78,7 @@ int main(void)
 	int targetAngle = 0;
 	int lowEyeThread = 5;
 	int highEyeThread = 45;
+	int lastShootTime=GetSysTime();
 	extern int speed;
 	speed = 60;
 	previousEyePort = eyePort;
@@ -106,16 +107,27 @@ int main(void)
 			speed = 50;
 			direction =backPosition();
 		}
-
 		targetAngle = getTargetAngle(targetAngle,eyePort);
-
+		
+		lastShootTime = getShootTime(lastShootTime,eyePort);
+		shoot(lastShootTime);
 		greyPort = getGreyPort();
 		if(greyPort){
+			SetLED(_LED_shoot_,0);
 			targetAngle = 0;
 			direction = whiteLineStrategy();
 		}
 		move(direction,speed,targetAngle);//give the direction and speed to <move>mothed in order to react
 		previousEyePort = eyePort;//check the previous port in order to make advanced move
+	}
+}
+
+void shoot(int lastShootTime){
+	if(GetSysTime()-lastShootTime<50){
+		SetLED(_LED_shoot_,1);
+	}
+	else{
+		SetLED(_LED_shoot_,0);
 	}
 }
 
@@ -139,11 +151,11 @@ int getTargetAngle(int previousTarget,int eyePort){
 
 }
 
-int getShootTime(int lastShootTime){
+int getShootTime(int lastShootTime,int eyePort){
 	int output = lastShootTime;
 	int fire = GetRemoIR(_FLAMEDETECT_fire_);
 	int time = GetSysTime();
-	if (time-lastShootTime>300&&fire<1800){
+	if (time-lastShootTime>300&&fire<1800&&(eyePort == 21|| eyePort ==22)){
 		output = time;
 	}
 	
@@ -178,8 +190,8 @@ int getGreyPort(int targetAngle){
 		if (gOutterBack<1200){
 			output = 4;
 		}
-	}
-	/*else if(targetAngle>180){
+	}	
+	else if(targetAngle>180){
 		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1650||
 			gOutterRight<1650){
 			output = 1;
@@ -190,7 +202,7 @@ int getGreyPort(int targetAngle){
 			gOutterLeft<1600){
 			output = 1;
 		}
-	}*/
+	}
 	return output;
 }
 int whiteLineStrategy(int GP,int d){
