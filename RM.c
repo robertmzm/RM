@@ -111,7 +111,7 @@ int main(void)
 		
 		lastShootTime = getShootTime(lastShootTime,eyePort);
 		shoot(lastShootTime);
-		greyPort = getGreyPort();
+		greyPort = getGreyPort(direction);
 		if(greyPort){
 			SetLED(_LED_shoot_,0);
 			targetAngle = 0;
@@ -123,7 +123,7 @@ int main(void)
 }
 
 void shoot(int lastShootTime){
-	if(GetSysTime()-lastShootTime<50){
+	if(GetSysTime()-lastShootTime<30){
 		SetLED(_LED_shoot_,1);
 	}
 	else{
@@ -205,7 +205,7 @@ int getGreyPort(int targetAngle){
 	}
 	return output;
 }
-int whiteLineStrategy(int GP,int d){
+int whiteLineStrategy(int d){
 	int direction=STOP;
 	int startTime=GetSysTime();
 	int eyePort = getEyePort(10,45);
@@ -455,7 +455,17 @@ void move(int d,int s,int targetAngle){
 	speed1 = checkSpeed(speed1);
 	speed2 = checkSpeed(speed2);
 	speed3 = checkSpeed(speed3);
-	speed4 = checkSpeed(speed4);	
+	speed4 = checkSpeed(speed4);
+	
+	SetLCD5Char(0,80,speed2,WHITE,BLACK);
+	SetLCD5Char(150,80,speed3,WHITE,BLACK);
+	SetLCD5Char(0,100,speed1,WHITE,BLACK);
+	SetLCD5Char(150,100,speed4,WHITE,BLACK);
+	
+	SetLCD5Char(0,120,d,CYAN,BLACK);
+	
+	
+	
 	SetMotor(_MOTOR_M1_,direction1,speed1);
 	SetMotor(_MOTOR_M2_,direction2,speed2);
 	SetMotor(_MOTOR_M3_,direction3,speed3);
