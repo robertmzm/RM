@@ -34,7 +34,7 @@
 		*optimize getGreyPort():
 			close gOutterLeft and gOutterBack when turning right;
 			close gOutterRight and gOutterBack when turning left;
-		
+		*enhance whiteLineStrategy();
 */
 #define STOP 360
 #define TESTSPEED 60
@@ -72,6 +72,8 @@ int main(void)
 	int greyPort = 0;
 	int pressed = 0;
 	int targetAngle = 0;
+	int lowEyeThread = 5;
+	int highEyeThread = 45;
 	extern int speed;
 	speed = 60;
 	previousEyePort = eyePort;
@@ -90,9 +92,9 @@ int main(void)
 		displayAll(display);
 		
 		
-		eyePort = getEyePort(5,45,targetAngle);//get the port of the fly eye giving lower thread 5 and higher thread 60
+		eyePort = getEyePort(eyeLowThread,eyeHightTread,targetAngle);//get the port of the fly eye giving lower thread 5 and higher thread 60
 		if(eyePort){
-			speed = 60;
+			speed = TESTSPEED;
 			direction = attackStrategy(eyePort,direction);
 		}
 		else{
@@ -101,7 +103,7 @@ int main(void)
 			direction =backPosition();
 		}
 
-		targetAngle = getTargetAngle(targetAngle);
+		targetAngle = getTargetAngle(targetAngle,eyePort);
 
 		greyPort = getGreyPort();
 		if(greyPort){
@@ -113,14 +115,15 @@ int main(void)
 	}
 }
 
-int getTargetAngle(int previousTarget){
+int getTargetAngle(int previousTarget,int eyePort){
 	int output = previousTarget;
 	int uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 	int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 	int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
-	if(uBack>900&&uFront<1000&&uLeft+uBack>1200&&previousTarget==0){
+	if(uBack>900&&uFront<1000&&uLeft+uBack>1200&&previousTarget==0
+		&&(eyePort==21||eyePort==22)){
 		if(uLeft<550){
 			output = 30;
 		}
@@ -187,9 +190,13 @@ int getGreyPort(int targetAngle){
 	return output;
 }
 int whiteLineStrategy(int GP,int d){
-	int direction=360;
+	int direction=STOP;
 	int startTime=GetSysTime();
-	while(GetSysTime()-startTime<200){
+	int eyePort = getEyePort(10,45);
+
+
+	while(GetSysTime()-startTime<200&&eyePort!=0){
+		eyePort = getEyePort(10,45);
 		direction = backPosition();
 		move(direction,15,0);
 	}
