@@ -1,4 +1,4 @@
-/*  *0224:
+/**0224:
 		*combine further() and closer() strategy into one function attackStrategy();
 		*tried smooth turn between different direction. worked but notas good as ideal;
     *0226:
@@ -36,6 +36,8 @@
 			close gOutterRight and gOutterBack when turning left;
 		*enhance whiteLineStrategy();
 		*add some features to displayAll();
+	*0420:
+		*implement shoot();
 */
 #define STOP 360
 #define TESTSPEED 60
@@ -59,6 +61,7 @@
 #include <GetTouchScreenX.h>
 #include <SetLCDClear.h>
 #include <GetRemoIR.h>
+#include <SetLED.h>
 
 int eyePort;
 int previousEyePort;
@@ -162,32 +165,32 @@ int getGreyPort(int targetAngle){
 	int gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 	int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
 	if(targetAngle==0){
-		if (gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750){
+		if (gFront<1900||gInnerLeft<800||gInnerRight<1300||gInnerBack<1600){
 			output = 1;
 		}
-		else if (gOutterLeft<1650){
+		else if (gOutterLeft<1600){
 			output = 2;
 		}
-		if (gOutterRight<1750){
+		if (gOutterRight<1600){
 			output = 3;
 		}
 		
-		if (gOutterBack<1400){
+		if (gOutterBack<1200){
 			output = 4;
 		}
 	}
-	else if(targetAngle>180){
-		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750||
-			gOutterRight<1750){
+	/*else if(targetAngle>180){
+		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1650||
+			gOutterRight<1650){
 			output = 1;
 		}
 	}
 	else{
-		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1750||
-			gOutterLeft<1650){
+		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1650||
+			gOutterLeft<1600){
 			output = 1;
 		}
-	}
+	}*/
 	return output;
 }
 int whiteLineStrategy(int GP,int d){
@@ -406,9 +409,9 @@ void move(int d,int s,int targetAngle){
 		}
 	}
 	
-	else if (abs(angleDif)>5){
+	else if (abs(angleDif)>8){
 		if(d==STOP){
-			if (angle>180){
+			if (angleDif<0){
 				direction1 = 0;
 				direction2 = 0;
 				direction3 = 0;
@@ -434,10 +437,7 @@ void move(int d,int s,int targetAngle){
 			speed2 = direction2==0?speed2-angleDif:speed2+angleDif;
 			speed3 = direction3==0?speed3-angleDif:speed3+angleDif;
 			speed4 = direction4==0?speed4-angleDif:speed4+angleDif;
-			
-			
 		}
-		
 	}
 	
 	speed1 = checkSpeed(speed1);
@@ -798,6 +798,7 @@ int getAngleDif(int target){
 			output = 360-target+current;
 		}
 	}
+	SetLCD5Char(150,40,output,GREEN,BLACK);
 	return output;
 }
 

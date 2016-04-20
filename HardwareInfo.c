@@ -46,9 +46,6 @@
 #ifndef _SCABLEAD_gInnerBack_
 #define _SCABLEAD_gInnerBack_ 896
 #endif
-#ifndef _SCABLEAD_gOutterBack_
-#define _SCABLEAD_gOutterBack_ 0
-#endif
 #ifndef _SCABLEAD_gFront_
 #define _SCABLEAD_gFront_ 160
 #endif
@@ -63,6 +60,9 @@
 #endif
 #ifndef _SCABLEAD_gOutterRight_
 #define _SCABLEAD_gOutterRight_ 512
+#endif
+#ifndef _SCABLEAD_gOutterBack_
+#define _SCABLEAD_gOutterBack_ 416
 #endif
 #ifndef _COMPASS_compass_
 #define _COMPASS_compass_ 237104
