@@ -63,7 +63,6 @@
 #include <GetRemoIR.h>
 #include <SetLED.h>
 
-int eyePort;
 int positionI;
 int speed;
 int main(void)
@@ -78,6 +77,7 @@ int main(void)
 	int lowEyeThread = 5;
 	int highEyeThread = 45;
 	int lastShootTime=GetSysTime();
+	int eyePort = 0;
 	extern int speed;
 	speed = 60;	
 	
@@ -224,7 +224,7 @@ int getEyePort(int lowerThread,int higherThread){
 	    *return 1~14 when ball is far;
 	    *return 15~28 when ball is close;
 	    */
-	extern int eyePort;
+	int eyePort;
 	int output=0;
 	eyePort=0;
 	int eyeValue = GetCompoI3( _COMPOUNDEYE3_leftEye_ ,9);
