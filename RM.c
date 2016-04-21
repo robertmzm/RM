@@ -119,7 +119,8 @@ int main(void)
 }
 
 void shoot(int lastShootTime){
-	if(GetSysTime()-lastShootTime<30){
+	int time = GetSysTime();
+	if(time-lastShootTime>40&&time-lastShootTime<70){
 		SetLED(_LED_shoot_,1);
 	}
 	else{
@@ -244,10 +245,6 @@ int getEyePort(int lowerThread,int higherThread){
 	//SetLCD5Char(0,100,eyeValue,YELLOW,BLACK);//display the value of the fly eye
 	return eyePort;	
 }
-
-
-
-
 
 
 
