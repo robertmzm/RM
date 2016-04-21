@@ -212,7 +212,7 @@ int whiteLineStrategy(int d){
 
 
 	while(GetSysTime()-startTime<150&&eyePort!=0){
-		eyePort = getEyePort(10,45);
+		eyePort = getEyePort(60,100);
 		direction = backPosition();
 		move(direction,35,0);
 	}
@@ -515,7 +515,7 @@ int closeStrategy(int p){
 		output=220;
 	}
 	else if(p ==6){
-		output=320;
+		output=310;
 	}
 	else if(p ==7||p==8){
 		output=0;
@@ -556,7 +556,7 @@ int farStrategy(int p){
 		output= 270;
 	}
 	else if(p ==6){
-		output =300;
+		output =280;
 	}
 	else if(p ==7||p==8){
 		output= 0;
