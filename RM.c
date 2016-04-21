@@ -482,49 +482,58 @@ int attackStrategy(int p,int previousDirection){
 
 int closeStrategy(int p){
 	int output;
-	if (p==1||p==14){
-			int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
-			int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
-			if(uLeft>uRight){
-				output = 250;
-			}
-			else{
-				output = 110;
-			}
+	int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+	int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+	if(uBack<200&&(p<6||p>9)){
+		if(p<7){
+			output = 270;
 		}
-		else if(p ==2){
-			output=170;
+		else{
+			output = 90;
 		}
-		else if(p ==3){
-			output = 180;
+	}
+	else if (p==1||p==14){
+		if(uLeft>uRight){
+			output = 250;
 		}
-		else if(p ==4){
-			output=200;
+		else{
+			output = 110;
 		}
-		else if(p ==5){
-			output=220;
-		}
-		else if(p ==6){
-			output=320;
-		}
-		else if(p ==7||p==8){
-			output=0;
-		}
-		else if (p==9){
-			output=40;
-		}
-		else if(p ==10){
-			output=140;
-		}
-		else if(p ==11){
-			output=160;
-		}
-		else if(p ==12){
-			output=180;
-		}
-		else if (p==13){
-			output=190;
-		}
+	}
+	else if(p ==2){
+		output=170;
+	}
+	else if(p ==3){
+		output = 180;
+	}
+	else if(p ==4){
+		output=200;
+	}
+	else if(p ==5){
+		output=220;
+	}
+	else if(p ==6){
+		output=320;
+	}
+	else if(p ==7||p==8){
+		output=0;
+	}
+	else if (p==9){
+		output=40;
+	}
+	else if(p ==10){
+		output=140;
+	}
+	else if(p ==11){
+		output=160;
+	}
+	else if(p ==12){
+		output=180;
+	}
+	else if (p==13){
+		output=190;
+	}
 	return output;
 }
 
