@@ -64,7 +64,6 @@
 #include <SetLED.h>
 
 int eyePort;
-int previousEyePort;
 int positionI;
 int speed;
 int main(void)
@@ -80,9 +79,7 @@ int main(void)
 	int highEyeThread = 45;
 	int lastShootTime=GetSysTime();
 	extern int speed;
-	speed = 60;
-	previousEyePort = eyePort;
-	
+	speed = 60;	
 	
 	
 	while (1){//forever running loop;
@@ -111,14 +108,13 @@ int main(void)
 		
 		lastShootTime = getShootTime(lastShootTime,eyePort);
 		shoot(lastShootTime);
-		greyPort = getGreyPort(direction);
+		greyPort = getGreyPort();
 		if(greyPort){
 			SetLED(_LED_shoot_,0);
 			targetAngle = 0;
-			direction = whiteLineStrategy();
+			direction = whiteLineStrategy(direction);
 		}
 		move(direction,speed,targetAngle);//give the direction and speed to <move>mothed in order to react
-		previousEyePort = eyePort;//check the previous port in order to make advanced move
 	}
 }
 
@@ -206,7 +202,7 @@ int getGreyPort(int targetAngle){
 	return output;
 }
 int whiteLineStrategy(int d){
-	int direction=STOP;
+	int direction=d;
 	int startTime=GetSysTime();
 	int eyePort = getEyePort(10,45);
 
@@ -216,7 +212,7 @@ int whiteLineStrategy(int d){
 		direction = backPosition();
 		move(direction,15,0);
 	}
-	return d;
+	return direction;
 	
 }
 
