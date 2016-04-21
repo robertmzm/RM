@@ -38,6 +38,8 @@
 		*add some features to displayAll();
 	*0420:
 		*implement shoot();
+		*change shoot time into a interval;
+		*fixed bug in whiteLineStrategy;
 */
 #define STOP 360
 #define TESTSPEED 60
