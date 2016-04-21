@@ -87,7 +87,7 @@ int main(void)
 	
 	while (1){//forever running loop;
 		pressed = GetTouchScreenX();
-		if(pressed){
+		if(0){
 		
 			pressed = GetTouchScreenX();
 			if(!pressed){
@@ -111,7 +111,7 @@ int main(void)
 		
 		lastShootTime = getShootTime(lastShootTime,eyePort);
 		shoot(lastShootTime);
-		greyPort = getGreyPort();
+		greyPort = getGreyPort(targetAngle);
 		if(greyPort){
 			SetLED(_LED_shoot_,0);
 			targetAngle = 0;
@@ -123,7 +123,7 @@ int main(void)
 
 void shoot(int lastShootTime){
 	int time = GetSysTime();
-	if(time-lastShootTime>20&&time-lastShootTime<50){
+	if(time-lastShootTime<30){
 		SetLED(_LED_shoot_,1);
 	}
 	else{
@@ -155,7 +155,7 @@ int getShootTime(int lastShootTime,int eyePort){
 	int output = lastShootTime;
 	int fire = GetRemoIR(_FLAMEDETECT_fire_);
 	int time = GetSysTime();
-	if (time-lastShootTime>300&&fire<1800&&(eyePort == 21|| eyePort ==22)){
+	if (time-lastShootTime>300&&fire<1200&&(eyePort == 21|| eyePort ==22)){
 		output = time;
 	}
 	
@@ -177,29 +177,29 @@ int getGreyPort(int targetAngle){
 	int gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 	int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
 	if(targetAngle==0){
-		if (gFront<1900||gInnerLeft<800||gInnerRight<1300||gInnerBack<1600){
+		if (gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850){
 			output = 1;
 		}
-		else if (gOutterLeft<1600){
+		else if (gOutterLeft<1700){
 			output = 2;
 		}
-		if (gOutterRight<1600){
+		else if (gOutterRight<1670){
 			output = 3;
 		}
 		
-		if (gOutterBack<1200){
+		else if (gOutterBack<1350){
 			output = 4;
 		}
 	}	
 	else if(targetAngle>180){
-		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1650||
+		if(gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850||
 			gOutterRight<1650){
 			output = 1;
 		}
 	}
 	else{
-		if(gFront<1900||gInnerLeft<900||gInnerRight<1400||gInnerBack<1650||
-			gOutterLeft<1600){
+		if(gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850||
+			gOutterLeft<1700){
 			output = 1;
 		}
 	}
@@ -211,8 +211,8 @@ int whiteLineStrategy(int d){
 	int eyePort = getEyePort(10,45);
 
 
-	while(GetSysTime()-startTime<150&&eyePort!=0){
-		eyePort = getEyePort(60,100);
+	while(GetSysTime()-startTime<100&&eyePort!=0){
+		eyePort = getEyePort(10,45);
 		direction = backPosition();
 		move(direction,35,0);
 	}
