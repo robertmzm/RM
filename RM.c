@@ -122,7 +122,7 @@ int main(void)
 
 void shoot(int lastShootTime){
 	int time = GetSysTime();
-	if(time-lastShootTime>40&&time-lastShootTime<70){
+	if(time-lastShootTime>20&&time-lastShootTime<50){
 		SetLED(_LED_shoot_,1);
 	}
 	else{
