@@ -40,6 +40,7 @@
 		*implement shoot();
 		*change shoot time into a interval;
 		*fixed bug in whiteLineStrategy;
+		
 */
 #define STOP 360
 #define TESTSPEED 60
@@ -210,10 +211,10 @@ int whiteLineStrategy(int d){
 	int eyePort = getEyePort(10,45);
 
 
-	while(GetSysTime()-startTime<200&&eyePort!=0){
+	while(GetSysTime()-startTime<150&&eyePort!=0){
 		eyePort = getEyePort(10,45);
 		direction = backPosition();
-		move(direction,15,0);
+		move(direction,35,0);
 	}
 	return direction;
 	
