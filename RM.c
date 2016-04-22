@@ -43,7 +43,7 @@
 		
 */
 #define STOP 360
-#define TESTSPEED 60
+#define TESTSPEED 70
 
 #include <stdio.h>
 #include <GetCompoI3.h>
@@ -509,10 +509,10 @@ int closeStrategy(int p){
 		output = 180;
 	}
 	else if(p ==4){
-		output=200;
+		output=215;
 	}
 	else if(p ==5){
-		output=220;
+		output=240;
 	}
 	else if(p ==6){
 		output=310;
@@ -524,10 +524,10 @@ int closeStrategy(int p){
 		output=40;
 	}
 	else if(p ==10){
-		output=140;
+		output=120;
 	}
 	else if(p ==11){
-		output=160;
+		output=135;
 	}
 	else if(p ==12){
 		output=180;
@@ -638,7 +638,7 @@ int backPosition(){
 						//pos8
 						output = 0;
 					}
-					else if (uBack<300){
+					else if (uBack<350){
 						//pos5
 						output = STOP;
 					}
@@ -678,9 +678,9 @@ int backPosition(){
 					//pos 2,5,8
 					if (uBack<200){
 						//pos8
-						output = 0;
+						output = 350;
 					}
-					else if (uBack<700){
+					else if (uBack<500){
 						//pos5
 						output = STOP;
 					}
