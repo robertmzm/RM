@@ -87,6 +87,7 @@ int main(void)
 	
 	
 	while (1){//forever running loop;
+	
 		pressed = GetTouchScreenX();
 		if(0){
 		
@@ -122,13 +123,16 @@ int main(void)
 	}
 }
 
-void shoot(int lastShootTime){
-	int time = GetSysTime();
-	if(time-lastShootTime<30){
+int shoot(int lastShootTime){
+	int timeDiff = GetSysTime()-lastShootTime;
+	SetLCD5Char(100,120,timeDiff,RED,BLACK);
+	if(timeDiff<30){
 		SetLED(_LED_shoot_,1);
+		return 1;
 	}
 	else{
 		SetLED(_LED_shoot_,0);
+		return 0;
 	}
 }
 
@@ -155,8 +159,9 @@ int getTargetAngle(int previousTarget,int eyePort){
 int getShootTime(int lastShootTime,int eyePort){
 	int output = lastShootTime;
 	int fire = GetRemoIR(_FLAMEDETECT_fire_);
+	SetLCD5Char(50,120,fire,RED,BLACK);
 	int time = GetSysTime();
-	if (time-lastShootTime>300&&fire<1200&&(eyePort == 21|| eyePort ==22)){
+	if (time-lastShootTime>100&&fire<500&&(eyePort == 21|| eyePort ==22)){
 		output = time;
 	}
 	
@@ -924,6 +929,14 @@ void displayAll(int i){
 		SetLCD5Char( 50 ,60 ,1 ,GREEN ,BLACK );
 		SetLCD5Char( 100 ,60 ,1 ,GREEN ,BLACK );
 		SetLCD5Char( 150 ,60 ,1 ,GREEN ,BLACK );
+	}
+}
+void testShooting(){
+	int eyePort = 21;
+	int lastShootTime = -300;
+	while(1){
+		lastShootTime = getShootTime(lastShootTime,eyePort);
+		shoot(lastShootTime);
 	}
 }
 
