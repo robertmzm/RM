@@ -43,6 +43,7 @@
 		
 */
 #define STOP 360
+#define BLOCKED 360
 #define TESTSPEED 70
 
 #include <stdio.h>
@@ -211,13 +212,12 @@ int whiteLineStrategy(int d){
 	int eyePort = getEyePort(10,45);
 
 
-	while(GetSysTime()-startTime<100&&eyePort!=0){
+	while(GetSysTime()-startTime<100&&eyePort!=0&&direction!=STOP){
 		eyePort = getEyePort(10,45);
 		direction = backPosition();
 		move(direction,35,0);
 	}
-	return direction;
-	
+	return direction;	
 }
 
 
@@ -785,7 +785,7 @@ int backPosition(){
 		}
 		else{
 			//all direction are blcoked;
-			output = STOP;
+			output = BLOCKED;
 		}
 	}
 	return output;
