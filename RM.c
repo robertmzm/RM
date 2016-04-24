@@ -79,7 +79,7 @@ int main(void)
 	int pressed = 0;
 	int targetAngle = 0;
 	int lowEyeThread = 5;
-	int highEyeThread = 45;
+	int highEyeThread = 70;
 	int lastShootTime=GetSysTime();
 	int eyePort = 0;
 	extern int speed;
@@ -508,37 +508,37 @@ int closeStrategy(int p){
 		}
 	}
 	else if(p ==2){
-		output=170;
+		output=135;
 	}
 	else if(p ==3){
 		output = 180;
 	}
 	else if(p ==4){
-		output=215;
+		output=180;
 	}
 	else if(p ==5){
-		output=240;
+		output=225;
 	}
 	else if(p ==6){
-		output=310;
+		output=300;
 	}
 	else if(p ==7||p==8){
 		output=0;
 	}
 	else if (p==9){
-		output=40;
+		output=30;
 	}
 	else if(p ==10){
-		output=120;
+		output=135;
 	}
 	else if(p ==11){
-		output=135;
+		output=180;
 	}
 	else if(p ==12){
 		output=180;
 	}
 	else if (p==13){
-		output=190;
+		output=225;
 	}
 	return output;
 }
