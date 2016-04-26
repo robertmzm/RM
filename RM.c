@@ -40,7 +40,8 @@
 		*implement shoot();
 		*change shoot time into a interval;
 		*fixed bug in whiteLineStrategy;
-		
+	*0425:
+		*fixed bug in main(), caused by wrong parameter.
 */
 #define STOP 360
 #define BLOCKED 360
@@ -99,7 +100,7 @@ int main(void)
 		displayAll(display);
 		
 		
-		eyePort = getEyePort(lowEyeThread,highEyeThread,targetAngle);//get the port of the fly eye giving lower thread 5 and higher thread 60
+		eyePort = getEyePort(lowEyeThread,highEyeThread);//get the port of the fly eye giving lower thread 5 and higher thread 60
 		if(eyePort){
 			speed = TESTSPEED;
 			direction = attackStrategy(eyePort,direction);
