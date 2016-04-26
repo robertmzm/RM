@@ -28,7 +28,7 @@
         *making changes from mac!!!!!!!;
 		*making changes from windows!!!!;
 	*0419:
-		*change all the direction in AttackStrategy();	
+		*change all the direction in AttackStrategy();
 		*enhance whitelineStratey();
 		*implement getTargetAngle();
 		*optimize getGreyPort():
@@ -42,6 +42,8 @@
 		*fixed bug in whiteLineStrategy;
 	*0425:
 		*fixed bug in main(), caused by wrong parameter.
+	*0426:
+		*just installed a atom plugin!!!it's soooo cooool;
 */
 #define STOP 360
 #define BLOCKED 360
@@ -84,22 +86,22 @@ int main(void)
 	int lastShootTime=GetSysTime();
 	int eyePort = 0;
 	extern int speed;
-	speed = 60;	
-	
-	
+	speed = 60;
+
+
 	while (1){//forever running loop;
-	
+
 		pressed = GetTouchScreenX();
 		if(0){
-		
+
 			pressed = GetTouchScreenX();
 			if(!pressed){
 				display=(display+1)%2;
 			}
 		}
 		displayAll(display);
-		
-		
+
+
 		eyePort = getEyePort(lowEyeThread,highEyeThread);//get the port of the fly eye giving lower thread 5 and higher thread 60
 		if(eyePort){
 			speed = TESTSPEED;
@@ -110,7 +112,7 @@ int main(void)
 			direction =backPosition();
 		}
 		targetAngle = getTargetAngle(targetAngle,eyePort);
-		
+
 		lastShootTime = getShootTime(lastShootTime,eyePort);
 		shoot(lastShootTime);
 		greyPort = getGreyPort(targetAngle);
@@ -166,7 +168,7 @@ int getShootTime(int lastShootTime,int eyePort){
 	if (time-lastShootTime>100&&fire<500&&(eyePort == 21|| eyePort ==22)){
 		output = time;
 	}
-	
+
 	return output;
 }
 
@@ -174,8 +176,8 @@ int getGreyPort(int targetAngle){
 	/*a function to determine if the robot touches the white line;
 	  *return the number of grey scale sensors touching the white line;
 	  */
-	
-	
+
+
 	int output = 0;
 	int gFront = GetADScable10(_SCABLEAD_gFront_);
 	int gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
@@ -194,11 +196,11 @@ int getGreyPort(int targetAngle){
 		else if (gOutterRight<1670){
 			output = 3;
 		}
-		
+
 		else if (gOutterBack<1350){
 			output = 4;
 		}
-	}	
+	}
 	else if(targetAngle>180){
 		if(gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850||
 			gOutterRight<1650){
@@ -224,7 +226,7 @@ int whiteLineStrategy(int d){
 		direction = backPosition();
 		move(direction,55,0);
 	}
-	return direction;	
+	return direction;
 }
 
 
@@ -252,7 +254,7 @@ int getEyePort(int lowerThread,int higherThread){
 			eyePort+=14;
 		}
 	}
-	return eyePort;	
+	return eyePort;
 }
 
 
@@ -269,15 +271,15 @@ void move(int d,int s,int targetAngle){
 	    *the range of direction 0<=d<360
 	    *361means turn clockwise,362 means turn counter-clockwise
 	    */
-	
+
 	int direction1,direction2,direction3,direction4;//direction of each motor.
 	int speed1,speed2,speed3,speed4;//speed of each motor.
 	int slowerSpeed;//the speed for the slower motor in order to control the direction.
 	int angle,angleDif;
 	double radianAngle;
-	
-	
-	
+
+
+
 	if (d<45){
 		//set up the direction of each motor
 		direction1 = 0;
@@ -339,7 +341,7 @@ void move(int d,int s,int targetAngle){
 		speed2=s;
 		speed3=slowerSpeed;
 		speed4=s;
-	
+
 	}
 	else if(d<270){
 		direction1 = 0;
@@ -392,11 +394,11 @@ void move(int d,int s,int targetAngle){
 	/**check the robot is facing the right direction;
 	    *if the robot is shifted between 5 to 15 degree,
 	      change each wheel's speed slightly in order to correct the direction;
-	    *if the robot is shifted more then 15 degree, 
+	    *if the robot is shifted more then 15 degree,
 	      change the direction by spinning;
 	    */
-	   
-	
+
+
 	angleDif = getAngleDif(targetAngle);
 	if (abs(angleDif)>40){
 		if (angleDif<0){
@@ -422,7 +424,7 @@ void move(int d,int s,int targetAngle){
 			speed4=30;
 		}
 	}
-	
+
 	else if (abs(angleDif)>8){
 		if(d==STOP){
 			if (angleDif<0){
@@ -453,25 +455,25 @@ void move(int d,int s,int targetAngle){
 			speed4 = direction4==0?speed4-angleDif:speed4+angleDif;
 		}
 	}
-	
+
 	speed1 = checkSpeed(speed1);
 	speed2 = checkSpeed(speed2);
 	speed3 = checkSpeed(speed3);
 	speed4 = checkSpeed(speed4);
-	
+
 	SetLCD5Char(0,80,speed2,WHITE,BLACK);
 	SetLCD5Char(150,80,speed3,WHITE,BLACK);
 	SetLCD5Char(0,100,speed1,WHITE,BLACK);
 	SetLCD5Char(150,100,speed4,WHITE,BLACK);
-	
+
 	SetLCD5Char(0,120,d,CYAN,BLACK);
-	
-	
-	
+
+
+
 	SetMotor(_MOTOR_M1_,direction1,speed1);
 	SetMotor(_MOTOR_M2_,direction2,speed2);
 	SetMotor(_MOTOR_M3_,direction3,speed3);
-	SetMotor(_MOTOR_M4_,direction4,speed4);   
+	SetMotor(_MOTOR_M4_,direction4,speed4);
 }
 
 int attackStrategy(int p,int previousDirection){
@@ -553,7 +555,7 @@ int farStrategy(int p){
 		output= 180;
 	}
 	else if(p ==3){
-		output= 210;	
+		output= 210;
 	}
 	else if(p ==4){
 		output= 240;
@@ -589,7 +591,7 @@ int backPosition(){
 	/*called when the ball is not detected
 	  *no input for now;
 	  *output the direction needed to go back to the right location
-	  */ 
+	  */
 	int uLeft,uRight,uFront,uBack;
 	uLeft = GetAdUltrasound( _ADULTRASOUND_uLeft_);
 	uRight = GetAdUltrasound( _ADULTRASOUND_uRight_);
@@ -598,7 +600,7 @@ int backPosition(){
 	int output = STOP;
 	if(uLeft+uRight>1000){
 		//left and right are not blocked;
-		
+
 		if(uFront+uBack>800){
 			/*front and back are not blcoked;
 			  *all open;
@@ -614,7 +616,7 @@ int backPosition(){
 			  //			//			//			//
 			  /////////////////////////////////////
 			  //			//			//			//
-			  //			//			//			// 
+			  //			//			//			//
 			  //		7	//		8	//		9	//
 			  //			//			//			//
 			  //			//			//			//
@@ -636,7 +638,7 @@ int backPosition(){
 						//pos1
 						output = 150;
 					}
-					
+
 				}
 				else if(uLeft<1100){
 					//pos 2,5,8
@@ -667,7 +669,7 @@ int backPosition(){
 				}
 			}
 			else{
-				//using right 
+				//using right
 				if(uRight<500){
 					//pos 3,6,9
 					if (uBack<400){
@@ -787,7 +789,7 @@ int backPosition(){
 				//pos2
 				output = STOP;
 			}
-			
+
 		}
 		else{
 			//all direction are blcoked;
@@ -836,7 +838,7 @@ int getAngleDif(int target){
 }
 
 void displayAll(int i){
-	
+
 	if(i==1){
 		int frontEyeValue;
 		int backEyeValue;
@@ -846,8 +848,8 @@ void displayAll(int i){
 		int angle;
 		int gFront,gInnerLeft,gOutterLeft,gInnerRight,gOutterRight,gInnerBack,gOutterBack;
 
-		
-		
+
+
 		angle = GetCompassB(_COMPASS_compass_);
 		uLeft = GetAdUltrasound( _ADULTRASOUND_uLeft_);
 		uRight = GetAdUltrasound( _ADULTRASOUND_uRight_);
@@ -855,7 +857,7 @@ void displayAll(int i){
 		uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 		frontEyeValue = GetCompoI3( _COMPOUNDEYE3_leftEye_ ,9);
 		backEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
-		frontEyePort =GetCompoI3(_COMPOUNDEYE3_leftEye_,8);		
+		frontEyePort =GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
 		backEyePort =GetCompoI3(_COMPOUNDEYE3_rightEye_,8);
 		gFront = GetADScable10(_SCABLEAD_gFront_);
 		gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
@@ -870,19 +872,19 @@ void displayAll(int i){
 		SetLCD5Char( 50 ,0 ,backEyeValue ,YELLOW ,BLACK );
 		SetLCD5Char( 100 ,0 ,frontEyePort ,YELLOW ,BLACK );
 		SetLCD5Char( 150 ,0 ,backEyePort ,YELLOW ,BLACK );
-		
+
 		SetLCD5Char( 0 ,20 ,uFront ,RED ,BLACK );
 		SetLCD5Char( 50 ,20 ,uLeft ,RED ,BLACK );
 		SetLCD5Char( 100 ,20 ,uRight ,RED ,BLACK );
 		SetLCD5Char( 150 ,20 ,uBack ,RED ,BLACK );
-		
+
 		SetLCD5Char( 70 ,40 ,gFront ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,60 ,gOutterLeft ,BLUE ,BLACK );
 		SetLCD5Char( 50 ,60 ,gInnerLeft ,BLUE ,BLACK );
 		SetLCD5Char( 100 ,60 ,gInnerRight ,BLUE ,BLACK );
 		SetLCD5Char( 150 ,60 ,gOutterRight ,BLUE ,BLACK );
 		SetLCD5Char( 70 ,80 ,gInnerBack ,BLUE ,BLACK );
-		SetLCD5Char( 70 ,100 ,gOutterBack ,BLUE ,BLACK );		
+		SetLCD5Char( 70 ,100 ,gOutterBack ,BLUE ,BLACK );
 
 		SetLCD5Char( 0 ,40 ,angle ,GREEN ,BLACK );
 //		SetLCD5Char( 50 ,60 ,1 ,GREEN ,BLACK );
@@ -898,6 +900,3 @@ void testShooting(){
 		shoot(lastShootTime);
 	}
 }
-
-
-	
