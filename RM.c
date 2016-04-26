@@ -106,7 +106,6 @@ int main(void)
 			direction = attackStrategy(eyePort,direction);
 		}
 		else{
-			targetAngle = 0;
 			speed = 50;
 			direction =backPosition();
 		}
@@ -143,8 +142,10 @@ int getTargetAngle(int previousTarget,int eyePort){
 	int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 	int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
-
-	if(uBack>900&&uFront<1000&&uLeft+uBack>1200&&previousTarget==0
+	if (eyePort<17||eyePort>25){//targetAngle goes back to 0 when the ball is in the back;
+		output = 0;
+	}
+	else if(uBack>900&&uFront<1000&&uLeft+uBack>1200&&previousTarget==0
 		&&(eyePort==21||eyePort==22)){
 		if(uLeft<550){
 			output = 30;
@@ -221,7 +222,7 @@ int whiteLineStrategy(int d){
 	while(GetSysTime()-startTime<100&&eyePort!=0&&direction!=STOP){
 		eyePort = getEyePort(10,45);
 		direction = backPosition();
-		move(direction,35,0);
+		move(direction,55,0);
 	}
 	return direction;	
 }
@@ -251,7 +252,6 @@ int getEyePort(int lowerThread,int higherThread){
 			eyePort+=14;
 		}
 	}
-	//SetLCD5Char(0,100,eyeValue,YELLOW,BLACK);//display the value of the fly eye
 	return eyePort;	
 }
 
@@ -888,48 +888,6 @@ void displayAll(int i){
 //		SetLCD5Char( 50 ,60 ,1 ,GREEN ,BLACK );
 //		SetLCD5Char( 100 ,60 ,1 ,GREEN ,BLACK );
 //		SetLCD5Char( 150 ,60 ,1 ,GREEN ,BLACK );
-	}
-	else if(i==2){
-		SetLCD5Char( 0 ,0 ,1 ,YELLOW ,BLACK );
-		SetLCD5Char( 50 ,0 ,1 ,YELLOW ,BLACK );
-		SetLCD5Char( 100 ,0 ,1 ,YELLOW ,BLACK );
-		SetLCD5Char( 150 ,0 ,1 ,YELLOW ,BLACK );
-		
-		SetLCD5Char( 0 ,20 ,1 ,RED ,BLACK );
-		SetLCD5Char( 50 ,20 ,1 ,RED ,BLACK );
-		SetLCD5Char( 100 ,20 ,1 ,RED ,BLACK );
-		SetLCD5Char( 150 ,20 ,1 ,RED ,BLACK );
-		
-		SetLCD5Char( 0 ,40 ,1 ,BLUE ,BLACK );
-		SetLCD5Char( 50 ,40 ,1 ,BLUE ,BLACK );
-		SetLCD5Char( 100 ,40 ,1 ,BLUE ,BLACK );
-		SetLCD5Char( 150 ,40 ,1 ,BLUE ,BLACK );
-		
-		SetLCD5Char( 0 ,60 ,1 ,GREEN ,BLACK );
-		SetLCD5Char( 50 ,60 ,1 ,GREEN ,BLACK );
-		SetLCD5Char( 100 ,60 ,1 ,GREEN ,BLACK );
-		SetLCD5Char( 150 ,60 ,1 ,GREEN ,BLACK );
-	}
-	else if(i==3){
-		SetLCD5Char( 0 ,0 ,1 ,YELLOW ,BLACK );
-		SetLCD5Char( 50 ,0 ,1 ,YELLOW ,BLACK );
-		SetLCD5Char( 100 ,0 ,1 ,YELLOW ,BLACK );
-		SetLCD5Char( 150 ,0 ,1 ,YELLOW ,BLACK );
-		
-		SetLCD5Char( 0 ,20 ,1 ,RED ,BLACK );
-		SetLCD5Char( 50 ,20 ,1 ,RED ,BLACK );
-		SetLCD5Char( 100 ,20 ,1 ,RED ,BLACK );
-		SetLCD5Char( 150 ,20 ,1 ,RED ,BLACK );
-		
-		SetLCD5Char( 0 ,40 ,1 ,BLUE ,BLACK );
-		SetLCD5Char( 50 ,40 ,1 ,BLUE ,BLACK );
-		SetLCD5Char( 100 ,40 ,1 ,BLUE ,BLACK );
-		SetLCD5Char( 150 ,40 ,1 ,BLUE ,BLACK );
-		
-		SetLCD5Char( 0 ,60 ,1 ,GREEN ,BLACK );
-		SetLCD5Char( 50 ,60 ,1 ,GREEN ,BLACK );
-		SetLCD5Char( 100 ,60 ,1 ,GREEN ,BLACK );
-		SetLCD5Char( 150 ,60 ,1 ,GREEN ,BLACK );
 	}
 }
 void testShooting(){
