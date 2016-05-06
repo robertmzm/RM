@@ -79,7 +79,7 @@ int main(void)
 	int pressed = 0;
 	int targetAngle = 0;
 	int lowEyeThread = 5;
-	int highEyeThread = 70;
+	int highEyeThread = 40;
 	int lastShootTime=GetSysTime();
 	int eyePort = 0;
 	extern int speed;
@@ -126,7 +126,7 @@ int main(void)
 int shoot(int lastShootTime){
 	int timeDiff = GetSysTime()-lastShootTime;
 	SetLCD5Char(100,120,timeDiff,RED,BLACK);
-	if(timeDiff<30){
+	if(timeDiff<20){
 		SetLED(_LED_shoot_,1);
 		return 1;
 	}
