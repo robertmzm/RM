@@ -69,6 +69,7 @@
 #include <SetLCDClear.h>
 #include <GetRemoIR.h>
 #include <SetLED.h>
+#include <GetButton1.h>
 
 int positionI;
 int speed;
@@ -79,6 +80,7 @@ int main(void)
 	int direction=STOP;//the direcion robot goes,360 means stop;
 	int display = 1;//indicate what to display
 	int greyPort = 0;
+	int pressing = 0;
 	int pressed = 0;
 	int targetAngle = 0;
 	int lowEyeThread = 5;
@@ -90,14 +92,11 @@ int main(void)
 
 
 	while (1){//forever running loop;
-
-		pressed = GetTouchScreenX();
-		if(0){
-
-			pressed = GetTouchScreenX();
-			if(!pressed){
-				display=(display+1)%2;
-			}
+		
+		pressing = GetButton1();
+		if(pressing ==0&&pressed == 1){
+			display=(display+1)%2;
+			SetLCDClear(BLACK);
 		}
 		displayAll(display);
 
@@ -122,6 +121,8 @@ int main(void)
 			direction = whiteLineStrategy(direction);
 		}
 		move(direction,speed,targetAngle);//give the direction and speed to <move>mothed in order to react
+		
+		pressed = pressing;
 	}
 }
 
@@ -400,7 +401,16 @@ void move(int d,int s,int targetAngle){
 
 
 	angleDif = getAngleDif(targetAngle);
-	if (abs(angleDif)>40){
+	int angleThread;
+	
+	if(targetAngle == 0){
+		angleThread = 15;
+	}
+	else{
+		angleThread = 40;
+	}
+	
+	if (abs(angleDif)>angleThread){
 		if (angleDif<0){
 			//turn clockwise
 			direction1=0;
@@ -424,7 +434,6 @@ void move(int d,int s,int targetAngle){
 			speed4=30;
 		}
 	}
-
 	else if (abs(angleDif)>8){
 		if(d==STOP){
 			if (angleDif<0){
