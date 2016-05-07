@@ -223,7 +223,7 @@ int whiteLineStrategy(int d){
 
 
 	while(GetSysTime()-startTime<100&&eyePort!=0&&direction!=STOP){
-		eyePort = getEyePort(10,45);
+		eyePort = getEyePort(10,80);
 		direction = backPosition();
 		move(direction,55,0);
 	}
@@ -401,10 +401,12 @@ void move(int d,int s,int targetAngle){
 
 
 	angleDif = getAngleDif(targetAngle);
+	
+	
 	int angleThread;
 	
 	if(targetAngle == 0){
-		angleThread = 15;
+		angleThread = 20;
 	}
 	else{
 		angleThread = 40;
@@ -417,10 +419,10 @@ void move(int d,int s,int targetAngle){
 			direction2 = 0;
 			direction3=0;
 			direction4=0;
-			speed1=30;
-			speed2=30;
-			speed3=30;
-			speed4=30;
+			speed1=16;
+			speed2=16;
+			speed3=16;
+			speed4=16;
 		}
 		else{
 			//turn counter-clockwise
@@ -503,7 +505,7 @@ int closeStrategy(int p){
 	int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 	int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
-	if(uBack<200&&(p<6||p>9)){
+	if(uBack<200&&(p<5||p>10)){
 		if(p<7){
 			output = 270;
 		}
@@ -526,25 +528,25 @@ int closeStrategy(int p){
 		output = 180;
 	}
 	else if(p ==4){
-		output=180;
+		output=220;
 	}
 	else if(p ==5){
 		output=225;
 	}
 	else if(p ==6){
-		output=300;
+		output=315;
 	}
 	else if(p ==7||p==8){
 		output=0;
 	}
 	else if (p==9){
-		output=30;
+		output=45;
 	}
 	else if(p ==10){
 		output=135;
 	}
 	else if(p ==11){
-		output=180;
+		output=140;
 	}
 	else if(p ==12){
 		output=180;
