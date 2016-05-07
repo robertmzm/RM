@@ -245,7 +245,7 @@ int getEyePort(int lowerThread,int higherThread){
 	int rightEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
 	if (eyeValue>lowerThread||rightEyeValue>lowerThread){
 		if(eyeValue>rightEyeValue){
-			eyePort =GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
+			eyePort =8-GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
 		}
 		else{
 			eyeValue = rightEyeValue;
