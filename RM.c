@@ -73,12 +73,14 @@
 
 int positionI;
 int speed;
+int display;
+
 int main(void)
 {
 	X2RCU_Init();//initialize the RCU;
 	int angle=0;//the angle of compass;
 	int direction=STOP;//the direcion robot goes,360 means stop;
-	int display = 1;//indicate what to display
+	extern int display;//indicate what to display
 	int greyPort = 0;
 	int pressing = 0;
 	int pressed = 0;
@@ -88,14 +90,14 @@ int main(void)
 	int lastShootTime=GetSysTime();
 	int eyePort = 0;
 	extern int speed;
-	speed = 60;
-
+	
+	display = 0;
 
 	while (1){//forever running loop;
-		
+
 		pressing = GetButton1();
 		if(pressing ==0&&pressed == 1){
-			display=(display+1)%2;
+			display=(display+1)%3;
 			SetLCDClear(BLACK);
 		}
 		displayAll(display);
@@ -128,8 +130,12 @@ int main(void)
 
 int shoot(int lastShootTime){
 	int timeDiff = GetSysTime()-lastShootTime;
+	extern int display;
 	
-	SetLCD5Char(100,120,timeDiff,RED,BLACK);
+	if(display == 1){
+		SetLCD5Char(100,120,timeDiff,RED,BLACK);
+	}
+	
 	if(timeDiff<20){
 		SetLED(_LED_shoot_,1);
 		return 1;
@@ -165,7 +171,11 @@ int getTargetAngle(int previousTarget,int eyePort){
 int getShootTime(int lastShootTime,int eyePort){
 	int output = lastShootTime;
 	int fire = GetRemoIR(_FLAMEDETECT_fire_);
-	SetLCD5Char(50,120,fire,RED,BLACK);
+	extern int display;
+	
+	if(display ==1){
+		SetLCD5Char(50,120,fire,RED,BLACK);
+	}
 	int time = GetSysTime();
 	if (time-lastShootTime>100&&fire<500&&(eyePort == 21|| eyePort ==22)){
 		output = time;
@@ -472,14 +482,18 @@ void move(int d,int s,int targetAngle){
 	speed2 = checkSpeed(speed2);
 	speed3 = checkSpeed(speed3);
 	speed4 = checkSpeed(speed4);
+	
+	extern int display;
+	if(display==1){
+		SetLCD5Char(0,80,speed2,WHITE,BLACK);
+		SetLCD5Char(150,80,speed3,WHITE,BLACK);
+		SetLCD5Char(0,100,speed1,WHITE,BLACK);
+		SetLCD5Char(150,100,speed4,WHITE,BLACK);
 
-	SetLCD5Char(0,80,speed2,WHITE,BLACK);
-	SetLCD5Char(150,80,speed3,WHITE,BLACK);
-	SetLCD5Char(0,100,speed1,WHITE,BLACK);
-	SetLCD5Char(150,100,speed4,WHITE,BLACK);
-
-	SetLCD5Char(0,120,d,CYAN,BLACK);
-
+		
+		SetLCD5Char(0,120,d,CYAN,BLACK);
+		SetLCD5Char(150,40,angleDif,GREEN,BLACK);
+	}
 
 
 	SetMotor(_MOTOR_M1_,direction1,speed1);
@@ -845,7 +859,7 @@ int getAngleDif(int target){
 			output = 360-target+current;
 		}
 	}
-	SetLCD5Char(150,40,output,GREEN,BLACK);
+	
 	return output;
 }
 
