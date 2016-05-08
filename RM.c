@@ -44,6 +44,11 @@
 		*fixed bug in main(), caused by wrong parameter.
 	*0426:
 		*just installed a atom plugin!!!it's soooo cooool;
+	*0507:
+		*change the threshold of the turning depends on the targetAngle;
+		*flipped the fly eye on the left;
+		*change some direction of closerStrategy;
+		*optimize the display on the screen;
 */
 #define STOP 360
 #define BLOCKED 360
@@ -85,12 +90,12 @@ int main(void)
 	int pressing = 0;
 	int pressed = 0;
 	int targetAngle = 0;
-	int lowEyeThread = 5;
-	int highEyeThread = 80;
+	int lowEyeThres = 5;
+	int highEyeThres = 80;
 	int lastShootTime=GetSysTime();
 	int eyePort = 0;
 	extern int speed;
-	
+
 	display = 0;
 
 	while (1){//forever running loop;
@@ -103,7 +108,7 @@ int main(void)
 		displayAll(display);
 
 
-		eyePort = getEyePort(lowEyeThread,highEyeThread);//get the port of the fly eye giving lower thread 5 and higher thread 60
+		eyePort = getEyePort(lowEyeThres,highEyeThres);//get the port of the fly eye giving lower thres 5 and higher thres 60
 		if(eyePort){
 			speed = TESTSPEED;
 			direction = attackStrategy(eyePort,direction);
@@ -123,7 +128,7 @@ int main(void)
 			direction = whiteLineStrategy(direction);
 		}
 		move(direction,speed,targetAngle);//give the direction and speed to <move>mothed in order to react
-		
+
 		pressed = pressing;
 	}
 }
@@ -131,11 +136,11 @@ int main(void)
 int shoot(int lastShootTime){
 	int timeDiff = GetSysTime()-lastShootTime;
 	extern int display;
-	
+
 	if(display == 1){
 		SetLCD5Char(100,120,timeDiff,RED,BLACK);
 	}
-	
+
 	if(timeDiff<20){
 		SetLED(_LED_shoot_,1);
 		return 1;
@@ -172,7 +177,7 @@ int getShootTime(int lastShootTime,int eyePort){
 	int output = lastShootTime;
 	int fire = GetRemoIR(_FLAMEDETECT_fire_);
 	extern int display;
-	
+
 	if(display ==1){
 		SetLCD5Char(50,120,fire,RED,BLACK);
 	}
@@ -188,7 +193,6 @@ int getGreyPort(int targetAngle){
 	/*a function to determine if the robot touches the white line;
 	  *return the number of grey scale sensors touching the white line;
 	  */
-
 
 	int output = 0;
 	int gFront = GetADScable10(_SCABLEAD_gFront_);
@@ -242,10 +246,10 @@ int whiteLineStrategy(int d){
 }
 
 
-int getEyePort(int lowerThread,int higherThread){
-	/**intake a lower threadshold and a higher threadshold;
+int getEyePort(int lowerThres,int higherThres){
+	/**intake a lower threshold and a higher threshold;
 	    *return the port which has the largest eye value
-	    *return 0 when the value is smaller than the lower threadshold;
+	    *return 0 when the value is smaller than the lower threshold;
 	    *return 1~14 when ball is far;
 	    *return 15~28 when ball is close;
 	    */
@@ -254,7 +258,7 @@ int getEyePort(int lowerThread,int higherThread){
 	eyePort=0;
 	int eyeValue = GetCompoI3( _COMPOUNDEYE3_leftEye_ ,9);
 	int rightEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
-	if (eyeValue>lowerThread||rightEyeValue>lowerThread){
+	if (eyeValue>lowerThres||rightEyeValue>lowerThres){
 		if(eyeValue>rightEyeValue){
 			eyePort =8-GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
 		}
@@ -262,7 +266,7 @@ int getEyePort(int lowerThread,int higherThread){
 			eyeValue = rightEyeValue;
 			eyePort =GetCompoI3(_COMPOUNDEYE3_rightEye_,8)+7;
 		}
-		if (eyeValue>higherThread){
+		if (eyeValue>higherThres){
 			eyePort+=14;
 		}
 	}
@@ -412,18 +416,18 @@ void move(int d,int s,int targetAngle){
 
 
 	angleDif = getAngleDif(targetAngle);
-	
-	
-	int angleThread;
-	
+
+
+	int angleThres;
+
 	if(targetAngle == 0){
-		angleThread = 20;
+		angleThres = 20;
 	}
 	else{
-		angleThread = 40;
+		angleThres = 40;
 	}
-	
-	if (abs(angleDif)>angleThread){
+
+	if (abs(angleDif)>angleThres){
 		if (angleDif<0){
 			//turn clockwise
 			direction1=0;
@@ -482,7 +486,7 @@ void move(int d,int s,int targetAngle){
 	speed2 = checkSpeed(speed2);
 	speed3 = checkSpeed(speed3);
 	speed4 = checkSpeed(speed4);
-	
+
 	extern int display;
 	if(display==1){
 		SetLCD5Char(0,80,speed2,WHITE,BLACK);
@@ -490,7 +494,7 @@ void move(int d,int s,int targetAngle){
 		SetLCD5Char(0,100,speed1,WHITE,BLACK);
 		SetLCD5Char(150,100,speed4,WHITE,BLACK);
 
-		
+
 		SetLCD5Char(0,120,d,CYAN,BLACK);
 		SetLCD5Char(150,40,angleDif,GREEN,BLACK);
 	}
@@ -859,7 +863,7 @@ int getAngleDif(int target){
 			output = 360-target+current;
 		}
 	}
-	
+
 	return output;
 }
 
@@ -881,10 +885,10 @@ void displayAll(int i){
 		uRight = GetAdUltrasound( _ADULTRASOUND_uRight_);
 		uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 		uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
-		frontEyeValue = GetCompoI3( _COMPOUNDEYE3_leftEye_ ,9);
-		backEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
-		frontEyePort =GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
-		backEyePort =GetCompoI3(_COMPOUNDEYE3_rightEye_,8);
+		leftEyeValue = GetCompoI3( _COMPOUNDEYE3_leftEye_ ,9);
+		rightEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
+		leftEyePort =8-GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
+		rightEyePort =GetCompoI3(_COMPOUNDEYE3_rightEye_,8);
 		gFront = GetADScable10(_SCABLEAD_gFront_);
 		gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
 		gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
@@ -911,11 +915,9 @@ void displayAll(int i){
 		SetLCD5Char( 150 ,60 ,gOutterRight ,BLUE ,BLACK );
 		SetLCD5Char( 70 ,80 ,gInnerBack ,BLUE ,BLACK );
 		SetLCD5Char( 70 ,100 ,gOutterBack ,BLUE ,BLACK );
+	}
+	else if (i==2){
 
-		SetLCD5Char( 0 ,40 ,angle ,GREEN ,BLACK );
-//		SetLCD5Char( 50 ,60 ,1 ,GREEN ,BLACK );
-//		SetLCD5Char( 100 ,60 ,1 ,GREEN ,BLACK );
-//		SetLCD5Char( 150 ,60 ,1 ,GREEN ,BLACK );
 	}
 }
 void testShooting(){
