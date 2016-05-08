@@ -84,7 +84,7 @@ int main(void)
 	int pressed = 0;
 	int targetAngle = 0;
 	int lowEyeThread = 5;
-	int highEyeThread = 40;
+	int highEyeThread = 80;
 	int lastShootTime=GetSysTime();
 	int eyePort = 0;
 	extern int speed;
@@ -128,6 +128,7 @@ int main(void)
 
 int shoot(int lastShootTime){
 	int timeDiff = GetSysTime()-lastShootTime;
+	
 	SetLCD5Char(100,120,timeDiff,RED,BLACK);
 	if(timeDiff<20){
 		SetLED(_LED_shoot_,1);
@@ -522,37 +523,37 @@ int closeStrategy(int p){
 		}
 	}
 	else if(p ==2){
-		output=135;
+		output=180;
 	}
 	else if(p ==3){
-		output = 180;
+		output = 210;
 	}
 	else if(p ==4){
-		output=220;
+		output=240;
 	}
 	else if(p ==5){
-		output=225;
+		output=300;
 	}
 	else if(p ==6){
-		output=315;
+		output=330;
 	}
 	else if(p ==7||p==8){
 		output=0;
 	}
 	else if (p==9){
-		output=45;
+		output=30;
 	}
 	else if(p ==10){
-		output=135;
+		output=60;
 	}
 	else if(p ==11){
-		output=140;
+		output=120;
 	}
 	else if(p ==12){
-		output=180;
+		output=150;
 	}
 	else if (p==13){
-		output=225;
+		output=180;
 	}
 	return output;
 }
