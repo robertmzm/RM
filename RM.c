@@ -870,10 +870,10 @@ int getAngleDif(int target){
 void displayAll(int i){
 
 	if(i==1){
-		int frontEyeValue;
-		int backEyeValue;
-		int frontEyePort;
-		int backEyePort;
+		int leftEyeValue;
+		int rightEyeValue;
+		int leftEyePort;
+		int rightEyePort;
 		int uLeft,uRight,uFront,uBack;
 		int angle;
 		int gFront,gInnerLeft,gOutterLeft,gInnerRight,gOutterRight,gInnerBack,gOutterBack;
@@ -898,10 +898,10 @@ void displayAll(int i){
 		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 
 
-		SetLCD5Char( 0 ,0 ,frontEyeValue ,YELLOW ,BLACK );
-		SetLCD5Char( 50 ,0 ,backEyeValue ,YELLOW ,BLACK );
-		SetLCD5Char( 100 ,0 ,frontEyePort ,YELLOW ,BLACK );
-		SetLCD5Char( 150 ,0 ,backEyePort ,YELLOW ,BLACK );
+		SetLCD5Char( 0 ,0 ,leftEyeValue ,YELLOW ,BLACK );
+		SetLCD5Char( 50 ,0 ,rightEyeValue ,YELLOW ,BLACK );
+		SetLCD5Char( 100 ,0 ,leftEyePort ,YELLOW ,BLACK );
+		SetLCD5Char( 150 ,0 ,rightEyePort ,YELLOW ,BLACK );
 
 		SetLCD5Char( 0 ,20 ,uFront ,RED ,BLACK );
 		SetLCD5Char( 50 ,20 ,uLeft ,RED ,BLACK );
