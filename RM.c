@@ -53,7 +53,9 @@
 		*added comment;
 		*displayAll() now have several pages to switch by using buttons;
 		*found that using more sensors does take much more time per loop;
-
+	*0509:
+		*implemented logIn();
+		
 */
 #define STOP 360
 #define BLOCKED 361
