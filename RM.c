@@ -107,10 +107,12 @@ int main(void)
 			display=(display+1)%3;
 			SetLCDClear(BLACK);
 		}
+		pressed = pressing;
 		displayAll(display);
 
 
 		eyePort = getEyePort(lowEyeThres,highEyeThres);//get the port of the fly eye giving lower thres 5 and higher thres 60
+		
 		if(eyePort){
 			speed = TESTSPEED;
 			direction = attackStrategy(eyePort,direction);
@@ -119,19 +121,20 @@ int main(void)
 			speed = 50;
 			direction =backPosition();
 		}
+		
 		targetAngle = getTargetAngle(targetAngle,eyePort);
 
 		lastShootTime = getShootTime(lastShootTime,eyePort);
 		shooting = shoot(lastShootTime);
+		
 		greyPort = getGreyPort(targetAngle);
 		if(greyPort){
 			SetLED(_LED_shoot_,0);
 			targetAngle = 0;
 			direction = whiteLineStrategy(direction);
 		}
+		
 		move(direction,speed,targetAngle);//give the direction and speed to <move>mothed in order to react
-
-		pressed = pressing;
 	}
 }
 
@@ -204,7 +207,7 @@ int getShootTime(int lastShootTime,int eyePort){
 		SetLCD5Char(50,120,fire,RED,BLACK);
 	}
 	int time = GetSysTime();
-	if (time-lastShootTime>100&&fire<500&&(eyePort == 21|| eyePort ==22)){
+	if (time-lastShootTime>100&&fire<400&&(eyePort == 21|| eyePort ==22)){
 		output = time;
 	}
 
