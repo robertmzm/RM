@@ -49,9 +49,14 @@
 		*flipped the fly eye on the left;
 		*change some direction of closerStrategy;
 		*optimize the display on the screen;
+	*0508:
+		*added comment;
+		*displayAll() now have several pages to switch by using buttons;
+		*found that using more sensors does take much more time per loop;
+
 */
 #define STOP 360
-#define BLOCKED 360
+#define BLOCKED 361
 #define TESTSPEED 70
 
 #include <stdio.h>
@@ -87,58 +92,65 @@ int main(void)
 	int direction=STOP;//the direcion robot goes,360 means stop;
 	extern int display;//indicate what to display
 	int greyPort = 0;
-	int pressing = 0;
-	int pressed = 0;
-	int targetAngle = 0;
-	int lowEyeThres = 5;
-	int highEyeThres = 80;
-	int lastShootTime=GetSysTime();
+	int pressing = 0;//indicate if the button is being pressed
+	int pressed = 0;//indicate if the button was pressed in the previous loop
+	int targetAngle = 0;//the angle the robot wants to face
+	int lowEyeThres = 5;//the threshold for the value of infrared sensors
+	int highEyeThres = 80;//the treshold for far and close infrared ball
+	int lastShootTime= -500;//the time of the last shot
 	int eyePort = 0;
-	int shooting = 0;//indicate if it is shooing or not  
-	
+	int shooting = 0;//indicate if it is shooing or not
+
 	extern int speed;
 
 	display = 0;
 
 	while (1){//forever running loop;
 
+		/*detect if the first button is pressed in order to switch to
+		  different pages;
+		 */
 		pressing = GetButton1();
-		if(pressing ==0&&pressed == 1){
+		if(pressing ==0&&pressed == 1){//swich pages only when the button is released
 			display=(display+1)%3;
 			SetLCDClear(BLACK);
 		}
 		pressed = pressing;
-		displayAll(display);
+		displayAll(display);//display everything
 
 
 		eyePort = getEyePort(lowEyeThres,highEyeThres);//get the port of the fly eye giving lower thres 5 and higher thres 60
-		
-		if(eyePort){
+
+		if(eyePort){//ball is detected
 			speed = TESTSPEED;
 			direction = attackStrategy(eyePort,direction);
 		}
-		else{
+		else{//no ball
 			speed = 50;
 			direction =backPosition();
 		}
-		
-		targetAngle = getTargetAngle(targetAngle,eyePort);
 
-		lastShootTime = getShootTime(lastShootTime,eyePort);
-		shooting = shoot(lastShootTime);
-		
-		greyPort = getGreyPort(targetAngle);
+		targetAngle = getTargetAngle(targetAngle,eyePort);//calculate where the robot needs to face;
+
+		lastShootTime = getShootTime(lastShootTime,eyePort);//determine if it is the time to shoot;
+		shooting = shoot(lastShootTime);//shoot!!!! and get the state of the shot;
+
+		greyPort = getGreyPort(targetAngle);//detect if the robot is touching the white line;
 		if(greyPort){
-			SetLED(_LED_shoot_,0);
-			targetAngle = 0;
-			direction = whiteLineStrategy(direction);
+			SetLED(_LED_shoot_,0);//turn of the solenoid because there is a loop inside;
+			targetAngle = 0;//set target angle back to zero since white line is detected;
+			direction = whiteLineStrategy(direction);//make sure the robot is going to the same direction as the function inside;
 		}
-		
-		move(direction,speed,targetAngle);//give the direction and speed to <move>mothed in order to react
+
+		move(direction,speed,targetAngle);//give the direction and speed to move() in order to react;
 	}
 }
 
 int shoot(int lastShootTime){
+	/*intake the time to shoot;
+	 *shoot if the difference of the time is small than the threshold;
+	 *return the status of the solenoid;
+	 */
 	int timeDiff = GetSysTime()-lastShootTime;
 	extern int display;
 
@@ -159,22 +171,22 @@ int shoot(int lastShootTime){
 int getTargetAngle(int previousTarget,int eyePort){
 	/*a function to calculate which angle shoud the robot face;
 	  *intake the previous ange the robot wanted to face;
-	  *output the new angle;
+	  *output the new angle the robot needs to face;
 	  */
-	int output = previousTarget;//make the previoud angle as the default output; 
+	int output = previousTarget;//make the previoud angle as the default output;
 	if (eyePort<17||eyePort>25){//targetAngle goes back to 0 when the ball is in the back;
 		output = 0;
 	}
 	/*need to make sure the previous angle is 0 so that the ultrasonic sensor is working correctly;
-	  *only turns when the ball is at front and close to the robot;
-	  */
+	 *only turns when the ball is at front and close to the robot;
+	 */
 	else if(previousTarget==0&&(eyePort==21||eyePort==22)){
-		
+
 		int uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 		int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
-		
+
 		if(uLeft+uBack>1200){//nothing is blocking on the left and right;
 			if(uBack>900&&uFront<1000){
 				if(uLeft<550){
@@ -184,7 +196,7 @@ int getTargetAngle(int previousTarget,int eyePort){
 					output = 330;
 				}
 			}
-			else if(uBack<650&&uFront>800){
+			else if(uBack<500&&uFront>800){
 				if(uLeft<550){
 					output = 330;
 				}
@@ -199,6 +211,10 @@ int getTargetAngle(int previousTarget,int eyePort){
 }
 
 int getShootTime(int lastShootTime,int eyePort){
+	/*intake the time of previous shot and the current eyePort;
+	 *output the a new time if a shot is needed;
+	 *output the previous shot time if no shot needed;
+	 */
 	int output = lastShootTime;
 	int fire = GetRemoIR(_FLAMEDETECT_fire_);
 	extern int display;
@@ -207,7 +223,7 @@ int getShootTime(int lastShootTime,int eyePort){
 		SetLCD5Char(50,120,fire,RED,BLACK);
 	}
 	int time = GetSysTime();
-	if (time-lastShootTime>100&&fire<400&&(eyePort == 21|| eyePort ==22)){
+	if (time-lastShootTime>100&&fire<400&&(eyePort == 21|| eyePort ==22)){//shoot when ball is on the front and close enough;
 		output = time;
 	}
 
@@ -217,6 +233,8 @@ int getShootTime(int lastShootTime,int eyePort){
 int getGreyPort(int targetAngle){
 	/*a function to determine if the robot touches the white line;
 	  *return the number of grey scale sensors touching the white line;
+	  *intake the angle the robot is facing;
+	  *turn off some sensors if need;
 	  */
 
 	int output = 0;
@@ -257,6 +275,12 @@ int getGreyPort(int targetAngle){
 	return output;
 }
 int whiteLineStrategy(int d){
+	/*the function is called only when white line is detected;
+	 *intake the direction the robot was going;
+	 *output the direction the robot is going;
+	 */
+
+
 	int direction=d;
 	int startTime=GetSysTime();
 	int eyePort = getEyePort(10,45);
@@ -317,7 +341,7 @@ void move(int d,int s,int targetAngle){
 	int speed1,speed2,speed3,speed4;//speed of each motor.
 	int slowerSpeed;//the speed for the slower motor in order to control the direction.
 	int angle,angleDif;
-	double radianAngle;
+	double radian;
 
 
 
@@ -327,8 +351,8 @@ void move(int d,int s,int targetAngle){
 		direction2 = 0;
 		direction3 = 2;
 		direction4 = 2;
-		radianAngle= degreeToRadian(45-d);//calculate the angle needed to calculate the slower speed
-		slowerSpeed = tan(radianAngle)*s;//calculate the slower speed in order to control direction of the robot
+		radian= degreeToRadian(45-d);//calculate the angle needed to calculate the slower speed
+		slowerSpeed = tan(radian)*s;//calculate the slower speed in order to control direction of the robot
 		//motor 2 and motor 4 go for full speed and motor 1 and motor 3 are slower
 		speed1=slowerSpeed;
 		speed2=s;
@@ -340,8 +364,8 @@ void move(int d,int s,int targetAngle){
 		direction2 = 0;
 		direction3 = 0;
 		direction4 = 2;
-		radianAngle = degreeToRadian(d-45);
-		slowerSpeed = tan(radianAngle)*s;
+		radian = degreeToRadian(d-45);
+		slowerSpeed = tan(radian)*s;
 		speed1=slowerSpeed;
 		speed2=s;
 		speed3=slowerSpeed;
@@ -352,8 +376,8 @@ void move(int d,int s,int targetAngle){
 		direction2 = 0;
 		direction3 = 0;
 		direction4 = 2;
-		radianAngle = degreeToRadian(135-d);
-		slowerSpeed = tan(radianAngle)*s;
+		radian = degreeToRadian(135-d);
+		slowerSpeed = tan(radian)*s;
 		speed1=s;
 		speed2=slowerSpeed;
 		speed3=s;
@@ -364,8 +388,8 @@ void move(int d,int s,int targetAngle){
 		direction2 = 2;
 		direction3 = 0;
 		direction4 = 0;
-		radianAngle = degreeToRadian(d-135);
-		slowerSpeed = tan(radianAngle)*s;
+		radian = degreeToRadian(d-135);
+		slowerSpeed = tan(radian)*s;
 		speed1=s;
 		speed2=slowerSpeed;
 		speed3=s;
@@ -376,8 +400,8 @@ void move(int d,int s,int targetAngle){
 		direction2 = 2;
 		direction3 = 0;
 		direction4 = 0;
-		radianAngle = degreeToRadian(225-d);
-		slowerSpeed = tan(radianAngle)*s;
+		radian = degreeToRadian(225-d);
+		slowerSpeed = tan(radian)*s;
 		speed1=slowerSpeed;
 		speed2=s;
 		speed3=slowerSpeed;
@@ -389,8 +413,8 @@ void move(int d,int s,int targetAngle){
 		direction2 = 2;
 		direction3 = 2;
 		direction4 = 0;
-		radianAngle = degreeToRadian(d-225);
-		slowerSpeed = tan(radianAngle)*s;
+		radian = degreeToRadian(d-225);
+		slowerSpeed = tan(radian)*s;
 		speed1=slowerSpeed;
 		speed2=s;
 		speed3=slowerSpeed;
@@ -401,8 +425,8 @@ void move(int d,int s,int targetAngle){
 		direction2 = 2;
 		direction3 = 2;
 		direction4 = 0;
-		radianAngle = degreeToRadian(315-d);
-		slowerSpeed = tan(radianAngle)*s;
+		radian = degreeToRadian(315-d);
+		slowerSpeed = tan(radian)*s;
 		speed1=s;
 		speed2=slowerSpeed;
 		speed3=s;
@@ -413,14 +437,14 @@ void move(int d,int s,int targetAngle){
 		direction2 = 0;
 		direction3 = 2;
 		direction4 = 2;
-		radianAngle = degreeToRadian(d-315);
-		slowerSpeed = tan(radianAngle)*s;
+		radian = degreeToRadian(d-315);
+		slowerSpeed = tan(radian)*s;
 		speed1=s;
 		speed2=slowerSpeed;
 		speed3=s;
 		speed4=slowerSpeed;
 	}
-	else if(d == STOP){
+	else if(d == STOP||d == BLOCKED){
 		//stop
 		direction1=1;
 		direction2 = 1;
@@ -446,10 +470,10 @@ void move(int d,int s,int targetAngle){
 	int angleThres;
 
 	if(targetAngle == 0){
-		angleThres = 20;
+		angleThres = 20;//turn sharply when facing back
 	}
 	else{
-		angleThres = 40;
+		angleThres = 40;//turn smoothly when turn shooting;
 	}
 
 	if (abs(angleDif)>angleThres){
@@ -477,7 +501,7 @@ void move(int d,int s,int targetAngle){
 		}
 	}
 	else if (abs(angleDif)>8){
-		if(d==STOP){
+		if(d==STOP||d==BLOCKED){
 			if (angleDif<0){
 				direction1 = 0;
 				direction2 = 0;
@@ -547,7 +571,7 @@ int attackStrategy(int p,int previousDirection){
 int closeStrategy(int p){
 	int output;
 	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
-	
+
 	if(uBack<200&&(p<5||p>10)){
 		if(p<7){
 			output = 270;
@@ -559,8 +583,8 @@ int closeStrategy(int p){
 	else if (p==1||p==14){
 		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
-		
-		
+
+
 		if(uLeft>uRight){
 			output = 250;
 		}
@@ -924,7 +948,7 @@ void displayAll(int i){
 		gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
 		gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
 		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
-		
+
 		SetLCD5Char(0,40,angle,GREEN,BLACK);
 
 		SetLCD5Char( 0 ,0 ,leftEyeValue ,YELLOW ,BLACK );
@@ -946,7 +970,6 @@ void displayAll(int i){
 		SetLCD5Char( 70 ,100 ,gOutterBack ,BLUE ,BLACK );
 	}
 	else if (i==2){
-
 	}
 }
 void testShooting(){
