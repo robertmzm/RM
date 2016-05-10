@@ -76,6 +76,7 @@
 #include <stdbool.h>
 #include <GetADScable10.h>
 #include <GetTouchScreenX.h>
+#include <GetTouchScreenX.h>
 #include <SetLCDClear.h>
 #include <GetRemoIR.h>
 #include <SetLED.h>
@@ -104,6 +105,8 @@ int main(void)
 	extern int speed;
 
 	display = 0;
+
+	logIn();
 
 	while (1){//forever running loop;
 
@@ -972,6 +975,43 @@ void displayAll(int i){
 	else if (i==2){
 	}
 }
+
+void logIn(){
+	int password[] = {0,7,2,9};
+	int count = 0;
+	int digit = 0;
+	while(count<4){
+		digit = getCode();
+		if(digit == password[count]){
+			count++;
+		}
+		else{
+			count = 0;
+		}
+	}
+}
+
+int getCode(){
+	int x;
+	int y;
+	int px;
+	int py;
+	while(1){
+		x = GetTouchScreenX();
+		y = GetTouchScreenY();
+		if(x==0&&px!=0){
+			if(y<105){
+				return (x/70+1)+((y/35+1)*3);
+			}
+			else if(x>70&&x<140){
+				return 0;
+			}
+		}
+		px = x;
+		py = y;
+	}
+}
+
 void testShooting(){
 	int eyePort = 21;
 	int lastShootTime = -300;
