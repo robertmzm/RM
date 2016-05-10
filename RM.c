@@ -94,6 +94,8 @@ int main(void)
 	int highEyeThres = 80;
 	int lastShootTime=GetSysTime();
 	int eyePort = 0;
+	int shooting = 0;//indicate if it is shooing or not  
+	
 	extern int speed;
 
 	display = 0;
@@ -120,7 +122,7 @@ int main(void)
 		targetAngle = getTargetAngle(targetAngle,eyePort);
 
 		lastShootTime = getShootTime(lastShootTime,eyePort);
-		shoot(lastShootTime);
+		shooting = shoot(lastShootTime);
 		greyPort = getGreyPort(targetAngle);
 		if(greyPort){
 			SetLED(_LED_shoot_,0);
@@ -141,7 +143,7 @@ int shoot(int lastShootTime){
 		SetLCD5Char(100,120,timeDiff,RED,BLACK);
 	}
 
-	if(timeDiff<20){
+	if(timeDiff<15){
 		SetLED(_LED_shoot_,1);
 		return 1;
 	}
@@ -152,21 +154,41 @@ int shoot(int lastShootTime){
 }
 
 int getTargetAngle(int previousTarget,int eyePort){
-	int output = previousTarget;
-	int uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
-	int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
-	int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
-	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+	/*a function to calculate which angle shoud the robot face;
+	  *intake the previous ange the robot wanted to face;
+	  *output the new angle;
+	  */
+	int output = previousTarget;//make the previoud angle as the default output; 
 	if (eyePort<17||eyePort>25){//targetAngle goes back to 0 when the ball is in the back;
 		output = 0;
 	}
-	else if(uBack>900&&uFront<1000&&uLeft+uBack>1200&&previousTarget==0
-		&&(eyePort==21||eyePort==22)){
-		if(uLeft<550){
-			output = 30;
-		}
-		else if(uRight<550){
-			output = 330;
+	/*need to make sure the previous angle is 0 so that the ultrasonic sensor is working correctly;
+	  *only turns when the ball is at front and close to the robot;
+	  */
+	else if(previousTarget==0&&(eyePort==21||eyePort==22)){
+		
+		int uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
+		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+		int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+		
+		if(uLeft+uBack>1200){//nothing is blocking on the left and right;
+			if(uBack>900&&uFront<1000){
+				if(uLeft<550){
+					output = 30;
+				}
+				else if(uRight<550){
+					output = 330;
+				}
+			}
+			else if(uBack<650&&uFront>800){
+				if(uLeft<550){
+					output = 330;
+				}
+				else if(uRight<550){
+					output = 30;
+				}
+			}
 		}
 	}
 	return output;
@@ -521,9 +543,8 @@ int attackStrategy(int p,int previousDirection){
 
 int closeStrategy(int p){
 	int output;
-	int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
-	int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+	
 	if(uBack<200&&(p<5||p>10)){
 		if(p<7){
 			output = 270;
@@ -533,6 +554,10 @@ int closeStrategy(int p){
 		}
 	}
 	else if (p==1||p==14){
+		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+		
+		
 		if(uLeft>uRight){
 			output = 250;
 		}
@@ -896,7 +921,8 @@ void displayAll(int i){
 		gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
 		gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
 		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
-
+		
+		SetLCD5Char(0,40,angle,GREEN,BLACK);
 
 		SetLCD5Char( 0 ,0 ,leftEyeValue ,YELLOW ,BLACK );
 		SetLCD5Char( 50 ,0 ,rightEyeValue ,YELLOW ,BLACK );
