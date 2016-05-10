@@ -55,6 +55,8 @@
 		*found that using more sensors does take much more time per loop;
 	*0509:
 		*implemented logIn();
+		*change displayAll() to screen();
+		*change display to screenI;
 
 */
 #define STOP 360
@@ -86,14 +88,14 @@
 
 int positionI;
 int speed;
-int display;
+int screenI;
 
 int main(void)
 {
 	X2RCU_Init();//initialize the RCU;
 	int angle=0;//the angle of compass;
 	int direction=STOP;//the direcion robot goes,360 means stop;
-	extern int display;//indicate what to display
+	extern int screenI;//indicate what to display
 	int greyPort = 0;
 	int pressing = 0;//indicate if the button is being pressed
 	int pressed = 0;//indicate if the button was pressed in the previous loop
@@ -106,7 +108,7 @@ int main(void)
 
 	extern int speed;
 
-	display = 0;
+	screenI = 0;
 
 	logIn();
 
@@ -117,11 +119,11 @@ int main(void)
 		 */
 		pressing = GetButton1();
 		if(pressing ==0&&pressed == 1){//swich pages only when the button is released
-			display=(display+1)%3;
+			screenI=(screenI+1)%3;
 			SetLCDClear(BLACK);
 		}
 		pressed = pressing;
-		displayAll(display);//display everything
+		screen(screenI);//display everything
 
 
 		eyePort = getEyePort(lowEyeThres,highEyeThres);//get the port of the fly eye giving lower thres 5 and higher thres 60
@@ -147,7 +149,7 @@ int main(void)
 			direction = whiteLineStrategy(direction);//make sure the robot is going to the same direction as the function inside;
 		}
 
-		move(direction,speed,targetAngle);//give the direction and speed to move() in order to react;
+		move(direction,speed,targetAngle,shooting);//give the direction and speed to move() in order to react;
 	}
 }
 
@@ -157,9 +159,9 @@ int shoot(int lastShootTime){
 	 *return the status of the solenoid;
 	 */
 	int timeDiff = GetSysTime()-lastShootTime;
-	extern int display;
+	extern int screenI;
 
-	if(display == 1){
+	if(screenI == 1){
 		SetLCD5Char(100,120,timeDiff,RED,BLACK);
 	}
 
@@ -222,9 +224,9 @@ int getShootTime(int lastShootTime,int eyePort){
 	 */
 	int output = lastShootTime;
 	int fire = GetRemoIR(_FLAMEDETECT_fire_);
-	extern int display;
+	extern int screenI;
 
-	if(display ==1){
+	if(screenI ==1){
 		SetLCD5Char(50,120,fire,RED,BLACK);
 	}
 	int time = GetSysTime();
@@ -334,7 +336,7 @@ double degreeToRadian(int degree){
 }
 
 
-void move(int d,int s,int targetAngle){
+void move(int d,int s,int targetAngle,int shooting){
 	/**A method to control the motor.
 	    *Input the direction and the percentage of power the robot wants to go.
 	    *No need to calculate the individual speed any more!
@@ -481,7 +483,7 @@ void move(int d,int s,int targetAngle){
 		angleThres = 40;//turn smoothly when turn shooting;
 	}
 
-	if (abs(angleDif)>angleThres){
+	if (abs(angleDif)>angleThres&&shooting!=1){
 		if (angleDif<0){
 			//turn clockwise
 			direction1=0;
@@ -541,8 +543,8 @@ void move(int d,int s,int targetAngle){
 	speed3 = checkSpeed(speed3);
 	speed4 = checkSpeed(speed4);
 
-	extern int display;
-	if(display==1){
+	extern int screenI;
+	if(screenI==1){
 		SetLCD5Char(0,80,speed2,WHITE,BLACK);
 		SetLCD5Char(150,80,speed3,WHITE,BLACK);
 		SetLCD5Char(0,100,speed1,WHITE,BLACK);
@@ -924,7 +926,7 @@ int getAngleDif(int target){
 	return output;
 }
 
-void displayAll(int i){
+void screen(int i){
 
 	if(i==1){
 		int leftEyeValue;
