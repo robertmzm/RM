@@ -55,7 +55,7 @@
 		*found that using more sensors does take much more time per loop;
 	*0509:
 		*implemented logIn();
-		
+
 */
 #define STOP 360
 #define BLOCKED 361
@@ -100,7 +100,7 @@ int main(void)
 	int targetAngle = 0;//the angle the robot wants to face
 	int lowEyeThres = 5;//the threshold for the value of infrared sensors
 	int highEyeThres = 80;//the treshold for far and close infrared ball
-	int lastShootTime= -500;//the time of the last shot
+	int lastShootTime= -300;//the time of the last shot
 	int eyePort = 0;
 	int shooting = 0;//indicate if it is shooing or not
 
