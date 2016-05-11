@@ -80,11 +80,13 @@
 #include <stdbool.h>
 #include <GetADScable10.h>
 #include <GetTouchScreenX.h>
-#include <GetTouchScreenX.h>
+#include <GetTouchScreenY.h>
 #include <SetLCDClear.h>
 #include <GetRemoIR.h>
 #include <SetLED.h>
 #include <GetButton1.h>
+#include <GetButton2.h>
+#include <SetLCDRectangle.h>
 
 int positionI;
 int speed;
@@ -981,6 +983,8 @@ void screen(int i){
 }
 
 void logIn(){
+	/*
+	drawOutline();
 	int password[] = {0,7,2,9};
 	int count = 0;
 	int digit = 0;
@@ -993,6 +997,40 @@ void logIn(){
 			count = 0;
 		}
 	}
+	*/
+	int count = 0;
+	int password[] = {1,2,1,1};
+	int digit = 0;
+	while(count<3){
+		//SetLCD5Char(0,0,count,YELLOW,BLACK);
+		digit = getCode2();
+		
+		if(digit == password[count]){
+			SetLCD5Char(0,50,1,YELLOW,BLACK);
+			count++;
+		}
+		else{
+			SetLCD5Char(0,50,0,YELLOW,BLACK);
+			count = 0;
+		}
+	}
+}
+
+int getCode2(){
+	int pressing1,pressing2;
+	int pressed1,pressed2;
+	while(1){
+		pressing1 = GetButton1();
+		pressing2 = GetButton2();
+		if(pressing1 ==0&&pressed1 == 1){
+			return 1;
+		}
+		if(pressing2 ==0&&pressed2 == 1){
+			return 2;
+		}
+		pressed1 = pressing1;
+		pressed2 = pressing2;
+	}
 }
 
 int getCode(){
@@ -1000,20 +1038,32 @@ int getCode(){
 	int y;
 	int px;
 	int py;
+	int output;
 	while(1){
 		x = GetTouchScreenX();
 		y = GetTouchScreenY();
+		SetLCD5Char(0,30,x,YELLOW,BLACK);
+		SetLCD5Char(0,50,y,YELLOW,BLACK);
 		if(x==0&&px!=0){
-			if(y<105){
-				return (x/70+1)+((y/35+1)*3);
+			
+			if(py>40){
+				
+				output = (px/110+1)+(((175-py)/35+1)*3);
+				SetLCD5Char(0,0,output,YELLOW,BLACK);
+				return output;
 			}
-			else if(x>70&&x<140){
+			else if(px>70&&px<140){
 				return 0;
 			}
 		}
 		px = x;
 		py = y;
 	}
+}
+
+
+void drawOutline(){
+	SetLCDRectangle(70,0,70,120,1,YELLOW);
 }
 
 void testShooting(){
