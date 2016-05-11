@@ -260,7 +260,7 @@ int getGreyPort(int targetAngle){
 	int gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
 	int gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 	int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
-	
+
 	if(targetAngle==0){
 		if (gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850){
 			output = 1;
@@ -291,6 +291,7 @@ int getGreyPort(int targetAngle){
 	return output;
 }
 int whiteLineStrategy(int d){
+
 	/*the function is called only when white line is detected;
 	 *intake the direction the robot was going;
 	 *output the direction the robot is going;
