@@ -72,6 +72,7 @@
 #include "JMLib.c"
 #include <GetData.h>
 #include <SetLCD5Char.h>
+#include <SetLCDString.h>
 #include <GetCompassB.h>
 #include <SetSysTime.h>
 #include <GetSysTime.h>
@@ -86,7 +87,9 @@
 #include <SetLED.h>
 #include <GetButton1.h>
 #include <GetButton2.h>
+#include <GetButton3.h>
 #include <SetLCDRectangle.h>
+#include <SetLCDSolidCircle.h>
 
 int positionI;
 int speed;
@@ -94,6 +97,7 @@ int screenI;
 
 int main(void)
 {
+	
 	X2RCU_Init();//initialize the RCU;
 	int angle=0;//the angle of compass;
 	int direction=STOP;//the direcion robot goes,360 means stop;
@@ -292,11 +296,9 @@ int whiteLineStrategy(int d){
 
 	int direction=d;
 	int startTime=GetSysTime();
-	int eyePort = getEyePort(10,45);
 
 
-	while(GetSysTime()-startTime<100&&eyePort!=0&&direction!=STOP){
-		eyePort = getEyePort(10,80);
+	while(GetSysTime()-startTime<100&&direction!=STOP){
 		direction = backPosition();
 		move(direction,55,0);
 	}
@@ -640,7 +642,14 @@ int closeStrategy(int p){
 int farStrategy(int p){
 	int output = STOP;
 	if (p==1||p==14){
-		output= 210;
+		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+		if(uLeft>uRight){
+			output= 210;
+		}
+		else{
+			output = 150;
+		}
 	}
 	else if(p ==2){
 		output= 180;
@@ -983,89 +992,63 @@ void screen(int i){
 }
 
 void logIn(){
-	/*
-	drawOutline();
-	int password[] = {0,7,2,9};
+	
 	int count = 0;
+	int password[] = {1,3,1,2,1,2};
 	int digit = 0;
-	while(count<4){
+	drawRM(0);
+	while(count<6){
+	
 		digit = getCode();
-		if(digit == password[count]){
-			count++;
-		}
-		else{
-			count = 0;
-		}
-	}
-	*/
-	int count = 0;
-	int password[] = {1,2,1,1};
-	int digit = 0;
-	while(count<3){
-		//SetLCD5Char(0,0,count,YELLOW,BLACK);
-		digit = getCode2();
 		
 		if(digit == password[count]){
-			SetLCD5Char(0,50,1,YELLOW,BLACK);
+			
 			count++;
 		}
 		else{
-			SetLCD5Char(0,50,0,YELLOW,BLACK);
 			count = 0;
 		}
+		SetLCD5Char(0,30,count,BLACK,BLACK);
 	}
+	
+	drawRM(1);
+	
 }
 
-int getCode2(){
-	int pressing1,pressing2;
-	int pressed1,pressed2;
+void drawRM(int i){
+	SetLCDClear(BLACK);
+	int color = RED;
+	if(i==1){
+		color = GREEN;
+	}
+	SetLCDString(100,75,"RM",color,BLACK);
+		
+}
+
+int getCode(){
+	int pressing1,pressing2,pressing3;
+	int pressed1,pressed2,pressed3;
 	while(1){
 		pressing1 = GetButton1();
 		pressing2 = GetButton2();
+		pressing3 = GetButton3();
 		if(pressing1 ==0&&pressed1 == 1){
 			return 1;
 		}
 		if(pressing2 ==0&&pressed2 == 1){
 			return 2;
 		}
+		if(pressing3 ==0&&pressed3 == 1){
+			return 3;
+		}
 		pressed1 = pressing1;
 		pressed2 = pressing2;
-	}
-}
-
-int getCode(){
-	int x;
-	int y;
-	int px;
-	int py;
-	int output;
-	while(1){
-		x = GetTouchScreenX();
-		y = GetTouchScreenY();
-		SetLCD5Char(0,30,x,YELLOW,BLACK);
-		SetLCD5Char(0,50,y,YELLOW,BLACK);
-		if(x==0&&px!=0){
-			
-			if(py>40){
-				
-				output = (px/110+1)+(((175-py)/35+1)*3);
-				SetLCD5Char(0,0,output,YELLOW,BLACK);
-				return output;
-			}
-			else if(px>70&&px<140){
-				return 0;
-			}
-		}
-		px = x;
-		py = y;
+		pressed3 = pressing3;
 	}
 }
 
 
-void drawOutline(){
-	SetLCDRectangle(70,0,70,120,1,YELLOW);
-}
-
+\
 void testShooting(){
 	int eyePort = 21;
 	int lastShootTime = -300;
