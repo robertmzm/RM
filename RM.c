@@ -97,7 +97,7 @@ int screenI;
 
 int main(void)
 {
-	
+
 	X2RCU_Init();//initialize the RCU;
 	int angle=0;//the angle of compass;
 	int direction=STOP;//the direcion robot goes,360 means stop;
@@ -145,7 +145,7 @@ int main(void)
 
 		targetAngle = getTargetAngle(targetAngle,eyePort);//calculate where the robot needs to face;
 
-		lastShootTime = getShootTime(lastShootTime,eyePort);//determine if it is the time to shoot;
+		lastShootTime = getShootTime(lastShootTime,eyePort,targetAngle);//determine if it is the time to shoot;
 		shooting = shoot(lastShootTime);//shoot!!!! and get the state of the shot;
 
 		greyPort = getGreyPort(targetAngle);//detect if the robot is touching the white line;
@@ -201,7 +201,7 @@ int getTargetAngle(int previousTarget,int eyePort){
 		int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
 		if(uLeft+uBack>1200){//nothing is blocking on the left and right;
-			if(uBack>900&&uFront<1000){
+			if(uBack>9=800&&uFront<1200){
 				if(uLeft<550){
 					output = 30;
 				}
@@ -209,6 +209,7 @@ int getTargetAngle(int previousTarget,int eyePort){
 					output = 330;
 				}
 			}
+			/*
 			else if(uBack<500&&uFront>800){
 				if(uLeft<550){
 					output = 330;
@@ -216,30 +217,31 @@ int getTargetAngle(int previousTarget,int eyePort){
 				else if(uRight<550){
 					output = 30;
 				}
-			}
+			}*/
 		}
 	}
 	return output;
 
 }
 
-int getShootTime(int lastShootTime,int eyePort){
+int getShootTime(int lastShootTime,int eyePort,int targetAngle){
 	/*intake the time of previous shot and the current eyePort;
 	 *output the a new time if a shot is needed;
 	 *output the previous shot time if no shot needed;
 	 */
 	int output = lastShootTime;
-	int fire = GetRemoIR(_FLAMEDETECT_fire_);
-	extern int screenI;
 
-	if(screenI ==1){
-		SetLCD5Char(50,120,fire,RED,BLACK);
-	}
-	int time = GetSysTime();
-	if (time-lastShootTime>100&&fire<400&&(eyePort == 21|| eyePort ==22)){//shoot when ball is on the front and close enough;
-		output = time;
-	}
 
+
+	if(eyePort == 21|| eyePort ==22){
+
+		int fire = GetRemoIR(_FLAMEDETECT_fire_);
+		int angleDif = getAngleDif(targetAngle);
+		int time = GetSysTime();
+		if (time-lastShootTime>100&&fire<400&&abs(angleDif)<10){//shoot when ball is on the front and close enough;
+			output = time;
+		}
+	}
 	return output;
 }
 
@@ -258,6 +260,7 @@ int getGreyPort(int targetAngle){
 	int gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
 	int gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 	int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
+	
 	if(targetAngle==0){
 		if (gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850){
 			output = 1;
@@ -947,9 +950,10 @@ void screen(int i){
 		int uLeft,uRight,uFront,uBack;
 		int angle;
 		int gFront,gInnerLeft,gOutterLeft,gInnerRight,gOutterRight,gInnerBack,gOutterBack;
+		int fire;
 
 
-
+		fire = GetRemoIR(_FLAMEDETECT_fire_);
 		angle = GetCompassB(_COMPASS_compass_);
 		uLeft = GetAdUltrasound( _ADULTRASOUND_uLeft_);
 		uRight = GetAdUltrasound( _ADULTRASOUND_uRight_);
@@ -986,23 +990,25 @@ void screen(int i){
 		SetLCD5Char( 150 ,60 ,gOutterRight ,BLUE ,BLACK );
 		SetLCD5Char( 70 ,80 ,gInnerBack ,BLUE ,BLACK );
 		SetLCD5Char( 70 ,100 ,gOutterBack ,BLUE ,BLACK );
+
+		SetLCD5Char(50,120,fire,RED,BLACK);
 	}
 	else if (i==2){
 	}
 }
 
 void logIn(){
-	
+
 	int count = 0;
 	int password[] = {1,3,1,2,1,2};
 	int digit = 0;
 	drawRM(0);
 	while(count<6){
-	
+
 		digit = getCode();
-		
+
 		if(digit == password[count]){
-			
+
 			count++;
 		}
 		else{
@@ -1010,9 +1016,9 @@ void logIn(){
 		}
 		SetLCD5Char(0,30,count,BLACK,BLACK);
 	}
-	
+
 	drawRM(1);
-	
+
 }
 
 void drawRM(int i){
@@ -1022,7 +1028,7 @@ void drawRM(int i){
 		color = GREEN;
 	}
 	SetLCDString(100,75,"RM",color,BLACK);
-		
+
 }
 
 int getCode(){
