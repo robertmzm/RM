@@ -201,7 +201,7 @@ int getTargetAngle(int previousTarget,int eyePort){
 		int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
 		if(uLeft+uBack>1200){//nothing is blocking on the left and right;
-			if(uBack>9=800&&uFront<1200){
+			if(uBack>800&&uFront<1200){
 				if(uLeft<550){
 					output = 30;
 				}
@@ -1055,12 +1055,12 @@ int getCode(){
 }
 
 
-\
+
 void testShooting(){
 	int eyePort = 21;
 	int lastShootTime = -300;
 	while(1){
-		lastShootTime = getShootTime(lastShootTime,eyePort);
+		lastShootTime = getShootTime(lastShootTime,eyePort,0);
 		shoot(lastShootTime);
 	}
 }
