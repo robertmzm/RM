@@ -312,14 +312,23 @@ int whiteLineStrategy(int d, int greyPort){
 		}
 	}
 	
-	else{
-		if(greyPort == LEFTGREY){
-			direction = 90;
-		}
-		else{
-			direction = 270;
-		}
+	else if (greyPort == LEFTGREY){
+		direction = 90;
+		int uLeft = 0;
 		while(GetSysTime()-startTime<50){
+			int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+			greyPort = getGreyPort(0);
+			if(greyPort==DANGEROUS){
+				direction = whiteLineStrategy(direction,greyPort);
+			}
+			move(direction,55,0);
+		}
+	}
+	else{
+		direction = 270;
+		int uRight = 0;
+		while(GetSysTime()-startTime<50){
+			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 			greyPort = getGreyPort(0);
 			if(greyPort==DANGEROUS){
 				direction = whiteLineStrategy(direction,greyPort);
