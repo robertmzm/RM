@@ -132,7 +132,7 @@ int main(void)
 			SetLCDClear(BLACK);
 		}
 		pressed = pressing;
-		screen(screenI);//display everything
+
 
 
 		eyePort = getEyePort(lowEyeThres,highEyeThres);//get the port of the fly eye giving lower thres 5 and higher thres 60
@@ -311,7 +311,7 @@ int whiteLineStrategy(int d, int greyPort){
 			move(direction,55,0);
 		}
 	}
-	
+
 	else if (greyPort == LEFTGREY){
 		direction = 90;
 		int uLeft = 0;
@@ -386,9 +386,10 @@ void move(int d,int s,int targetAngle,int shooting){
 	int speed1,speed2,speed3,speed4;//speed of each motor.
 	int slowerSpeed;//the speed for the slower motor in order to control the direction.
 	int angle,angleDif;
+	int extern screenI;
 	double radian;
 
-
+	screen(screenI);//display everything;
 
 	if (d<45){
 		//set up the direction of each motor
