@@ -62,6 +62,9 @@
 #define STOP 360
 #define BLOCKED 361
 #define TESTSPEED 70
+#define DANGEROUS 1
+#define LEFTGREY 2
+#define RIGHTGREY 3
 
 #include <stdio.h>
 #include <GetCompoI3.h>
@@ -152,7 +155,7 @@ int main(void)
 		if(greyPort){
 			SetLED(_LED_shoot_,0);//turn of the solenoid because there is a loop inside;
 			targetAngle = 0;//set target angle back to zero since white line is detected;
-			direction = whiteLineStrategy(direction);//make sure the robot is going to the same direction as the function inside;
+			direction = whiteLineStrategy(direction,greyPort);//make sure the robot is going to the same direction as the function inside;
 		}
 
 		move(direction,speed,targetAngle,shooting);//give the direction and speed to move() in order to react;
@@ -263,34 +266,34 @@ int getGreyPort(int targetAngle){
 
 	if(targetAngle==0){
 		if (gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850){
-			output = 1;
+			output = DANGEROUS;
 		}
 		else if (gOutterLeft<1700){
-			output = 2;
+			output = LEFTGREY;
 		}
 		else if (gOutterRight<1670){
-			output = 3;
+			output = RIGHTGREY;
 		}
 
 		else if (gOutterBack<1350){
-			output = 4;
+			output = DANGEROUS;
 		}
 	}
 	else if(targetAngle>180){
 		if(gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850||
 			gOutterRight<1650){
-			output = 1;
+			output = DANGEROUS;
 		}
 	}
 	else{
 		if(gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850||
 			gOutterLeft<1700){
-			output = 1;
+			output = DANGEROUS;
 		}
 	}
 	return output;
 }
-int whiteLineStrategy(int d){
+int whiteLineStrategy(int d, int greyPort){
 
 	/*the function is called only when white line is detected;
 	 *intake the direction the robot was going;
@@ -301,10 +304,28 @@ int whiteLineStrategy(int d){
 	int direction=d;
 	int startTime=GetSysTime();
 
-
-	while(GetSysTime()-startTime<100&&direction!=STOP){
-		direction = backPosition();
-		move(direction,55,0);
+	if (greyPort == DANGEROUS){
+		move(STOP,0,0);
+		while(GetSysTime()-startTime<100&&direction!=STOP){
+			direction = backPosition();
+			move(direction,55,0);
+		}
+	}
+	
+	else{
+		if(greyPort == LEFTGREY){
+			direction = 90;
+		}
+		else{
+			direction = 270;
+		}
+		while(GetSysTime()-startTime<50){
+			greyPort = getGreyPort(0);
+			if(greyPort==DANGEROUS){
+				direction = whiteLineStrategy(direction,greyPort);
+			}
+			move(direction,55,0);
+		}
 	}
 	return direction;
 }
