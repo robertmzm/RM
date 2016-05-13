@@ -57,6 +57,9 @@
 		*implemented logIn();
 		*change displayAll() to screen();
 		*change display to screenI;
+	*0512:
+		*implemented new whiteLineStrategy();
+		*put screen() into move() to display all the time;
 
 */
 #define STOP 360
