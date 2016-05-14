@@ -763,10 +763,10 @@ int closeStrategy(int p){
 		output = 210;
 	}
 	else if(p ==4){
-		output=240;
+		output=230;//change from 240 to 230
 	}
 	else if(p ==5){
-		output=300;
+		output=290;//change from 300 to 290
 	}
 	else if(p ==6){
 		output=330;
@@ -817,7 +817,7 @@ int farStrategy(int p){
 		output= 270;
 	}
 	else if(p ==6){
-		output =280;
+		output =300;//change front 280 to 300
 	}
 	else if(p ==7||p==8){
 		output= 0;
