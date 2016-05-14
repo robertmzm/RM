@@ -126,7 +126,7 @@ int main(void)
 	logIn();
 
 	while (1){//forever running loop;
-
+		screen(screenI);//display everything;
 		/*detect if the first button is pressed in order to switch to
 		  different pages;
 		 */
@@ -155,7 +155,7 @@ int main(void)
 		lastShootTime = getShootTime(lastShootTime,eyePort,targetAngle);//determine if it is the time to shoot;
 		shooting = shoot(lastShootTime);//shoot!!!! and get the state of the shot;
 
-		greyPort = NewGetGreyPort(targetAngle);//detect if the robot is touching the white line;
+		greyPort = newGetGreyPort(targetAngle);//detect if the robot is touching the white line;
 		if(greyPort){
 			SetLED(_LED_shoot_,0);//turn of the solenoid because there is a loop inside;
 			targetAngle = 0;//set target angle back to zero since white line is detected;
@@ -357,7 +357,7 @@ int newWhiteLineStrategy(int d, int greyPort){
 		direction = 90;
 		int uBack = 0;
 		int uFront = 0;
-		while(GetSysTime()-startTime<50){
+		while(GetSysTime()-startTime<20){
 			
 			startTime = newGetGreyPort(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
@@ -365,14 +365,14 @@ int newWhiteLineStrategy(int d, int greyPort){
 	}
 	else if(greyPort == RIGHTGREY){
 		direction = 270;
-		while(GetSysTime()-startTime<50){
+		while(GetSysTime()-startTime<20){
 			startTime = newGetGreyPort(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
 		}
 	}
 	else if(greyPort == BACKGREY){
 		direction = 0;
-		while(GetSysTime()-startTime<50){
+		while(GetSysTime()-startTime<20){
 			startTime = newGetGreyPort(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
 		}
