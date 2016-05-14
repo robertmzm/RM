@@ -60,6 +60,8 @@
 	*0512:
 		*implemented new whiteLineStrategy();
 		*put screen() into move() to display all the time;
+	*0514:
+		*
 
 */
 #define STOP 360
@@ -98,7 +100,6 @@
 #include <SetLCDRectangle.h>
 #include <SetLCDSolidCircle.h>
 
-int positionI;
 int speed;
 int screenI;
 
@@ -126,7 +127,9 @@ int main(void)
 	logIn();
 
 	while (1){//forever running loop;
+		
 		screen(screenI);//display everything;
+		
 		/*detect if the first button is pressed in order to switch to
 		  different pages;
 		 */
@@ -504,8 +507,6 @@ void move(int d,int s,int targetAngle,int shooting){
 	int angle,angleDif;
 	int extern screenI;
 	double radian;
-
-	screen(screenI);//display everything;
 
 	if (d<45){
 		//set up the direction of each motor
