@@ -68,6 +68,7 @@
 #define DANGEROUS 1
 #define LEFTGREY 2
 #define RIGHTGREY 3
+#define BACKGREY 4
 
 #include <stdio.h>
 #include <GetCompoI3.h>
@@ -282,7 +283,7 @@ int getGreyPort(int targetAngle){
 			output = DANGEROUS;
 		}
 	}
-	else if(targetAngle>180){
+	else if(targetAngle<180){
 		if(gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850||
 			gOutterRight<1650){
 			output = DANGEROUS;
@@ -296,6 +297,52 @@ int getGreyPort(int targetAngle){
 	}
 	return output;
 }
+
+int newGetGreyPort(int targetAngle){
+
+		int output = 0;
+		int gFront = GetADScable10(_SCABLEAD_gFront_);
+		int gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
+		int gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
+		int gInnerRight = GetADScable10(_SCABLEAD_gInnerRight_);
+		int gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
+		int gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
+		int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
+
+		if(targetAngle==0){
+			if (gInnerBack<1850||gInnerLeft<900||gFront<1900||gInnerRight<1500){
+				output = DANGEROUS;
+			}
+			else if (gOutterLeft<1700){
+				output = LEFTGREY;
+			}
+			else if (gOutterRight<1670){
+				output = RIGHTGREY;
+			}
+
+			else if (gOutterBack<1350){
+				output = BACKGREY;
+			}
+		}
+		else if(targetAngle>180){
+			if(gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850||
+				gOutterRight<1650){
+				output = DANGEROUS;
+			}
+		}
+		else{
+			if(gFront<1900||gInnerLeft<900||gInnerRight<1500||gInnerBack<1850||
+				gOutterLeft<1700){
+				output = DANGEROUS;
+			}
+		}
+		return output;
+}
+
+int newWhiteLineStrategy(){
+
+}
+
 int whiteLineStrategy(int d, int greyPort){
 
 	/*the function is called only when white line is detected;
