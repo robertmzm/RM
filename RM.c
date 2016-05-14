@@ -132,7 +132,7 @@ int main(void)
 		 */
 		pressing = GetButton1();
 		if(pressing ==0&&pressed == 1){//swich pages only when the button is released
-			screenI=(screenI+1)%3;
+			screenI=(screenI+1)%4;
 			SetLCDClear(BLACK);
 		}
 		pressed = pressing;
@@ -155,11 +155,11 @@ int main(void)
 		lastShootTime = getShootTime(lastShootTime,eyePort,targetAngle);//determine if it is the time to shoot;
 		shooting = shoot(lastShootTime);//shoot!!!! and get the state of the shot;
 
-		greyPort = newGetGreyPort(targetAngle);//detect if the robot is touching the white line;
+		greyPort = getGreyPort2(targetAngle);//detect if the robot is touching the white line;
 		if(greyPort){
 			SetLED(_LED_shoot_,0);//turn of the solenoid because there is a loop inside;
 			targetAngle = 0;//set target angle back to zero since white line is detected;
-			direction = newWhiteLineStrategy(direction,greyPort);//make sure the robot is going to the same direction as the function inside;
+			direction = whiteLineStrategy2(direction,greyPort);//make sure the robot is going to the same direction as the function inside;
 		}
 
 		move(direction,speed,targetAngle,shooting);//give the direction and speed to move() in order to react;
@@ -298,7 +298,7 @@ int getGreyPort(int targetAngle){
 	return output;
 }
 
-int newGetGreyPort(int targetAngle){
+int getGreyPort2(int targetAngle){
 
 		int output = 0;
 		int gFront = GetADScable10(_SCABLEAD_gFront_);
@@ -324,7 +324,7 @@ int newGetGreyPort(int targetAngle){
 				output = BACKGREY;
 			}
 		}
-		else if(targetAngle<180){
+		else if(targetAngle<180){//gOutterLeft and gOutterBack are off
 			if(gFront<1900||gInnerRight<1500||gOutterRight<1650){
 				output = DANGEROUS;
 			}
@@ -332,7 +332,7 @@ int newGetGreyPort(int targetAngle){
 				output = LEFTGREY;
 			}
 		}
-		else{
+		else{//gOutterRight and gOutterBack are off
 			if(gFront<1900||gInnerLeft<900||gOutterLeft<1700){
 				output = DANGEROUS;
 			}
@@ -343,7 +343,7 @@ int newGetGreyPort(int targetAngle){
 		return output;
 }
 
-int newWhiteLineStrategy(int d, int greyPort){
+int whiteLineStrategy2(int d, int greyPort){
 	int direction = d;
 	int startTime = GetSysTime();
 	
@@ -358,22 +358,58 @@ int newWhiteLineStrategy(int d, int greyPort){
 		int uBack = 0;
 		int uFront = 0;
 		while(GetSysTime()-startTime<20){
-			
-			startTime = newGetGreyPort(0)==0?startTime:GetSysTime();
+			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
+			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+			if(uFront+uBack<1000){
+				direction = 90;
+			}
+			else if(uBack<400){
+				direction = 60;
+			}
+			else if(uFront<400){
+				direction = 120;
+			}
+			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
 		}
 	}
 	else if(greyPort == RIGHTGREY){
 		direction = 270;
+		int uBack = 0;
+		int uFront = 0;
 		while(GetSysTime()-startTime<20){
-			startTime = newGetGreyPort(0)==0?startTime:GetSysTime();
+			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
+			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+			if(uFront+uBack<1000){
+				direction = 270;
+			}
+			else if(uBack<400){
+				direction = 300;
+			}
+			else if(uFront<400){
+				direction = 240;
+			}
+			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
 		}
 	}
 	else if(greyPort == BACKGREY){
 		direction = 0;
+		int uLeft = 0;
+		int uRight = 0;
 		while(GetSysTime()-startTime<20){
-			startTime = newGetGreyPort(0)==0?startTime:GetSysTime();
+			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+			if(uLeft+uRight<800){
+				direction = 0;
+			}
+			else if(uLeft<400){
+				direction = 45;
+			}
+			else if(uRight<400){
+				direction = 315;
+			}
+			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
 		}
 	}
@@ -403,7 +439,7 @@ int whiteLineStrategy(int d, int greyPort){
 		direction = 90;
 		int uLeft = 0;
 		while(GetSysTime()-startTime<50||uLeft<300){
-			int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 			move(direction,55,0,0);
 		}
 	}
@@ -1105,8 +1141,73 @@ void screen(int i){
 
 		SetLCD5Char(50,120,fire,RED,BLACK);
 	}
-	else if (i==2){
+	
+
+	else if(i==2){
+		int leftEyeValue;
+		int rightEyeValue;
+		int leftEyePort;
+		int rightEyePort;
+		int uLeft,uRight,uFront,uBack;
+		int angle;
+		int gFront,gInnerLeft,gOutterLeft,gInnerRight,gOutterRight,gInnerBack,gOutterBack;
+		int fire;
+
+
+		fire = GetRemoIR(_FLAMEDETECT_fire_);
+		angle = GetCompassB(_COMPASS_compass_);
+		uLeft = GetAdUltrasound( _ADULTRASOUND_uLeft_);
+		uRight = GetAdUltrasound( _ADULTRASOUND_uRight_);
+		uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
+		uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+		leftEyeValue = GetCompoI3( _COMPOUNDEYE3_leftEye_ ,9);
+		rightEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
+		leftEyePort =8-GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
+		rightEyePort =GetCompoI3(_COMPOUNDEYE3_rightEye_,8);
+		gFront = GetADScable10(_SCABLEAD_gFront_);
+		gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
+		gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
+		gInnerRight = GetADScable10(_SCABLEAD_gInnerRight_);
+		gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
+		gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
+		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 	}
+	
+
+	else if(i==3){
+		int leftEyeValue;
+		int rightEyeValue;
+		int leftEyePort;
+		int rightEyePort;
+		int uLeft,uRight,uFront,uBack;
+		int angle;
+		int gFront,gInnerLeft,gOutterLeft,gInnerRight,gOutterRight,gInnerBack,gOutterBack;
+		int fire;
+
+
+		SetLCD5Char(0,40,angle,GREEN,BLACK);
+
+		SetLCD5Char( 0 ,0 ,leftEyeValue ,YELLOW ,BLACK );
+		SetLCD5Char( 50 ,0 ,rightEyeValue ,YELLOW ,BLACK );
+		SetLCD5Char( 100 ,0 ,leftEyePort ,YELLOW ,BLACK );
+		SetLCD5Char( 150 ,0 ,rightEyePort ,YELLOW ,BLACK );
+
+		SetLCD5Char( 0 ,20 ,uFront ,RED ,BLACK );
+		SetLCD5Char( 50 ,20 ,uLeft ,RED ,BLACK );
+		SetLCD5Char( 100 ,20 ,uRight ,RED ,BLACK );
+		SetLCD5Char( 150 ,20 ,uBack ,RED ,BLACK );
+
+		SetLCD5Char( 70 ,40 ,gFront ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,60 ,gOutterLeft ,BLUE ,BLACK );
+		SetLCD5Char( 50 ,60 ,gInnerLeft ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,60 ,gInnerRight ,BLUE ,BLACK );
+		SetLCD5Char( 150 ,60 ,gOutterRight ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,80 ,gInnerBack ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,100 ,gOutterBack ,BLUE ,BLACK );
+
+		SetLCD5Char(50,120,fire,RED,BLACK);
+	}
+
 }
 
 void logIn(){
