@@ -61,7 +61,8 @@
 		*implemented new whiteLineStrategy();
 		*put screen() into move() to display all the time;
 	*0514:
-		*
+		*change NewWhiteLineStrategy() to whiteLineStrategy2();
+		
 
 */
 #define STOP 360
