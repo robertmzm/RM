@@ -329,7 +329,7 @@ int newGetGreyPort(int targetAngle){
 				output = DANGEROUS;
 			}
 			else if(gInnerLeft<900||gInnerBack<1850){
-				output = GREYLEFT;
+				output = LEFTGREY;
 			}
 		}
 		else{
@@ -337,7 +337,7 @@ int newGetGreyPort(int targetAngle){
 				output = DANGEROUS;
 			}
 			else if(gInnerRight<1500||gInnerBack<1850){
-				output = GREYRIGHT;
+				output = RIGHTGREY;
 			}
 		}
 		return output;
@@ -346,6 +346,7 @@ int newGetGreyPort(int targetAngle){
 int newWhiteLineStrategy(int d, int greyPort){
 	int direction = d;
 	int startTime = GetSysTime();
+	
 	if(greyPort == DANGEROUS){
 		while(GetSysTime()-startTime<100&&direction!=STOP){
 			direction = backPosition();
@@ -357,23 +358,14 @@ int newWhiteLineStrategy(int d, int greyPort){
 		int uBack = 0;
 		int uFront = 0;
 		while(GetSysTime()-startTime<50){
-			/*
-			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
-			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
-			if(uFront+uBack<1000){//front or back is blocked
-				direction = 90
-			}
-			else if(uBack<400){//slide to the front
-				direction = 60;
-			}
-			else if(uBack<1300)*/
+			
 			startTime = newGetGreyPort(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
 		}
 	}
 	else if(greyPort == RIGHTGREY){
 		direction = 270;
-		while(GetSysTime()-startTime<50)
+		while(GetSysTime()-startTime<50){
 			startTime = newGetGreyPort(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
 		}
