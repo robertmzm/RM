@@ -155,11 +155,11 @@ int main(void)
 		lastShootTime = getShootTime(lastShootTime,eyePort,targetAngle);//determine if it is the time to shoot;
 		shooting = shoot(lastShootTime);//shoot!!!! and get the state of the shot;
 
-		greyPort = getGreyPort(targetAngle);//detect if the robot is touching the white line;
+		greyPort = NewGetGreyPort(targetAngle);//detect if the robot is touching the white line;
 		if(greyPort){
 			SetLED(_LED_shoot_,0);//turn of the solenoid because there is a loop inside;
 			targetAngle = 0;//set target angle back to zero since white line is detected;
-			direction = whiteLineStrategy(direction,greyPort);//make sure the robot is going to the same direction as the function inside;
+			direction = newWhiteLineStrategy(direction,greyPort);//make sure the robot is going to the same direction as the function inside;
 		}
 
 		move(direction,speed,targetAngle,shooting);//give the direction and speed to move() in order to react;
