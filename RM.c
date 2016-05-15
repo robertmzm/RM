@@ -352,7 +352,8 @@ int whiteLineStrategy2(int d, int greyPort){
 	int startTime = GetSysTime();
 	
 	if(greyPort == DANGEROUS){
-		while(GetSysTime()-startTime<100&&direction!=STOP){
+		while((GetSysTime()-startTime<100&&direction!=STOP)||direction==BLOCKED){
+			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			direction = backPosition();
 			move(direction,55,0,0);
 		}
@@ -368,10 +369,10 @@ int whiteLineStrategy2(int d, int greyPort){
 				direction = 90;
 			}
 			else if(uBack<400){
-				direction = 60;
+				direction = 30;//change from 60 to 30
 			}
 			else if(uFront<400){
-				direction = 120;
+				direction = 150;
 			}
 			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
@@ -388,10 +389,10 @@ int whiteLineStrategy2(int d, int greyPort){
 				direction = 270;
 			}
 			else if(uBack<400){
-				direction = 300;
+				direction = 330;//change from 300 to 330
 			}
 			else if(uFront<400){
-				direction = 240;
+				direction = 210;
 			}
 			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
@@ -1215,13 +1216,13 @@ void screen(int i){
 void logIn(){
 
 	int count = 0;
-	int password[] = {1,3,1,2,1,2};
+	int count2;
+	int password[] = {1,2,3,1,2,3};
 	int digit = 0;
 	drawRM(0);
 	while(count<6){
 
 		digit = getCode();
-
 		if(digit == password[count]){
 
 			count++;
@@ -1229,7 +1230,9 @@ void logIn(){
 		else{
 			count = 0;
 		}
-		SetLCD5Char(0,30,count,BLACK,BLACK);
+		count2 = count;
+		SetLCD5Char(0,30,0,BLACK,BLACK);
+		
 	}
 
 	drawRM(1);
