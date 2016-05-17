@@ -62,7 +62,7 @@
 		*put screen() into move() to display all the time;
 	*0514:
 		*change NewWhiteLineStrategy() to whiteLineStrategy2();
-		
+
 
 */
 #define STOP 360
@@ -128,9 +128,9 @@ int main(void)
 	logIn();
 
 	while (1){//forever running loop;
-		
+
 		screen(screenI);//display everything;
-		
+
 		/*detect if the first button is pressed in order to switch to
 		  different pages;
 		 */
@@ -350,7 +350,7 @@ int getGreyPort2(int targetAngle){
 int whiteLineStrategy2(int d, int greyPort){
 	int direction = d;
 	int startTime = GetSysTime();
-	
+
 	if(greyPort == DANGEROUS){
 		while((GetSysTime()-startTime<100&&direction!=STOP)||direction==BLOCKED){
 			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
@@ -362,9 +362,11 @@ int whiteLineStrategy2(int d, int greyPort){
 		direction = 90;
 		int uBack = 0;
 		int uFront = 0;
+		int uLeft = 0;
 		while(GetSysTime()-startTime<20){
 			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 			if(uFront+uBack<1000){
 				direction = 90;
 			}
@@ -374,17 +376,21 @@ int whiteLineStrategy2(int d, int greyPort){
 			else if(uFront<400){
 				direction = 150;
 			}
-			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
+			if(getGreyPort2(0)!=0||uLeft<350){
+				startTime = GetSysTime();
+			}
 		}
 	}
 	else if(greyPort == RIGHTGREY){
 		direction = 270;
 		int uBack = 0;
 		int uFront = 0;
+		int uRight = 0;
 		while(GetSysTime()-startTime<20){
 			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 			if(uFront+uBack<1000){
 				direction = 270;
 			}
@@ -394,17 +400,21 @@ int whiteLineStrategy2(int d, int greyPort){
 			else if(uFront<400){
 				direction = 210;
 			}
-			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
+			if(getGreyPort2(0)!=0||uRight<350){
+				startTime = GetSysTime();
+			}
 		}
 	}
 	else if(greyPort == BACKGREY){
 		direction = 0;
 		int uLeft = 0;
 		int uRight = 0;
+		int uBack = 0;
 		while(GetSysTime()-startTime<20){
 			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 			if(uLeft+uRight<800){
 				direction = 0;
 			}
@@ -414,8 +424,10 @@ int whiteLineStrategy2(int d, int greyPort){
 			else if(uRight<400){
 				direction = 315;
 			}
-			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
 			move(direction,55,0,0);
+			if(getGreyPort2(0)!=0||uBack<350){
+				startTime = GetSysTime();
+			}
 		}
 	}
 	return direction;
@@ -1144,7 +1156,7 @@ void screen(int i){
 
 		SetLCD5Char(50,120,fire,RED,BLACK);
 	}
-	
+
 
 	else if(i==2){
 		int leftEyeValue;
@@ -1175,7 +1187,7 @@ void screen(int i){
 		gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
 		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 	}
-	
+
 
 	else if(i==3){
 		int leftEyeValue;
@@ -1232,7 +1244,7 @@ void logIn(){
 		}
 		count2 = count;
 		SetLCD5Char(0,30,0,BLACK,BLACK);
-		
+
 	}
 
 	drawRM(1);
