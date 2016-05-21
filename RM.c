@@ -352,8 +352,8 @@ int whiteLineStrategy2(int d, int greyPort){
 	int startTime = GetSysTime();
 
 	if(greyPort == DANGEROUS){
-		while((GetSysTime()-startTime<100&&direction!=STOP)||direction==BLOCKED){
-			startTime = getGreyPort2(0)==0?startTime:GetSysTime();
+		while(GetSysTime()-startTime<100&&direction!=STOP){
+			startTime = getGreyPort2(0)==0&&direction!=BLOCKED?startTime:GetSysTime();
 			direction = backPosition();
 			move(direction,55,0,0);
 		}
