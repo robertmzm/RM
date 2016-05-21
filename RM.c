@@ -116,7 +116,7 @@ int main(void)
 	int pressed = 0;//indicate if the button was pressed in the previous loop
 	int targetAngle = 0;//the angle the robot wants to face
 	int lowEyeThres = 5;//the threshold for the value of infrared sensors
-	int highEyeThres = 80;//the treshold for far and close infrared ball
+	int highEyeThres = 50;//the treshold for far and close infrared ball
 	int lastShootTime= -300;//the time of the last shot
 	int eyePort = 0;
 	int shooting = 0;//indicate if it is shooing or not
@@ -314,25 +314,25 @@ int getGreyPort2(int targetAngle){
 		int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
 
 		if(targetAngle==0){
-			if (gInnerBack<1850||gInnerLeft<900||gFront<1900||gInnerRight<1500){
+			if (gInnerBack<1800||gInnerLeft<900||gFront<1900||gInnerRight<1500){
 				output = DANGEROUS;
 			}
 			else if (gOutterLeft<1700){
 				output = LEFTGREY;
 			}
-			else if (gOutterRight<1670){
+			else if (gOutterRight<1600){
 				output = RIGHTGREY;
 			}
 
-			else if (gOutterBack<1350){
+			else if (gOutterBack<1300){
 				output = BACKGREY;
 			}
 		}
 		else if(targetAngle<180){//gOutterLeft and gOutterBack are off
-			if(gFront<1900||gInnerRight<1500||gOutterRight<1650){
+			if(gFront<1900||gInnerRight<1500||gOutterRight<1600){
 				output = DANGEROUS;
 			}
-			else if(gInnerLeft<900||gInnerBack<1850){
+			else if(gInnerLeft<900||gInnerBack<1800){
 				output = LEFTGREY;
 			}
 		}
@@ -340,7 +340,7 @@ int getGreyPort2(int targetAngle){
 			if(gFront<1900||gInnerLeft<900||gOutterLeft<1700){
 				output = DANGEROUS;
 			}
-			else if(gInnerRight<1500||gInnerBack<1850){
+			else if(gInnerRight<1500||gInnerBack<1800){
 				output = RIGHTGREY;
 			}
 		}
@@ -363,7 +363,7 @@ int whiteLineStrategy2(int d, int greyPort){
 		int uBack = 0;
 		int uFront = 0;
 		int uLeft = 0;
-		while(GetSysTime()-startTime<20){
+		while(GetSysTime()-startTime<30){
 			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
@@ -377,7 +377,7 @@ int whiteLineStrategy2(int d, int greyPort){
 				direction = 150;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort2(0)!=0||uLeft<350){
+			if(getGreyPort2(0)!=0||uLeft<310){
 				startTime = GetSysTime();
 			}
 		}
@@ -387,7 +387,7 @@ int whiteLineStrategy2(int d, int greyPort){
 		int uBack = 0;
 		int uFront = 0;
 		int uRight = 0;
-		while(GetSysTime()-startTime<20){
+		while(GetSysTime()-startTime<30){
 			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
@@ -401,7 +401,7 @@ int whiteLineStrategy2(int d, int greyPort){
 				direction = 210;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort2(0)!=0||uRight<350){
+			if(getGreyPort2(0)!=0||uRight<310){
 				startTime = GetSysTime();
 			}
 		}
@@ -411,7 +411,7 @@ int whiteLineStrategy2(int d, int greyPort){
 		int uLeft = 0;
 		int uRight = 0;
 		int uBack = 0;
-		while(GetSysTime()-startTime<20){
+		while(GetSysTime()-startTime<30){
 			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
@@ -425,7 +425,7 @@ int whiteLineStrategy2(int d, int greyPort){
 				direction = 315;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort2(0)!=0||uBack<350){
+			if(getGreyPort2(0)!=0||uBack<310){
 				startTime = GetSysTime();
 			}
 		}
