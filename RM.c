@@ -67,11 +67,12 @@
 */
 #define STOP 360
 #define BLOCKED 361
-#define TESTSPEED 70
+#define TESTSPEED 80
 #define DANGEROUS 1
-#define LEFTGREY 2
-#define RIGHTGREY 3
-#define BACKGREY 4
+#define FRONTGREY 2
+#define LEFTGREY 3
+#define RIGHTGREY 4
+#define BACKGREY 5
 
 #include <stdio.h>
 #include <GetCompoI3.h>
@@ -120,11 +121,10 @@ int main(void)
 	int lastShootTime= -300;//the time of the last shot
 	int eyePort = 0;
 	int shooting = 0;//indicate if it is shooing or not
-
+	
 	extern int speed;
 
 	screenI = 0;
-
 	logIn();
 
 	while (1){//forever running loop;
@@ -183,6 +183,7 @@ int shoot(int lastShootTime){
 	}
 
 	if(timeDiff<15){
+		speed = 90;
 		SetLED(_LED_shoot_,1);
 		return 1;
 	}
@@ -249,7 +250,7 @@ int getShootTime(int lastShootTime,int eyePort,int targetAngle){
 		int fire = GetRemoIR(_FLAMEDETECT_fire_);
 		int angleDif = getAngleDif(targetAngle);
 		int time = GetSysTime();
-		if (time-lastShootTime>100&&fire<400&&abs(angleDif)<10){//shoot when ball is on the front and close enough;
+		if (time-lastShootTime>100&&fire<200&&abs(angleDif)<10){//shoot when ball is on the front and close enough;
 			output = time;
 		}
 	}
@@ -314,33 +315,36 @@ int getGreyPort2(int targetAngle){
 		int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
 
 		if(targetAngle==0){
-			if (gInnerBack<1800||gInnerLeft<900||gFront<1900||gInnerRight<1500){
+			if (gInnerBack<1700||gInnerLeft<800||gInnerRight<1400){
 				output = DANGEROUS;
 			}
-			else if (gOutterLeft<1700){
+			else if(gFront<1800){
+				output = FRONTGREY;
+			}
+			else if (gOutterLeft<1600){
 				output = LEFTGREY;
 			}
-			else if (gOutterRight<1600){
+			else if (gOutterRight<1500){
 				output = RIGHTGREY;
 			}
 
-			else if (gOutterBack<1300){
+			else if (gOutterBack<1200){
 				output = BACKGREY;
 			}
 		}
 		else if(targetAngle<180){//gOutterLeft and gOutterBack are off
-			if(gFront<1900||gInnerRight<1500||gOutterRight<1600){
+			if(gFront<1800||gInnerRight<1400||gOutterRight<1500){
 				output = DANGEROUS;
 			}
-			else if(gInnerLeft<900||gInnerBack<1800){
+			else if(gInnerLeft<800||gInnerBack<1700){
 				output = LEFTGREY;
 			}
 		}
 		else{//gOutterRight and gOutterBack are off
-			if(gFront<1900||gInnerLeft<900||gOutterLeft<1700){
+			if(gFront<1800||gInnerLeft<800||gOutterLeft<1600){
 				output = DANGEROUS;
 			}
-			else if(gInnerRight<1500||gInnerBack<1800){
+			else if(gInnerRight<1400||gInnerBack<1700){
 				output = RIGHTGREY;
 			}
 		}
@@ -351,7 +355,7 @@ int whiteLineStrategy2(int d, int greyPort){
 	int direction = d;
 	int startTime = GetSysTime();
 
-	if(greyPort == DANGEROUS){
+	if(greyPort == DANGEROUS||greyPort==FRONTGREY){
 		while(GetSysTime()-startTime<100&&direction!=STOP){
 			startTime = getGreyPort2(0)==0&&direction!=BLOCKED?startTime:GetSysTime();
 			direction = backPosition();
@@ -677,7 +681,7 @@ void move(int d,int s,int targetAngle,int shooting){
 			speed4=30;
 		}
 	}
-	else if (abs(angleDif)>8){
+	else if (shooting!=1&&abs(angleDif)>8){
 		if(d==STOP||d==BLOCKED){
 			if (angleDif<0){
 				direction1 = 0;
@@ -1077,7 +1081,7 @@ int maxMin(int n,int max, int min){
 }
 
 int checkSpeed(int speed){
-	return maxMin(speed,100,0);
+	return maxMin(speed,90,0);
 }
 
 int getAngleDif(int target){
