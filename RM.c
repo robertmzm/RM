@@ -117,7 +117,7 @@ int main(void)
 	int pressed = 0;//indicate if the button was pressed in the previous loop
 	int targetAngle = 0;//the angle the robot wants to face
 	int lowEyeThres = 5;//the threshold for the value of infrared sensors
-	int highEyeThres = 50;//the treshold for far and close infrared ball
+	int highEyeThres = 60;//the treshold for far and close infrared ball
 	int lastShootTime= -300;//the time of the last shot
 	int eyePort = 0;
 	int shooting = 0;//indicate if it is shooing or not
@@ -355,11 +355,35 @@ int whiteLineStrategy2(int d, int greyPort){
 	int direction = d;
 	int startTime = GetSysTime();
 
-	if(greyPort == DANGEROUS||greyPort==FRONTGREY){
+	if(greyPort == DANGEROUS){
 		while(GetSysTime()-startTime<100&&direction!=STOP){
 			startTime = getGreyPort2(0)==0&&direction!=BLOCKED?startTime:GetSysTime();
 			direction = backPosition();
 			move(direction,55,0,0);
+		}
+	}
+	else if(greyPort == FRONTGREY){
+		direction = 180;
+		int uFront = 0;
+		int uRight = 0;
+		int uLeft = 0;
+		while(GetSysTime()-startTime<30){
+			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
+			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+			if(uLeft+uRight<1000){
+				direction = 180;
+			}
+			else if(uLeft<400){
+				direction = 150;//change from 60 to 30
+			}
+			else if(uRight<400){
+				direction = 210;
+			}
+			move(direction,55,0,0);
+			if(getGreyPort2(0)!=0||uFront<310){
+				startTime = GetSysTime();
+			}
 		}
 	}
 	else if(greyPort == LEFTGREY){
