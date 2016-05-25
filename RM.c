@@ -500,7 +500,6 @@ int whiteLineStrategy(int d, int greyPort){
 	return direction;
 }
 
-
 int getEyePort(int lowerThres,int higherThres){
 	/**intake a lower threshold and a higher threshold;
 	    *return the port which has the largest eye value
@@ -1257,7 +1256,7 @@ void logIn(){
 
 	int count = 0;
 	int count2;
-	int password[] = {1,2,3,1,2,3};
+	int password[] = {1,3,3,2,3,3};
 	int digit = 0;
 	drawRM(0);
 	while(count<6){
