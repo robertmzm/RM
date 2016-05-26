@@ -105,7 +105,7 @@
 #include <SetLCDRectangle.h>
 #include <SetLCDSolidCircle.h>
 
-int speed;
+int speed;//the speed the robot is running on;
 int screenI;
 
 int main(void)
@@ -307,7 +307,12 @@ int getGreyPort(int targetAngle){
 }
 
 int getGreyPort2(int targetAngle){
-
+		/*intake the angle the robot intends to face;
+		 *return 0 if no white line is detected;
+		 *return the direction of the white line if detected;
+		 *if the white line is right under the robot,
+		  it means DANGEROUS;
+		 */
 		int output = 0;
 		int gFront = GetADScable10(_SCABLEAD_gFront_);
 		int gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
@@ -525,7 +530,7 @@ int getRightEye(int command){
 
 int getEyePort(int lowerThres,int higherThres){
 	/**intake a lower threshold and a higher threshold;
-	    *return the port which has the largest eye value
+	    *return the port which has the largest eye value;
 	    *return 0 when the value is smaller than the lower threshold;
 	    *return 1~14 when ball is far;
 	    *return 15~28 when ball is close;
@@ -553,6 +558,9 @@ int getEyePort(int lowerThres,int higherThres){
 
 
 double degreeToRadian(int degree){
+	/*intake a degree;
+	 *return the degree in radian;
+	 */
 	return (degree*M_PI)/180;
 }
 
