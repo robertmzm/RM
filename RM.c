@@ -62,7 +62,10 @@
 		*put screen() into move() to display all the time;
 	*0514:
 		*change NewWhiteLineStrategy() to whiteLineStrategy2();
-
+	*0521:
+		*add FRONTGREY option in getGreyPort();
+	*0525:
+		*impletments getLeftEye() and getRightEye();
 
 */
 #define STOP 360
@@ -121,7 +124,7 @@ int main(void)
 	int lastShootTime= -300;//the time of the last shot
 	int eyePort = 0;
 	int shooting = 0;//indicate if it is shooing or not
-	
+
 	extern int speed;
 
 	screenI = 0;
@@ -501,6 +504,10 @@ int whiteLineStrategy(int d, int greyPort){
 }
 
 int getLeftEye(int command){
+	/*intake a command one wants to put in GetCompoI3();
+	 *flip all the ports since the eye is psycally flipped;
+	 *return the output from GetCompoI3();
+	 */
 	if(command<8){
 		return GetCompoI3(_COMPOUNDEYE3_leftEye_,command);
 	}
