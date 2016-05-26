@@ -500,6 +500,22 @@ int whiteLineStrategy(int d, int greyPort){
 	return direction;
 }
 
+int getLeftEye(int command){
+	if(command<8){
+		return GetCompoI3(_COMPOUNDEYE3_leftEye_,command);
+	}
+	else if(command == 8||command == 12){
+		return 8-GetCompoI3(_COMPOUNDEYE3_leftEye_,command);
+	}
+	else{
+		return GetCompoI3(_COMPOUNDEYE3_leftEye_,command);
+	}
+}
+
+int getRightEye(int command){
+	return GetCompoI3(_COMPOUNDEYE3_rightEye_,command);
+}
+
 int getEyePort(int lowerThres,int higherThres){
 	/**intake a lower threshold and a higher threshold;
 	    *return the port which has the largest eye value
@@ -510,15 +526,15 @@ int getEyePort(int lowerThres,int higherThres){
 	int eyePort;
 	int output=0;
 	eyePort=0;
-	int eyeValue = GetCompoI3( _COMPOUNDEYE3_leftEye_ ,9);
-	int rightEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
+	int eyeValue = getLeftEye(9);
+	int rightEyeValue = getRightEye(9);
 	if (eyeValue>lowerThres||rightEyeValue>lowerThres){
 		if(eyeValue>rightEyeValue){
-			eyePort =8-GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
+			eyePort =getLeftEye(8);
 		}
 		else{
 			eyeValue = rightEyeValue;
-			eyePort =GetCompoI3(_COMPOUNDEYE3_rightEye_,8)+7;
+			eyePort =getRightEye(8)+7;
 		}
 		if (eyeValue>higherThres){
 			eyePort+=14;
