@@ -109,6 +109,20 @@
 #include <SetLCDRectangle.h>
 #include <SetLCDSolidCircle.h>
 
+struct Threshold{
+	int lowEyeThres;
+	int highEyeThres;
+	int gInnerLeftThres;
+	int gOutterLeftThres;
+	int gInnerRightThres;
+	int gOutterRightThres;
+	int gFrontThres;
+	int gInnerBackThres;
+	int gOutterBackThres;
+	int fireThres;
+	int whiteLineTimeThres;
+};
+
 int speed;//the speed the robot is running on;
 int screenI;
 
@@ -133,7 +147,7 @@ int main(void)
 
 	screenI = 0;
 	logIn();
-
+	
 	while (1){//forever running loop;
 
 		screen(screenI);//display everything;
@@ -369,7 +383,7 @@ int whiteLineStrategy(int d, int greyPort){
 
 	if(greyPort == DANGEROUS){
 		while(GetSysTime()-startTime<100&&direction!=STOP){
-			startTime = getGreyPort2(0)==0&&direction!=BLOCKED?startTime:GetSysTime();
+			startTime = getGreyPort(0)==0&&direction!=BLOCKED?startTime:GetSysTime();
 			direction = backPosition();
 			move(direction,55,0,0);
 		}
@@ -393,7 +407,7 @@ int whiteLineStrategy(int d, int greyPort){
 				direction = 210;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort2(0)!=0||uFront<310){
+			if(getGreyPort(0)!=0||uFront<310){
 				startTime = GetSysTime();
 			}
 		}
@@ -417,7 +431,7 @@ int whiteLineStrategy(int d, int greyPort){
 				direction = 150;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort2(0)!=0||uLeft<310){
+			if(getGreyPort(0)!=0||uLeft<310){
 				startTime = GetSysTime();
 			}
 		}
@@ -441,7 +455,7 @@ int whiteLineStrategy(int d, int greyPort){
 				direction = 210;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort2(0)!=0||uRight<310){
+			if(getGreyPort(0)!=0||uRight<310){
 				startTime = GetSysTime();
 			}
 		}
@@ -465,7 +479,7 @@ int whiteLineStrategy(int d, int greyPort){
 				direction = 315;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort2(0)!=0||uBack<250){
+			if(getGreyPort(0)!=0){
 				startTime = GetSysTime();
 			}
 		}
