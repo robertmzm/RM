@@ -1266,7 +1266,8 @@ void screen(int i){
 		SetLCD5Char( 0 ,80 ,getLeftEye(5) ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,100 ,getLeftEye(6) ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,120 ,getLeftEye(7) ,BLUE ,BLACK );
-		SetLCD5Char( 0 ,120 ,getEyePort(5,50) ,BLUE ,BLACK );
+
+		SetLCD5Char( 50 ,140 ,getEyePort(5,50) ,BLUE ,BLACK );
 
 		SetLCD5Char( 100 ,0 ,getRightEye(1) ,BLUE ,BLACK );
 		SetLCD5Char( 100 ,20 ,getRightEye(2) ,BLUE ,BLACK );
