@@ -538,11 +538,28 @@ int getEyePort(int lowerThres,int higherThres){
 	int eyePort;
 	int output=0;
 	eyePort=0;
-	int eyeValue = getLeftEye(9);
+	int eyeValue;
+	int leftEyeValue = getLeftEye(9);
 	int rightEyeValue = getRightEye(9);
-	if (eyeValue>lowerThres||rightEyeValue>lowerThres){
-		if(eyeValue>rightEyeValue){
-			eyePort =getLeftEye(8);
+
+	if (leftEyeValue>lowerThres||rightEyeValue>lowerThres){
+		if(leftEyeValue>rightEyeValue){
+			eyeValue = leftEyeValue;
+			eyePort =getLeftEye(8);/*
+			if(eyePort==5){
+				int port4=getLeftEye(4);
+				int port5=eyeValue;
+				int port6=getLeftEye(6);
+				if(eyeValue-port4<5){
+					eyePort =
+				}
+			}
+			else if(eyePort == 6){
+
+			}
+			else if(eyePort == 7){
+
+			}*/
 		}
 		else{
 			eyeValue = rightEyeValue;
@@ -1217,33 +1234,13 @@ void screen(int i){
 
 
 	else if(i==2){
-		int leftEyeValue;
-		int rightEyeValue;
-		int leftEyePort;
-		int rightEyePort;
-		int uLeft,uRight,uFront,uBack;
-		int angle;
-		int gFront,gInnerLeft,gOutterLeft,gInnerRight,gOutterRight,gInnerBack,gOutterBack;
-		int fire;
-
-
-		fire = GetRemoIR(_FLAMEDETECT_fire_);
-		angle = GetCompassB(_COMPASS_compass_);
-		uLeft = GetAdUltrasound( _ADULTRASOUND_uLeft_);
-		uRight = GetAdUltrasound( _ADULTRASOUND_uRight_);
-		uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
-		uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
-		leftEyeValue = GetCompoI3( _COMPOUNDEYE3_leftEye_ ,9);
-		rightEyeValue = GetCompoI3( _COMPOUNDEYE3_rightEye_ ,9);
-		leftEyePort =8-GetCompoI3(_COMPOUNDEYE3_leftEye_,8);
-		rightEyePort =GetCompoI3(_COMPOUNDEYE3_rightEye_,8);
-		gFront = GetADScable10(_SCABLEAD_gFront_);
-		gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
-		gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
-		gInnerRight = GetADScable10(_SCABLEAD_gInnerRight_);
-		gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
-		gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
-		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
+		SetLCD5Char( 0 ,0 ,getLeftEye(1) ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,20 ,getLeftEye(2) ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,40 ,getLeftEye(3) ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,60 ,getLeftEye(4) ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,80 ,getLeftEye(5) ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,100 ,getLeftEye(6) ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,120 ,getLeftEye(7) ,BLUE ,BLACK );
 	}
 
 
