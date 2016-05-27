@@ -545,28 +545,49 @@ int getEyePort(int lowerThres,int higherThres){
 	if (leftEyeValue>lowerThres||rightEyeValue>lowerThres){
 		if(leftEyeValue>rightEyeValue){
 			eyeValue = leftEyeValue;
-			eyePort =getLeftEye(8);/*
+			eyePort = getLeftEye(8);
 			if(eyePort==5){
+
 				int port4=getLeftEye(4);
 				int port5=eyeValue;
 				int port6=getLeftEye(6);
-				if(eyeValue-port4<5){
-					eyePort =
+
+				if(port5-port4<10){
+					eyePort = 5;
+				}
+				else if(port5-port6<10){
+					eyePort = 7;
+				}
+				else{
+					eyePort = 6
 				}
 			}
 			else if(eyePort == 6){
 
+				int port5 = getLeftEye(5);
+				int port6 = eyeValue;
+				int port7 = getLeftEye(7);
+
+				if(port6-port5<10){
+					eyePort = 7;
+				}
+				else if(port6-port7<10){
+					eyePort = 9;
+				}
+				else{
+					eyePort = 8;
+				}
 			}
 			else if(eyePort == 7){
-
-			}*/
+				eyePort = 10;
+			}
 		}
 		else{
 			eyeValue = rightEyeValue;
 			eyePort =getRightEye(8)+7;
 		}
 		if (eyeValue>higherThres){
-			eyePort+=14;
+			eyePort+=20;
 		}
 	}
 	return eyePort;
