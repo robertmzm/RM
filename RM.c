@@ -66,6 +66,10 @@
 		*add FRONTGREY option in getGreyPort();
 	*0525:
 		*impletments getLeftEye() and getRightEye();
+	*0526:
+		*tried new getEyePort(), does not work;
+		*change whiteLineStrategy2() to whiteLineStrategy;
+		*change getGreyPort2() to getGreyPort();
 
 */
 #define STOP 360
@@ -162,11 +166,11 @@ int main(void)
 		lastShootTime = getShootTime(lastShootTime,eyePort,targetAngle);//determine if it is the time to shoot;
 		shooting = shoot(lastShootTime);//shoot!!!! and get the state of the shot;
 
-		greyPort = getGreyPort2(targetAngle);//detect if the robot is touching the white line;
+		greyPort = getGreyPort(targetAngle);//detect if the robot is touching the white line;
 		if(greyPort){
 			SetLED(_LED_shoot_,0);//turn of the solenoid because there is a loop inside;
 			targetAngle = 0;//set target angle back to zero since white line is detected;
-			direction = whiteLineStrategy2(direction,greyPort);//make sure the robot is going to the same direction as the function inside;
+			direction = whiteLineStrategy(direction,greyPort);//make sure the robot is going to the same direction as the function inside;
 		}
 
 		move(direction,speed,targetAngle,shooting);//give the direction and speed to move() in order to react;
@@ -259,13 +263,13 @@ int getShootTime(int lastShootTime,int eyePort,int targetAngle){
 	}
 	return output;
 }
-
+/*
 int getGreyPort(int targetAngle){
 	/*a function to determine if the robot touches the white line;
 	  *return the number of grey scale sensors touching the white line;
 	  *intake the angle the robot is facing;
 	  *turn off some sensors if need;
-	  */
+
 
 	int output = 0;
 	int gFront = GetADScable10(_SCABLEAD_gFront_);
@@ -304,9 +308,9 @@ int getGreyPort(int targetAngle){
 		}
 	}
 	return output;
-}
+}*/
 
-int getGreyPort2(int targetAngle){
+int getGreyPort(int targetAngle){
 		/*intake the angle the robot intends to face;
 		 *return 0 if no white line is detected;
 		 *return the direction of the white line if detected;
@@ -359,7 +363,7 @@ int getGreyPort2(int targetAngle){
 		return output;
 }
 
-int whiteLineStrategy2(int d, int greyPort){
+int whiteLineStrategy(int d, int greyPort){
 	int direction = d;
 	int startTime = GetSysTime();
 
@@ -461,20 +465,20 @@ int whiteLineStrategy2(int d, int greyPort){
 				direction = 315;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort2(0)!=0||uBack<310){
+			if(getGreyPort2(0)!=0||uBack<250){
 				startTime = GetSysTime();
 			}
 		}
 	}
 	return direction;
 }
-
+/*
 int whiteLineStrategy(int d, int greyPort){
 
 	/*the function is called only when white line is detected;
 	 *intake the direction the robot was going;
 	 *output the direction the robot is going;
-	 */
+
 
 
 	int direction=d;
@@ -507,7 +511,7 @@ int whiteLineStrategy(int d, int greyPort){
 	}
 	return direction;
 }
-
+*/
 int getLeftEye(int command){
 	/*intake a command one wants to put in GetCompoI3();
 	 *flip all the ports since the eye is psycally flipped;
