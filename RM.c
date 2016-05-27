@@ -559,7 +559,7 @@ int getEyePort(int lowerThres,int higherThres){
 					eyePort = 7;
 				}
 				else{
-					eyePort = 6
+					eyePort = 6;
 				}
 			}
 			else if(eyePort == 6){
@@ -1262,7 +1262,7 @@ void screen(int i){
 		SetLCD5Char( 0 ,80 ,getLeftEye(5) ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,100 ,getLeftEye(6) ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,120 ,getLeftEye(7) ,BLUE ,BLACK );
-		SetLCD5Char( 0 ,120 ,getEyePort(5,80) ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,120 ,getEyePort(5,50) ,BLUE ,BLACK );
 
 	}
 
