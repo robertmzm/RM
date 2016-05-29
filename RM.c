@@ -121,6 +121,7 @@ typedef struct Threshold{
 	int gOutterBackThres;
 	int fireThres;
 	int whiteLineTimeThres;
+	int shootTimeThres;
 }Threshold;
 
 
@@ -139,8 +140,6 @@ int main(void)
 	int pressing = 0;//indicate if the button is being pressed
 	int pressed = 0;//indicate if the button was pressed in the previous loop
 	int targetAngle = 0;//the angle the robot wants to face
-	int lowEyeThres = 5;//the threshold for the value of infrared sensors
-	int highEyeThres = 60;//the treshold for far and close infrared ball
 	int lastShootTime= -300;//the time of the last shot
 	int eyePort = 0;
 	int shooting = 0;//indicate if it is shooing or not
@@ -151,7 +150,7 @@ int main(void)
 
 	screenI = 0;
 	logIn();
-	
+
 	while (1){//forever running loop;
 
 		screen(screenI,thres);//display everything;
@@ -181,21 +180,21 @@ int main(void)
 
 		targetAngle = getTargetAngle(targetAngle,eyePort);//calculate where the robot needs to face;
 
-		lastShootTime = getShootTime(lastShootTime,eyePort,targetAngle);//determine if it is the time to shoot;
-		shooting = shoot(lastShootTime);//shoot!!!! and get the state of the shot;
+		lastShootTime = getShootTime(lastShootTime,eyePort,targetAngle,thres);//determine if it is the time to shoot;
+		shooting = shoot(lastShootTime,thres);//shoot!!!! and get the state of the shot;
 
-		greyPort = getGreyPort(targetAngle);//detect if the robot is touching the white line;
+		greyPort = getGreyPort(targetAngle,thres);//detect if the robot is touching the white line;
 		if(greyPort){
 			SetLED(_LED_shoot_,0);//turn of the solenoid because there is a loop inside;
 			targetAngle = 0;//set target angle back to zero since white line is detected;
-			direction = whiteLineStrategy(direction,greyPort);//make sure the robot is going to the same direction as the function inside;
+			direction = whiteLineStrategy(direction,greyPort,thres);//make sure the robot is going to the same direction as the function inside;
 		}
 
 		move(direction,speed,targetAngle,shooting);//give the direction and speed to move() in order to react;
 	}
 }
 
-int shoot(int lastShootTime){
+int shoot(int lastShootTime,Threshold thres){
 	/*intake the time to shoot;
 	 *shoot if the difference of the time is small than the threshold;
 	 *return the status of the solenoid;
@@ -207,7 +206,7 @@ int shoot(int lastShootTime){
 		SetLCD5Char(100,120,timeDiff,RED,BLACK);
 	}
 
-	if(timeDiff<15){
+	if(timeDiff<thres.shootTimeThres){
 		speed = 90;
 		SetLED(_LED_shoot_,1);
 		return 1;
@@ -261,7 +260,7 @@ int getTargetAngle(int previousTarget,int eyePort){
 
 }
 
-int getShootTime(int lastShootTime,int eyePort,int targetAngle){
+int getShootTime(int lastShootTime,int eyePort,int targetAngle,Threshold thres){
 	/*intake the time of previous shot and the current eyePort;
 	 *output the a new time if a shot is needed;
 	 *output the previous shot time if no shot needed;
@@ -275,7 +274,7 @@ int getShootTime(int lastShootTime,int eyePort,int targetAngle){
 		int fire = GetRemoIR(_FLAMEDETECT_fire_);
 		int angleDif = getAngleDif(targetAngle);
 		int time = GetSysTime();
-		if (time-lastShootTime>100&&fire<200&&abs(angleDif)<10){//shoot when ball is on the front and close enough;
+		if (time-lastShootTime>100&&fire<thres.fireThres&&abs(angleDif)<10){//shoot when ball is on the front and close enough;
 			output = time;
 		}
 	}
@@ -328,7 +327,7 @@ int getGreyPort(int targetAngle){
 	return output;
 }*/
 
-int getGreyPort(int targetAngle){
+int getGreyPort(int targetAngle, Threshold thres){
 		/*intake the angle the robot intends to face;
 		 *return 0 if no white line is detected;
 		 *return the direction of the white line if detected;
@@ -345,16 +344,16 @@ int getGreyPort(int targetAngle){
 		int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
 
 		if(targetAngle==0){
-			if (gInnerBack<1700||gInnerLeft<800||gInnerRight<1400){
+			if (gInnerBack<thres.gInnerBackThres||gInnerLeft<thres.gInnerLeftThres||gInnerRight<thres.gInnerRightThres){
 				output = DANGEROUS;
 			}
-			else if(gFront<1800){
+			else if(gFront<thres.gFrontThres){
 				output = FRONTGREY;
 			}
-			else if (gOutterLeft<1600){
+			else if (gOutterLeft<thres.gOutterLeftThres){
 				output = LEFTGREY;
 			}
-			else if (gOutterRight<1500){
+			else if (gOutterRight<thres.gOutterRightThres){
 				output = RIGHTGREY;
 			}
 
@@ -363,31 +362,31 @@ int getGreyPort(int targetAngle){
 			}
 		}
 		else if(targetAngle<180){//gOutterLeft and gOutterBack are off
-			if(gFront<1800||gInnerRight<1400||gOutterRight<1500){
+			if(gFront<thres.gFrontThres||gInnerRight<thres.gInnerRightThres||gOutterRight<thres.gOutterRight){
 				output = DANGEROUS;
 			}
-			else if(gInnerLeft<800||gInnerBack<1700){
+			else if(gInnerLeft<thres.gInnerLeftThres||gInnerBack<thres.gInnerBackThres){
 				output = LEFTGREY;
 			}
 		}
 		else{//gOutterRight and gOutterBack are off
-			if(gFront<1800||gInnerLeft<800||gOutterLeft<1600){
+			if(gFront<thres.gFrontThres||gInnerLeft<thres.gInnerLeftThres||gOutterLeft<thres.gOutterLeftThres){
 				output = DANGEROUS;
 			}
-			else if(gInnerRight<1400||gInnerBack<1700){
+			else if(gInnerRight<thres.gInnerRightThres||gInnerBack<thres.gInnerBackThres){
 				output = RIGHTGREY;
 			}
 		}
 		return output;
 }
 
-int whiteLineStrategy(int d, int greyPort){
+int whiteLineStrategy(int d, int greyPort,Threshold thres){
 	int direction = d;
 	int startTime = GetSysTime();
 
 	if(greyPort == DANGEROUS){
-		while(GetSysTime()-startTime<100&&direction!=STOP){
-			startTime = getGreyPort(0)==0&&direction!=BLOCKED?startTime:GetSysTime();
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres+60&&direction!=STOP){
+			startTime = getGreyPort(0,thres)==0&&direction!=BLOCKED?startTime:GetSysTime();
 			direction = backPosition();
 			move(direction,55,0,0);
 		}
@@ -397,7 +396,7 @@ int whiteLineStrategy(int d, int greyPort){
 		int uFront = 0;
 		int uRight = 0;
 		int uLeft = 0;
-		while(GetSysTime()-startTime<30){
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres){
 			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
@@ -411,7 +410,7 @@ int whiteLineStrategy(int d, int greyPort){
 				direction = 210;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort(0)!=0||uFront<310){
+			if(getGreyPort(0,thres)!=0||uFront<310){
 				startTime = GetSysTime();
 			}
 		}
@@ -421,7 +420,7 @@ int whiteLineStrategy(int d, int greyPort){
 		int uBack = 0;
 		int uFront = 0;
 		int uLeft = 0;
-		while(GetSysTime()-startTime<30){
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres){
 			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
@@ -435,7 +434,7 @@ int whiteLineStrategy(int d, int greyPort){
 				direction = 150;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort(0)!=0||uLeft<310){
+			if(getGreyPort(0,thres)!=0||uLeft<310){
 				startTime = GetSysTime();
 			}
 		}
@@ -445,7 +444,7 @@ int whiteLineStrategy(int d, int greyPort){
 		int uBack = 0;
 		int uFront = 0;
 		int uRight = 0;
-		while(GetSysTime()-startTime<30){
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres){
 			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
@@ -459,7 +458,7 @@ int whiteLineStrategy(int d, int greyPort){
 				direction = 210;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort(0)!=0||uRight<310){
+			if(getGreyPort(0,thres)!=0||uRight<310){
 				startTime = GetSysTime();
 			}
 		}
@@ -469,7 +468,7 @@ int whiteLineStrategy(int d, int greyPort){
 		int uLeft = 0;
 		int uRight = 0;
 		int uBack = 0;
-		while(GetSysTime()-startTime<30){
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres){
 			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
@@ -1302,7 +1301,7 @@ void screen(int i,Threshold thres){
 
 		SetLCD5Char(0,0,thres.lowEyeThres,GREEN,BLACK);
 		SetLCD5Char(50,0,thres.highEyeThres,GREEN,BLACK);
-		
+
 		SetLCD5Char( 70 ,40 ,thres.gFrontThres ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,60 ,thres.gOutterLeftThres ,BLUE ,BLACK );
 		SetLCD5Char( 50 ,60 ,thres.gInnerLeftThres ,BLUE ,BLACK );
@@ -1320,7 +1319,7 @@ void logIn(){
 
 	int count = 0;
 	int count2;
-	int password[] = {1,3,3,2,3,3};
+	int password[] = {1,3,1,3,1,2};
 	int digit = 0;
 	drawRM(0);
 	while(count<6){
@@ -1397,4 +1396,5 @@ void initThres(Threshold *thres){
 	thres->gOutterBackThres = 1200;
 	thres->fireThres = 200;
 	thres->whiteLineTimeThres = 30;
+	thres->shootTimeThres = 15;
 }
