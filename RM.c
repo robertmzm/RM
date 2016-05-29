@@ -149,7 +149,7 @@ int main(void)
 	extern int speed;
 
 	screenI = 0;
-	logIn();
+	//logIn();
 
 	while (1){//forever running loop;
 
@@ -362,7 +362,7 @@ int getGreyPort(int targetAngle, Threshold thres){
 			}
 		}
 		else if(targetAngle<180){//gOutterLeft and gOutterBack are off
-			if(gFront<thres.gFrontThres||gInnerRight<thres.gInnerRightThres||gOutterRight<thres.gOutterRight){
+			if(gFront<thres.gFrontThres||gInnerRight<thres.gInnerRightThres||gOutterRight<thres.gOutterRightThres){
 				output = DANGEROUS;
 			}
 			else if(gInnerLeft<thres.gInnerLeftThres||gInnerBack<thres.gInnerBackThres){
@@ -482,7 +482,7 @@ int whiteLineStrategy(int d, int greyPort,Threshold thres){
 				direction = 315;
 			}
 			move(direction,55,0,0);
-			if(getGreyPort(0)!=0){
+			if(getGreyPort(0,thres)!=0){
 				startTime = GetSysTime();
 			}
 		}
@@ -1319,7 +1319,7 @@ void logIn(){
 
 	int count = 0;
 	int count2;
-	int password[] = {1,3,1,3,1,2};
+	int password[] = {1,2,3,1,2,3};
 	int digit = 0;
 	drawRM(0);
 	while(count<6){
