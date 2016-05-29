@@ -109,7 +109,7 @@
 #include <SetLCDRectangle.h>
 #include <SetLCDSolidCircle.h>
 
-struct Threshold{
+typedef struct Threshold{
 	int lowEyeThres;
 	int highEyeThres;
 	int gInnerLeftThres;
@@ -121,7 +121,9 @@ struct Threshold{
 	int gOutterBackThres;
 	int fireThres;
 	int whiteLineTimeThres;
-};
+}Threshold;
+
+
 
 int speed;//the speed the robot is running on;
 int screenI;
@@ -143,6 +145,8 @@ int main(void)
 	int eyePort = 0;
 	int shooting = 0;//indicate if it is shooing or not
 
+	Threshold thres;
+	initThres(&thres);
 	extern int speed;
 
 	screenI = 0;
@@ -150,7 +154,7 @@ int main(void)
 	
 	while (1){//forever running loop;
 
-		screen(screenI);//display everything;
+		screen(screenI,thres);//display everything;
 
 		/*detect if the first button is pressed in order to switch to
 		  different pages;
@@ -164,7 +168,7 @@ int main(void)
 
 
 
-		eyePort = getEyePort(lowEyeThres,highEyeThres);//get the port of the fly eye giving lower thres 5 and higher thres 60
+		eyePort = getEyePort(thres);//get the port of the fly eye giving lower thres 5 and higher thres 60
 
 		if(eyePort){//ball is detected
 			speed = TESTSPEED;
@@ -546,7 +550,7 @@ int getRightEye(int command){
 	return GetCompoI3(_COMPOUNDEYE3_rightEye_,command);
 }
 
-int getEyePort(int lowerThres,int higherThres){
+int getEyePort(Threshold thres){
 	/**intake a lower threshold and a higher threshold;
 	    *return the port which has the largest eye value;
 	    *return 0 when the value is smaller than the lower threshold;
@@ -560,7 +564,7 @@ int getEyePort(int lowerThres,int higherThres){
 	int leftEyeValue = getLeftEye(9);
 	int rightEyeValue = getRightEye(9);
 
-	if (leftEyeValue>lowerThres||rightEyeValue>lowerThres){
+	if (leftEyeValue>thres.lowEyeThres||rightEyeValue>thres.lowEyeThres){
 		if(leftEyeValue>rightEyeValue){
 			eyeValue = leftEyeValue;
 			eyePort = getLeftEye(8);/*
@@ -604,7 +608,7 @@ int getEyePort(int lowerThres,int higherThres){
 			eyeValue = rightEyeValue;
 			eyePort =getRightEye(8)+7;
 		}
-		if (eyeValue>higherThres){
+		if (eyeValue>thres.highEyeThres){
 			eyePort+=14;
 		}
 	}
@@ -1217,7 +1221,7 @@ int getAngleDif(int target){
 	return output;
 }
 
-void screen(int i){
+void screen(int i,Threshold thres){
 
 	if(i==1){
 		int leftEyeValue;
@@ -1281,7 +1285,7 @@ void screen(int i){
 		SetLCD5Char( 0 ,100 ,getLeftEye(6) ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,120 ,getLeftEye(7) ,BLUE ,BLACK );
 
-		SetLCD5Char( 50 ,140 ,getEyePort(5,50) ,BLUE ,BLACK );
+		SetLCD5Char( 50 ,140 ,getEyePort(thres) ,BLUE ,BLACK );
 
 		SetLCD5Char( 100 ,0 ,getRightEye(1) ,BLUE ,BLACK );
 		SetLCD5Char( 100 ,20 ,getRightEye(2) ,BLUE ,BLACK );
@@ -1294,37 +1298,20 @@ void screen(int i){
 
 
 	else if(i==3){
-		int leftEyeValue;
-		int rightEyeValue;
-		int leftEyePort;
-		int rightEyePort;
-		int uLeft,uRight,uFront,uBack;
-		int angle;
-		int gFront,gInnerLeft,gOutterLeft,gInnerRight,gOutterRight,gInnerBack,gOutterBack;
-		int fire;
 
 
-		SetLCD5Char(0,40,angle,GREEN,BLACK);
+		SetLCD5Char(0,0,thres.lowEyeThres,GREEN,BLACK);
+		SetLCD5Char(50,0,thres.highEyeThres,GREEN,BLACK);
+		
+		SetLCD5Char( 70 ,40 ,thres.gFrontThres ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,60 ,thres.gOutterLeftThres ,BLUE ,BLACK );
+		SetLCD5Char( 50 ,60 ,thres.gInnerLeftThres ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,60 ,thres.gInnerRightThres ,BLUE ,BLACK );
+		SetLCD5Char( 150 ,60 ,thres.gOutterRightThres ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,80 ,thres.gInnerBackThres ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,100 ,thres.gOutterBackThres ,BLUE ,BLACK );
 
-		SetLCD5Char( 0 ,0 ,leftEyeValue ,YELLOW ,BLACK );
-		SetLCD5Char( 50 ,0 ,rightEyeValue ,YELLOW ,BLACK );
-		SetLCD5Char( 100 ,0 ,leftEyePort ,YELLOW ,BLACK );
-		SetLCD5Char( 150 ,0 ,rightEyePort ,YELLOW ,BLACK );
 
-		SetLCD5Char( 0 ,20 ,uFront ,RED ,BLACK );
-		SetLCD5Char( 50 ,20 ,uLeft ,RED ,BLACK );
-		SetLCD5Char( 100 ,20 ,uRight ,RED ,BLACK );
-		SetLCD5Char( 150 ,20 ,uBack ,RED ,BLACK );
-
-		SetLCD5Char( 70 ,40 ,gFront ,BLUE ,BLACK );
-		SetLCD5Char( 0 ,60 ,gOutterLeft ,BLUE ,BLACK );
-		SetLCD5Char( 50 ,60 ,gInnerLeft ,BLUE ,BLACK );
-		SetLCD5Char( 100 ,60 ,gInnerRight ,BLUE ,BLACK );
-		SetLCD5Char( 150 ,60 ,gOutterRight ,BLUE ,BLACK );
-		SetLCD5Char( 70 ,80 ,gInnerBack ,BLUE ,BLACK );
-		SetLCD5Char( 70 ,100 ,gOutterBack ,BLUE ,BLACK );
-
-		SetLCD5Char(50,120,fire,RED,BLACK);
 	}
 
 }
@@ -1393,7 +1380,21 @@ void testShooting(){
 	int eyePort = 21;
 	int lastShootTime = -300;
 	while(1){
-		lastShootTime = getShootTime(lastShootTime,eyePort,0);
-		shoot(lastShootTime);
+		//lastShootTime = getShootTime(lastShootTime,eyePort,0);
+		//shoot(lastShootTime);
 	}
+}
+
+void initThres(Threshold *thres){
+	thres->lowEyeThres = 5;
+	thres->highEyeThres = 50;
+	thres->gInnerLeftThres = 800;
+	thres->gOutterLeftThres = 1600;
+	thres->gInnerRightThres = 1400;
+	thres->gOutterRightThres = 1500;
+	thres->gFrontThres = 1800;
+	thres->gInnerBackThres = 1700;
+	thres->gOutterBackThres = 1200;
+	thres->fireThres = 200;
+	thres->whiteLineTimeThres = 30;
 }
