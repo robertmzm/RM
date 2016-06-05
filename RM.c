@@ -70,8 +70,11 @@
 		*tried new getEyePort(), does not work;
 		*change whiteLineStrategy2() to whiteLineStrategy;
 		*change getGreyPort2() to getGreyPort();
+	*0603:
+		*tring to fit the program in both kind of Hardware;
 
 */
+#define MACHINE 0
 #define STOP 360
 #define BLOCKED 361
 #define TESTSPEED 80
@@ -81,10 +84,21 @@
 #define RIGHTGREY 4
 #define BACKGREY 5
 
+//select the hardware the program is using
+#if MACHINE==0
+
+#include "HardwareInfo.c"
+
+#elif MACHINE==1
+
+#include "X3.c"
+
+#endif
+
+
 #include <stdio.h>
 #include <GetCompoI3.h>
 #include <math.h>
-#include "HardwareInfo.c"
 #include <SetMotor.h>
 #include <SetLCDFilledRectangle.h>
 #include "JMLib.c"
@@ -1385,16 +1399,32 @@ void testShooting(){
 }
 
 void initThres(Threshold *thres){
-	thres->lowEyeThres = 5;
-	thres->highEyeThres = 50;
-	thres->gInnerLeftThres = 800;
-	thres->gOutterLeftThres = 1600;
-	thres->gInnerRightThres = 1400;
-	thres->gOutterRightThres = 1500;
-	thres->gFrontThres = 1800;
-	thres->gInnerBackThres = 1700;
-	thres->gOutterBackThres = 1200;
-	thres->fireThres = 200;
-	thres->whiteLineTimeThres = 30;
-	thres->shootTimeThres = 15;
+	if(MACHINE==0){
+		thres->lowEyeThres = 5;
+		thres->highEyeThres = 50;
+		thres->gInnerLeftThres = 800;
+		thres->gOutterLeftThres = 1600;
+		thres->gInnerRightThres = 1400;
+		thres->gOutterRightThres = 1500;
+		thres->gFrontThres = 1800;
+		thres->gInnerBackThres = 1700;
+		thres->gOutterBackThres = 1200;
+		thres->fireThres = 200;
+		thres->whiteLineTimeThres = 30;
+		thres->shootTimeThres = 15;
+	}
+	else if(MACHINE==1){
+		thres->lowEyeThres = 5;
+		thres->highEyeThres = 50;
+		thres->gInnerLeftThres = 0;
+		thres->gOutterLeftThres = 0;
+		thres->gInnerRightThres = 0;
+		thres->gOutterRightThres = 0;
+		thres->gFrontThres = 0;
+		thres->gInnerBackThres = 0;
+		thres->gOutterBackThres = 0;
+		thres->fireThres = 0;
+		thres->whiteLineTimeThres = 30;
+		thres->shootTimeThres = 15;
+	}
 }
