@@ -74,7 +74,12 @@
 		*tring to fit the program in both kind of Hardware;
 
 */
-#define MACHINE 0
+
+#define X2 0
+#define X3 1
+
+#define MACHINE X2//choose which hardware to use
+
 #define STOP 360
 #define BLOCKED 361
 #define TESTSPEED 80
@@ -85,11 +90,11 @@
 #define BACKGREY 5
 
 //select the hardware the program is using
-#if MACHINE==0
+#if MACHINE==X2
 
 #include "HardwareInfo.c"
 
-#elif MACHINE==1
+#elif MACHINE==X3
 
 #include "X3.c"
 
@@ -788,7 +793,7 @@ void move(int d,int s,int targetAngle,int shooting){
 		if (angleDif<0){
 			//turn clockwise
 			direction1=0;
-			direction2 = 0;
+			direction2=0;
 			direction3=0;
 			direction4=0;
 			speed1=16;
@@ -851,7 +856,6 @@ void move(int d,int s,int targetAngle,int shooting){
 		SetLCD5Char(0,100,speed1,WHITE,BLACK);
 		SetLCD5Char(150,100,speed4,WHITE,BLACK);
 
-
 		SetLCD5Char(0,120,d,CYAN,BLACK);
 		SetLCD5Char(150,40,angleDif,GREEN,BLACK);
 	}
@@ -868,15 +872,25 @@ int attackStrategy(int p,int previousDirection){
 	    *output the direction the robot should go;
 	    *the strategy works when ball is both far or close;
 	    */
-	if (p<15){
-		return farStrategy(p);
+	if(MACHINE==X2){
+		if (p<15){
+			return farStrategyX2(p);
+		}
+		else{
+			return closeStrategyX2(p-14);
+		}
 	}
-	else{
-		return closeStrategy(p-14);
+	else if (MACHINE==X3){
+		if (p<15){
+			return farStrategyX3(p);
+		}
+		else{
+			return closeStrategyX3(p-14);
+		}
 	}
 }
 
-int closeStrategy(int p){
+int closeStrategyX2(int p){
 	int output;
 	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
@@ -936,7 +950,115 @@ int closeStrategy(int p){
 	return output;
 }
 
-int farStrategy(int p){
+int farStrategyX2(int p){
+	int output = STOP;
+	if (p==1||p==14){
+		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+		if(uLeft>uRight){
+			output= 210;
+		}
+		else{
+			output = 150;
+		}
+	}
+	else if(p ==2){
+		output= 180;
+	}
+	else if(p ==3){
+		output= 210;
+	}
+	else if(p ==4){
+		output= 240;
+	}
+	else if(p ==5){
+		output= 270;
+	}
+	else if(p ==6){
+		output =300;//change front 280 to 300
+	}
+	else if(p ==7||p==8){
+		output= 0;
+	}
+	else if(p ==9){
+		output= 60;
+	}
+	else if(p ==10){
+		output= 90;
+	}
+	else if(p ==11){
+		output= 120;
+	}
+	else if(p ==12){
+		output= 150;
+	}
+	else if(p ==13){
+		output= 180;
+	}
+	return output;
+}
+
+int closeStrategyX3(int p){
+	int output;
+	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+
+	if(uBack<200&&(p<5||p>10)){
+		if(p<7){
+			output = 270;
+		}
+		else{
+			output = 90;
+		}
+	}
+	else if (p==1||p==14){
+		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+
+
+		if(uLeft>uRight){
+			output = 250;
+		}
+		else{
+			output = 110;
+		}
+	}
+	else if(p ==2){
+		output=180;
+	}
+	else if(p ==3){
+		output = 210;
+	}
+	else if(p ==4){
+		output=230;//change from 240 to 230
+	}
+	else if(p ==5){
+		output=290;//change from 300 to 290
+	}
+	else if(p ==6){
+		output=330;
+	}
+	else if(p ==7||p==8){
+		output=0;
+	}
+	else if (p==9){
+		output=30;
+	}
+	else if(p ==10){
+		output=60;
+	}
+	else if(p ==11){
+		output=120;
+	}
+	else if(p ==12){
+		output=150;
+	}
+	else if (p==13){
+		output=180;
+	}
+	return output;
+}
+
+int farStrategyX3(int p){
 	int output = STOP;
 	if (p==1||p==14){
 		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
@@ -1399,7 +1521,7 @@ void testShooting(){
 }
 
 void initThres(Threshold *thres){
-	if(MACHINE==0){
+	if(MACHINE==X2){
 		thres->lowEyeThres = 5;
 		thres->highEyeThres = 50;
 		thres->gInnerLeftThres = 800;
@@ -1413,8 +1535,8 @@ void initThres(Threshold *thres){
 		thres->whiteLineTimeThres = 30;
 		thres->shootTimeThres = 15;
 	}
-	else if(MACHINE==1){
-		thres->lowEyeThres = 5;
+	else if(MACHINE==X3){
+		thres->lowEyeThres = 15;
 		thres->highEyeThres = 50;
 		thres->gInnerLeftThres = 0;
 		thres->gOutterLeftThres = 0;
