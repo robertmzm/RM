@@ -150,8 +150,7 @@ int screenI;
 
 int main(void)
 {
-
-	X2RCU_Init();//initialize the RCU;
+	initRCU();//initialize the RCU;
 	int angle=0;//the angle of compass;
 	int direction=STOP;//the direcion robot goes,360 means stop;
 	extern int screenI;//indicate what to display
@@ -210,6 +209,14 @@ int main(void)
 		}
 
 		move(direction,speed,targetAngle,shooting);//give the direction and speed to move() in order to react;
+	}
+}
+void initRCU(){
+	if(MACHINE==X2){
+		X2RCU_Init();
+	}
+	else if(MACHINE==X3){
+		X3RCU_Init();
 	}
 }
 
@@ -1523,7 +1530,7 @@ void testShooting(){
 void initThres(Threshold *thres){
 	if(MACHINE==X2){
 		thres->lowEyeThres = 5;
-		thres->highEyeThres = 50;
+		thres->highEyeThres = 60;
 		thres->gInnerLeftThres = 800;
 		thres->gOutterLeftThres = 1600;
 		thres->gInnerRightThres = 1400;
