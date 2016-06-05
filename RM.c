@@ -149,7 +149,7 @@ int main(void)
 	extern int speed;
 
 	screenI = 0;
-	//logIn();
+	logIn();
 
 	while (1){//forever running loop;
 
@@ -1333,7 +1333,7 @@ void logIn(){
 			count = 0;
 		}
 		count2 = count;
-		SetLCD5Char(0,30,0,BLACK,BLACK);
+		SetLCD5Char(0,30,count,BLACK,BLACK);
 
 	}
 
