@@ -83,7 +83,7 @@
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define MACHINE X2
+												#define MACHINE X3
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
 #define BLOCKED 361
@@ -97,7 +97,7 @@
 //select the hardware the program is using
 #if MACHINE==X2
 
-#include "HardwareInfo.c"
+#include "X2.c"
 
 #elif MACHINE==X3
 
@@ -158,6 +158,9 @@ int screenI;
 int main(void)
 {
 	initRCU();//initialize the RCU;
+	
+	testShooting();
+	
 	int angle=0;//the angle of compass;
 	int direction=STOP;//the direcion robot goes,360 means stop;
 	extern int screenI;//indicate what to display
@@ -304,7 +307,7 @@ int getShootTime(int lastShootTime,int eyePort,int targetAngle,Threshold thres){
 
 	if(eyePort == 21|| eyePort ==22){
 
-		int fire = GetRemoIR(_FLAMEDETECT_fire_);
+		int fire = GetRemoIR(MACHINE==X2?_FLAMEDETECT_fire_:_FLAMEDETECT_laser_);
 		int angleDif = getAngleDif(targetAngle);
 		int time = GetSysTime();
 		if (time-lastShootTime>100&&fire<thres.fireThres&&abs(angleDif)<10){//shoot when ball is on the front and close enough;
@@ -1526,11 +1529,16 @@ int getCode(){
 
 
 void testShooting(){
-	int eyePort = 21;
-	int lastShootTime = -300;
+	int count = 0;
+	while(count<20){
+		count = GetSysTime();
+		SetLED(_LED_shoot_,1);
+		SetLCD5Char(0,0,count,YELLOW,BLACK);
+		SetLCD5Char(0,20,999,YELLOW,BLACK);
+	}
+	SetLCDClear(GREEN);
 	while(1){
-		//lastShootTime = getShootTime(lastShootTime,eyePort,0);
-		//shoot(lastShootTime);
+	
 	}
 }
 
@@ -1561,7 +1569,7 @@ void initThres(Threshold *thres){
 		thres->gFrontThres = 1400;
 		thres->gInnerBackThres = 1350;
 		thres->gOutterBackThres = 1700;
-		thres->fireThres = 0;
+		thres->fireThres = 20;
 		thres->whiteLineTimeThres = 30;
 		thres->shootTimeThres = 15;
 		thres->angleHighThres = 40;
