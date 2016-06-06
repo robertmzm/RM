@@ -78,7 +78,7 @@
 #define X2 0
 #define X3 1
 
-#define MACHINE X2//choose which hardware to use
+#define MACHINE X3//choose which hardware to use
 
 #define STOP 360
 #define BLOCKED 361
@@ -167,7 +167,7 @@ int main(void)
 	extern int speed;
 
 	screenI = 0;
-	logIn();
+	//logIn();
 
 	while (1){//forever running loop;
 
@@ -1543,15 +1543,15 @@ void initThres(Threshold *thres){
 		thres->shootTimeThres = 15;
 	}
 	else if(MACHINE==X3){
-		thres->lowEyeThres = 15;
-		thres->highEyeThres = 50;
-		thres->gInnerLeftThres = 0;
-		thres->gOutterLeftThres = 0;
-		thres->gInnerRightThres = 0;
-		thres->gOutterRightThres = 0;
-		thres->gFrontThres = 0;
-		thres->gInnerBackThres = 0;
-		thres->gOutterBackThres = 0;
+		thres->lowEyeThres = 5;
+		thres->highEyeThres = 40;
+		thres->gInnerLeftThres = 1250;
+		thres->gOutterLeftThres = 1400;
+		thres->gInnerRightThres = 1400;
+		thres->gOutterRightThres = 1600;
+		thres->gFrontThres = 1400;
+		thres->gInnerBackThres = 1350;
+		thres->gOutterBackThres = 1700;
 		thres->fireThres = 0;
 		thres->whiteLineTimeThres = 30;
 		thres->shootTimeThres = 15;
