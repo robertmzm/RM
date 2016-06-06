@@ -93,6 +93,7 @@
 #define LEFTGREY 3
 #define RIGHTGREY 4
 #define BACKGREY 5
+#define DISABLETHRES 0
 
 //select the hardware the program is using
 #if MACHINE==X2
@@ -104,6 +105,13 @@
 #include "X3.c"
 
 #endif
+
+
+//make sure _FLAMEDETECT_laser_ is defined
+#ifndef _FLAMEDETECT_laser_
+#define _FLAMEDETECT_laser_ 0
+#endif
+
 
 
 #include <stdio.h>
@@ -158,12 +166,14 @@ int screenI;
 int main(void)
 {
 	initRCU();//initialize the RCU;
-	
+	extern int speed;
+	extern int screenI;//indicate what to display
+	screenI = 0;
 	testShooting();
-	
+
 	int angle=0;//the angle of compass;
 	int direction=STOP;//the direcion robot goes,360 means stop;
-	extern int screenI;//indicate what to display
+
 	int greyPort = 0;
 	int pressing = 0;//indicate if the button is being pressed
 	int pressed = 0;//indicate if the button was pressed in the previous loop
@@ -174,9 +184,9 @@ int main(void)
 
 	Threshold thres;
 	initThres(&thres);
-	extern int speed;
 
-	screenI = 0;
+
+
 	//logIn();
 
 	while (1){//forever running loop;
@@ -1386,7 +1396,7 @@ void screen(int i,Threshold thres){
 		int fire;
 
 
-		fire = GetRemoIR(_FLAMEDETECT_fire_);
+		fire = MACHINE==X2?GetRemoIR(_FLAMEDETECT_fire_):GetRemoIR(_FLAMEDETECT_laser_);
 		angle = GetCompassB(_COMPASS_compass_);
 		uLeft = GetAdUltrasound( _ADULTRASOUND_uLeft_);
 		uRight = GetAdUltrasound( _ADULTRASOUND_uRight_);
@@ -1429,6 +1439,7 @@ void screen(int i,Threshold thres){
 
 
 	else if(i==2){
+		//print information relating to fly eye
 		SetLCD5Char( 0 ,0 ,getLeftEye(1) ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,20 ,getLeftEye(2) ,BLUE ,BLACK );
 		SetLCD5Char( 0 ,40 ,getLeftEye(3) ,BLUE ,BLACK );
@@ -1450,7 +1461,7 @@ void screen(int i,Threshold thres){
 
 
 	else if(i==3){
-
+		//printing information relating to threshold
 
 		SetLCD5Char(0,0,thres.lowEyeThres,GREEN,BLACK);
 		SetLCD5Char(50,0,thres.highEyeThres,GREEN,BLACK);
@@ -1463,7 +1474,11 @@ void screen(int i,Threshold thres){
 		SetLCD5Char( 70 ,80 ,thres.gInnerBackThres ,BLUE ,BLACK );
 		SetLCD5Char( 70 ,100 ,thres.gOutterBackThres ,BLUE ,BLACK );
 
-
+		SetLCD5Char(0,20,fireThres,RED,BLACK);
+		SetLCD5Char(50,20,whiteLineTimeThres,RED,BLACK);
+		SetLCD5Char(100,20,shootTimeThres,RED,BLACK);
+		SetLCD5Char(0,120,angleHighThres,RED,BLACK);
+		SetLCD5Char(50,120,angleLowThres,RED,BLACK);
 	}
 
 }
@@ -1528,17 +1543,27 @@ int getCode(){
 
 
 
-void testShooting(){
+void testShooting1(){
+	/*easist shooting
+	 *shoot without any conditioning
+	 */
 	int count = 0;
 	while(count<20){
 		count = GetSysTime();
 		SetLED(_LED_shoot_,1);
-		SetLCD5Char(0,0,count,YELLOW,BLACK);
-		SetLCD5Char(0,20,999,YELLOW,BLACK);
 	}
-	SetLCDClear(GREEN);
 	while(1){
-	
+
+	}
+}
+void testShooting2(){
+	Threshold thres;
+	initThres(&thres);
+	int lastShootTime = -300;
+	while(1){
+		screen(1,thres);
+		lastShootTime = getShootTime(lastShootTime,21,0,thres);
+		shoot(lastShootTime,thres);
 	}
 }
 
