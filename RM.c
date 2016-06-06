@@ -72,14 +72,19 @@
 		*change getGreyPort2() to getGreyPort();
 	*0603:
 		*tring to fit the program in both kind of Hardware;
+	*0606:
+		*finish fitting the program to new hardware;
+		*add angleHighThres and angleLowThres;
 
 */
 
 #define X2 0
 #define X3 1
 
-#define MACHINE X3//choose which hardware to use
-
+//choose which hardware to use
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+												#define MACHINE X2
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
 #define BLOCKED 361
 #define TESTSPEED 80
@@ -141,6 +146,8 @@ typedef struct Threshold{
 	int fireThres;
 	int whiteLineTimeThres;
 	int shootTimeThres;
+	int angleHighThres;
+	int angleLowThres;
 }Threshold;
 
 
@@ -208,7 +215,7 @@ int main(void)
 			direction = whiteLineStrategy(direction,greyPort,thres);//make sure the robot is going to the same direction as the function inside;
 		}
 
-		move(direction,speed,targetAngle,shooting);//give the direction and speed to move() in order to react;
+		move(direction,speed,targetAngle,shooting,thres);//give the direction and speed to move() in order to react;
 	}
 }
 void initRCU(){
@@ -650,7 +657,7 @@ double degreeToRadian(int degree){
 }
 
 
-void move(int d,int s,int targetAngle,int shooting){
+void move(int d,int s,int targetAngle,int shooting,Threshold thres){
 	/**A method to control the motor.
 	    *Input the direction and the percentage of power the robot wants to go.
 	    *No need to calculate the individual speed any more!
@@ -790,10 +797,10 @@ void move(int d,int s,int targetAngle,int shooting){
 	int angleThres;
 
 	if(targetAngle == 0){
-		angleThres = 20;//turn sharply when facing back
+		angleThres = thres.angleLowThres;//turn sharply when facing back
 	}
 	else{
-		angleThres = 40;//turn smoothly when turn shooting;
+		angleThres = thres.angleHighThres;//turn smoothly when turn shooting;
 	}
 
 	if (abs(angleDif)>angleThres&&shooting!=1){
@@ -1541,6 +1548,8 @@ void initThres(Threshold *thres){
 		thres->fireThres = 200;
 		thres->whiteLineTimeThres = 30;
 		thres->shootTimeThres = 15;
+		thres->angleHighThres = 40;
+		thres->angleLowThres = 20;
 	}
 	else if(MACHINE==X3){
 		thres->lowEyeThres = 5;
@@ -1555,5 +1564,7 @@ void initThres(Threshold *thres){
 		thres->fireThres = 0;
 		thres->whiteLineTimeThres = 30;
 		thres->shootTimeThres = 15;
+		thres->angleHighThres = 40;
+		thres->angleLowThres = 20;
 	}
 }
