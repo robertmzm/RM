@@ -169,7 +169,6 @@ int main(void)
 	extern int speed;
 	extern int screenI;//indicate what to display
 	screenI = 0;
-	testShooting();
 
 	int angle=0;//the angle of compass;
 	int direction=STOP;//the direcion robot goes,360 means stop;
@@ -1474,11 +1473,11 @@ void screen(int i,Threshold thres){
 		SetLCD5Char( 70 ,80 ,thres.gInnerBackThres ,BLUE ,BLACK );
 		SetLCD5Char( 70 ,100 ,thres.gOutterBackThres ,BLUE ,BLACK );
 
-		SetLCD5Char(0,20,fireThres,RED,BLACK);
-		SetLCD5Char(50,20,whiteLineTimeThres,RED,BLACK);
-		SetLCD5Char(100,20,shootTimeThres,RED,BLACK);
-		SetLCD5Char(0,120,angleHighThres,RED,BLACK);
-		SetLCD5Char(50,120,angleLowThres,RED,BLACK);
+		SetLCD5Char(0,20,thres.fireThres,RED,BLACK);
+		SetLCD5Char(50,20,thres.whiteLineTimeThres,RED,BLACK);
+		SetLCD5Char(100,20,thres.shootTimeThres,RED,BLACK);
+		SetLCD5Char(0,120,thres.angleHighThres,RED,BLACK);
+		SetLCD5Char(50,120,thres.angleLowThres,RED,BLACK);
 	}
 
 }
