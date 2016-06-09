@@ -86,7 +86,7 @@
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define MACHINE X2
+												#define MACHINE X3
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
 #define BLOCKED 361
@@ -679,6 +679,13 @@ int getEyePort(Threshold thres){
 /*
 
 */
+double toRadian(int degree){
+	/*intake a degree;
+	 *return the degree in radian;
+	 */
+	return degree*M_PI/180;
+}
+
 int sinLaw(int degree1,int degree2,int speed2){
 	/*intake both angle and one of the length
 	 *output the other length
@@ -690,12 +697,6 @@ int sinLaw(int degree1,int degree2,int speed2){
 
 
 
-double toRadian(int degree){
-	/*intake a degree;
-	 *return the degree in radian;
-	 */
-	return degree*M_PI/180;
-}
 
 
 void move(int d,int s,int targetAngle,int shooting,Threshold thres){
@@ -710,9 +711,10 @@ void move(int d,int s,int targetAngle,int shooting,Threshold thres){
 	int speed1,speed2,speed3,speed4;//speed of each motor.
 	int slowerSpeed;//the speed for the slower motor in order to control the direction.
 	int angle,angleDif;
+	int degree1, degree2;
 	int extern screenI;
 	double radian;
-	v = shooting?MAXSPEED:v;
+	s = shooting?MAXSPEED:s;
 	if(MACHINE == X2){
 		if (d<45){
 			//set up the direction of each motor
@@ -816,108 +818,108 @@ void move(int d,int s,int targetAngle,int shooting,Threshold thres){
 	}
 	else if(MACHINE == X3){
 	    if(d<50){
-	        degree1 = 50-direction;
-	        degree2 = 50+direction;
-	        slowerspeed = sinLaw(degree1,degree2,s);
+	        degree1 = 50-d;
+	        degree2 = 50+d;
+	        slowerSpeed = sinLaw(degree1,degree2,s);
 	        direction1 = 0;
 	        direction2 = 0;
 	        direction3 = 2;
 	        direction4 = 2;
-	        speed1 = slowerspeed;
+	        speed1 = slowerSpeed;
 	        speed2 = s;
-	        speed3 = slowerspeed;
+	        speed3 = slowerSpeed;
 	        speed4 = s;
 	    }
 	    else if(d<90){
-	        degree1 = direction-50;
-	        degree2 = 130-direction;
-	        slowerspeed = sinLaw(degree1,degree2,v);
+	        degree1 = d-50;
+	        degree2 = 130-d;
+	        slowerSpeed = sinLaw(degree1,degree2,s);
 	        direction1 = 2;
 	        direction2 = 0;
 	        direction3 = 0;
 	        direction4 = 2;
-	        speed1 = slowerspeed;
+	        speed1 = slowerSpeed;
 	        speed2 = s;
-	        speed3 = slowerspeed;
+	        speed3 = slowerSpeed;
 	        speed4 = s;
 	    }
 	    else if(d<130){
-	        degree1 = 130-direction;
-	        degree2 = direction-50;
-	        slowerspeed = sinLaw(degree1,degree2,v);
+	        degree1 = 130-d;
+	        degree2 = d-50;
+	        slowerSpeed = sinLaw(degree1,degree2,s);
 	        direction1 = 2;
 	        direction2 = 0;
 	        direction3 = 0;
 	        direction4 = 2;
 	        speed1 = s;
-	        speed2 = slowerspeed;
+	        speed2 = slowerSpeed;
 	        speed3 = s;
-	        speed4 = slowerspeed;
+	        speed4 = slowerSpeed;
 	    }
 	    else if(d<180){
-	            degree1 = direction-130;
-	            degree2 = 230-direction;
-	            slowerspeed = sinLaw(degree1,degree2,v);
+	            degree1 = d-130;
+	            degree2 = 230-d;
+	            slowerSpeed = sinLaw(degree1,degree2,s);
 	            direction1 = 2;
 	            direction2 = 2;
 	            direction3 = 0;
 	            direction4 = 0;
 	            speed1 = s;
-	            speed2 = slowerspeed;
+	            speed2 = slowerSpeed;
 	            speed3 = s;
-	            speed4 = slowerspeed;
+	            speed4 = slowerSpeed;
 	    }
 	    else if(d<230){
-	            degree1 = 230-direction;
-	            degree2 = direction-130;
-	            slowerspeed = sinLaw(degree1,degree2,v);
+	            degree1 = 230-d;
+	            degree2 = d-130;
+	            slowerSpeed = sinLaw(degree1,degree2,s);
 	            direction1 = 2;
 	            direction2 = 2;
 	            direction3 = 0;
 	            direction4 = 0;
-	            speed1 = slowerspeed;
+	            speed1 = slowerSpeed;
 	            speed2 = s;
-	            speed3 = slowerspeed;
+	            speed3 = slowerSpeed;
 	            speed4 = s;
 	    }
 	    else if(d<270){
-	            degree1 = direction-230;
-	            degree2 = 310-direction;
-	            slowerspeed = sinLaw(degree1,degree2,v);
+	            degree1 = d-230;
+	            degree2 = 310-d;
+	            slowerSpeed = sinLaw(degree1,degree2,s);
 	            direction1 = 0;
 	            direction2 = 2;
 	            direction3 = 2;
 	            direction4 = 0;
-	            speed1 = slowerspeed;
+	            speed1 = slowerSpeed;
 	            speed2 = s;
-	            speed3 = slowerspeed;
+	            speed3 = slowerSpeed;
 	            speed4 = s;
 	    }
 	    else if(d<310){
-	            degree1 = 310-direction;
-	            degree2 = direction-230;
-	            slowerspeed = sinLaw(degree1,degree2,v);
+	            degree1 = 310-d;
+	            degree2 = d-230;
+	            slowerSpeed = sinLaw(degree1,degree2,s);
 	            direction1 = 0;
 	            direction2 = 2;
 	            direction3 = 2;
 	            direction4 = 0;
 	            speed1 = s;
-	            speed2 = slowerspeed;
+	            speed2 = slowerSpeed;
 	            speed3 = s;
-	            speed4 = slowerspeed;
+	            speed4 = slowerSpeed;
 	    }
 	    else if(d<360){
-	            degree1 = direction-310;
-	            degree2 = 410-direction;
-	            slowerspeed = sinLaw(degree1,degree2,v);
+	            degree1 = d-310;
+	            degree2 = 410-d;
+	            slowerSpeed = sinLaw(degree1,degree2,s);
 	            direction1 = 0;
 	            direction2 = 0;
 	            direction3 = 2;
 	            direction4 = 2;
 	            speed1 = s;
-	            speed2 = slowerspeed;
+	            speed2 = slowerSpeed;
 	            speed3 = s;
-	            speed4 = slowerspeed;
+	            speed4 = slowerSpeed;
 	    }
 	}
 	if(d == STOP||d == BLOCKED){
@@ -1207,10 +1209,10 @@ int closeStrategyX3(int p){
 		output=30;
 	}
 	else if(p ==10){
-		output=60;
+		output=70;
 	}
 	else if(p ==11){
-		output=120;
+		output=130;
 	}
 	else if(p ==12){
 		output=150;
