@@ -661,11 +661,138 @@ int getEyePort(Threshold thres){
 
 
 
-double degreeToRadian(int degree){
+
+/*
+
+void move(int direction, int v){
+    int degree1 = 0;
+    int degree2 = 0;
+    int slowerV = 0;
+    int motorSpeed[] = {0,0,0,0};
+    int motorDirection[] = {0,0,0,0};
+
+    if(direction<50){
+        degree1 = 50-direction;
+        degree2 = 50+direction;
+        slowerV = sinLaw(degree1,degree2,v);
+        motorDirection[0] = 0;
+        motorDirection[1] = 0;
+        motorDirection[2] = 2;
+        motorDirection[3] = 2;
+        motorSpeed[0] = slowerV;
+        motorSpeed[1] = v;
+        motorSpeed[2] = slowerV;
+        motorSpeed[3] = v;
+    }
+    else if(direction<90){
+        degree1 = direction-50;
+        degree2 = 130-direction;
+        slowerV = sinLaw(degree1,degree2,v);
+        motorDirection[0] = 2;
+        motorDirection[1] = 0;
+        motorDirection[2] = 0;
+        motorDirection[3] = 2;
+        motorSpeed[0] = slowerV;
+        motorSpeed[1] = v;
+        motorSpeed[2] = slowerV;
+        motorSpeed[3] = v;
+    }
+    else if(direction<130){
+        degree1 = 130-direction;
+        degree2 = direction-50;
+        slowerV = sinLaw(degree1,degree2,v);
+        motorDirection[0] = 2;
+        motorDirection[1] = 0;
+        motorDirection[2] = 0;
+        motorDirection[3] = 2;
+        motorSpeed[0] = v;
+        motorSpeed[1] = slowerV;
+        motorSpeed[2] = v;
+        motorSpeed[3] = slowerV;
+    }
+    else if(direction<180){
+            degree1 = direction-130;
+            degree2 = 230-direction;
+            slowerV = sinLaw(degree1,degree2,v);
+            motorDirection[0] = 2;
+            motorDirection[1] = 2;
+            motorDirection[2] = 0;
+            motorDirection[3] = 0;
+            motorSpeed[0] = v;
+            motorSpeed[1] = slowerV;
+            motorSpeed[2] = v;
+            motorSpeed[3] = slowerV;
+    }
+    else if(direction<230){
+            degree1 = 230-direction;
+            degree2 = direction-130;
+            slowerV = sinLaw(degree1,degree2,v);
+            motorDirection[0] = 2;
+            motorDirection[1] = 2;
+            motorDirection[2] = 0;
+            motorDirection[3] = 0;
+            motorSpeed[0] = slowerV;
+            motorSpeed[1] = v;
+            motorSpeed[2] = slowerV;
+            motorSpeed[3] = v;
+    }
+    else if(direction<270){
+            degree1 = direction-230;
+            degree2 = 310-direction;
+            slowerV = sinLaw(degree1,degree2,v);
+            motorDirection[0] = 0;
+            motorDirection[1] = 2;
+            motorDirection[2] = 2;
+            motorDirection[3] = 0;
+            motorSpeed[0] = slowerV;
+            motorSpeed[1] = v;
+            motorSpeed[2] = slowerV;
+            motorSpeed[3] = v;
+    }
+    else if(direction<310){
+            degree1 = 310-direction;
+            degree2 = direction-230;
+            slowerV = sinLaw(degree1,degree2,v);
+            motorDirection[0] = 0;
+            motorDirection[1] = 2;
+            motorDirection[2] = 2;
+            motorDirection[3] = 0;
+            motorSpeed[0] = v;
+            motorSpeed[1] = slowerV;
+            motorSpeed[2] = v;
+            motorSpeed[3] = slowerV;
+    }
+    else if(direction<360){
+            degree1 = direction-310;
+            degree2 = 410-direction;
+            slowerV = sinLaw(degree1,degree2,v);
+            motorDirection[0] = 0;
+            motorDirection[1] = 0;
+            motorDirection[2] = 2;
+            motorDirection[3] = 2;
+            motorSpeed[0] = v;
+            motorSpeed[1] = slowerV;
+            motorSpeed[2] = v;
+            motorSpeed[3] = slowerV;
+    }
+
+    printMotorDirection(motorDirection);
+    printMotorSpeed(motorSpeed);
+}
+
+int sinLaw(int degree1,int degree2,int speed2){
+    double radian1 = toRadian(degree1);
+    double radian2 = toRadian(degree2);
+    return (sin(radian1)*speed2)/sin(radian2);
+}
+*/
+
+
+double toRadian(int degree){
 	/*intake a degree;
 	 *return the degree in radian;
 	 */
-	return (degree*M_PI)/180;
+	return degree*M_PI/180;
 }
 
 
@@ -683,105 +810,106 @@ void move(int d,int s,int targetAngle,int shooting,Threshold thres){
 	int angle,angleDif;
 	int extern screenI;
 	double radian;
-
-	if (d<45){
-		//set up the direction of each motor
-		direction1 = 0;
-		direction2 = 0;
-		direction3 = 2;
-		direction4 = 2;
-		radian= degreeToRadian(45-d);//calculate the angle needed to calculate the slower speed
-		slowerSpeed = tan(radian)*s;//calculate the slower speed in order to control direction of the robot
-		//motor 2 and motor 4 go for full speed and motor 1 and motor 3 are slower
-		speed1=slowerSpeed;
-		speed2=s;
-		speed3=slowerSpeed;
-		speed4=s;
-	}
-	else if(d<90){
-		direction1 = 2;
-		direction2 = 0;
-		direction3 = 0;
-		direction4 = 2;
-		radian = degreeToRadian(d-45);
-		slowerSpeed = tan(radian)*s;
-		speed1=slowerSpeed;
-		speed2=s;
-		speed3=slowerSpeed;
-		speed4=s;
-	}
-	else if(d<135){
-		direction1 = 2;
-		direction2 = 0;
-		direction3 = 0;
-		direction4 = 2;
-		radian = degreeToRadian(135-d);
-		slowerSpeed = tan(radian)*s;
-		speed1=s;
-		speed2=slowerSpeed;
-		speed3=s;
-		speed4=slowerSpeed;
-	}
-	else if(d<180){
-		direction1 = 2;
-		direction2 = 2;
-		direction3 = 0;
-		direction4 = 0;
-		radian = degreeToRadian(d-135);
-		slowerSpeed = tan(radian)*s;
-		speed1=s;
-		speed2=slowerSpeed;
-		speed3=s;
-		speed4=slowerSpeed;
-	}
-	else if (d<225){
-		direction1 = 2;
-		direction2 = 2;
-		direction3 = 0;
-		direction4 = 0;
-		radian = degreeToRadian(225-d);
-		slowerSpeed = tan(radian)*s;
-		speed1=slowerSpeed;
-		speed2=s;
-		speed3=slowerSpeed;
-		speed4=s;
-
-	}
-	else if(d<270){
-		direction1 = 0;
-		direction2 = 2;
-		direction3 = 2;
-		direction4 = 0;
-		radian = degreeToRadian(d-225);
-		slowerSpeed = tan(radian)*s;
-		speed1=slowerSpeed;
-		speed2=s;
-		speed3=slowerSpeed;
-		speed4=s;
-	}
-	else if(d<315){
-		direction1 = 0;
-		direction2 = 2;
-		direction3 = 2;
-		direction4 = 0;
-		radian = degreeToRadian(315-d);
-		slowerSpeed = tan(radian)*s;
-		speed1=s;
-		speed2=slowerSpeed;
-		speed3=s;
-		speed4=slowerSpeed;
-	}
-	else if(d<360){
-		direction1 = 0;
-		direction2 = 0;
-		direction3 = 2;
-		direction4 = 2;
-		radian = degreeToRadian(d-315);
-		slowerSpeed = tan(radian)*s;
-		speed1=s;
-		speed2=slowerSpeed;
-		speed3=s;
-		speed4=slowerSpeed;
+		if(MACHINE == X2){
+		if (d<45){
+			//set up the direction of each motor
+			direction1 = 0;
+			direction2 = 0;
+			direction3 = 2;
+			direction4 = 2;
+			radian= toRadian(45-d);//calculate the angle needed to calculate the slower speed
+			slowerSpeed = tan(radian)*s;//calculate the slower speed in order to control direction of the robot
+			//motor 2 and motor 4 go for full speed and motor 1 and motor 3 are slower
+			speed1=slowerSpeed;
+			speed2=s;
+			speed3=slowerSpeed;
+			speed4=s;
+		}
+		else if(d<90){
+			direction1 = 2;
+			direction2 = 0;
+			direction3 = 0;
+			direction4 = 2;
+			radian = toRadian(d-45);
+			slowerSpeed = tan(radian)*s;
+			speed1=slowerSpeed;
+			speed2=s;
+			speed3=slowerSpeed;
+			speed4=s;
+		}
+		else if(d<135){
+			direction1 = 2;
+			direction2 = 0;
+			direction3 = 0;
+			direction4 = 2;
+			radian = toRadian(135-d);
+			slowerSpeed = tan(radian)*s;
+			speed1=s;
+			speed2=slowerSpeed;
+			speed3=s;
+			speed4=slowerSpeed;
+		}
+		else if(d<180){
+			direction1 = 2;
+			direction2 = 2;
+			direction3 = 0;
+			direction4 = 0;
+			radian = toRadian(d-135);
+			slowerSpeed = tan(radian)*s;
+			speed1=s;
+			speed2=slowerSpeed;
+			speed3=s;
+			speed4=slowerSpeed;
+		}
+		else if (d<225){
+			direction1 = 2;
+			direction2 = 2;
+			direction3 = 0;
+			direction4 = 0;
+			radian = toRadian(225-d);
+			slowerSpeed = tan(radian)*s;
+			speed1=slowerSpeed;
+			speed2=s;
+			speed3=slowerSpeed;
+			speed4=s;
+	
+		}
+		else if(d<270){
+			direction1 = 0;
+			direction2 = 2;
+			direction3 = 2;
+			direction4 = 0;
+			radian = toRadian(d-225);
+			slowerSpeed = tan(radian)*s;
+			speed1=slowerSpeed;
+			speed2=s;
+			speed3=slowerSpeed;
+			speed4=s;
+		}
+		else if(d<315){
+			direction1 = 0;
+			direction2 = 2;
+			direction3 = 2;
+			direction4 = 0;
+			radian = toRadian(315-d);
+			slowerSpeed = tan(radian)*s;
+			speed1=s;
+			speed2=slowerSpeed;
+			speed3=s;
+			speed4=slowerSpeed;
+		}
+		else if(d<360){
+			direction1 = 0;
+			direction2 = 0;
+			direction3 = 2;
+			direction4 = 2;
+			radian = toRadian(d-315);
+			slowerSpeed = tan(radian)*s;
+			speed1=s;
+			speed2=slowerSpeed;
+			speed3=s;
+			speed4=slowerSpeed;
+		}
 	}
 	else if(d == STOP||d == BLOCKED){
 		//stop
