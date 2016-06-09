@@ -1,0 +1,1078 @@
+<?xml version="1.0" standalone="no"?>
+<!--RoboExp Hardware Information-->
+<HardwareTable>
+  <SoftwareType>X2RCU</SoftwareType>
+  <Description />
+  <HardwareType>
+    <_FAN_>
+      <TypeNickNameDefault>风扇模块</TypeNickNameDefault>
+      <TypeNickNameCHS>风扇模块</TypeNickNameCHS>
+      <TypeNickNameCHT>风扇模块</TypeNickNameCHT>
+      <TypeDesDefault>风扇</TypeDesDefault>
+      <TypeDesCHS>风扇</TypeDesCHS>
+      <TypeDesCHT>风扇</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--风扇控制线1</PinDesDefault0>
+      <PinDesCHS0>功能--风扇控制线1</PinDesCHS0>
+      <PinDesCHT0>功能--风扇控制线1</PinDesCHT0>
+      <PinDesDefault1>功能--风扇控制线2</PinDesDefault1>
+      <PinDesCHS1>功能--风扇控制线2</PinDesCHS1>
+      <PinDesCHT1>功能--风扇控制线2</PinDesCHT1>
+      <HardwareInstance />
+    </_FAN_>
+    <_IRDISTANCE_>
+      <TypeNickNameDefault>红外测距模块</TypeNickNameDefault>
+      <TypeNickNameCHS>红外测距模块</TypeNickNameCHS>
+      <TypeNickNameCHT>红外测距模块</TypeNickNameCHT>
+      <TypeDesDefault>使用红外线测量距离</TypeDesDefault>
+      <TypeDesCHS>使用红外线测量距离</TypeDesCHS>
+      <TypeDesCHT>使用红外线测量距离</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--距离测量</PinDesDefault0>
+      <PinDesCHS0>功能--距离测量</PinDesCHS0>
+      <PinDesCHT0>功能--距离测量</PinDesCHT0>
+      <HardwareInstance />
+    </_IRDISTANCE_>
+    <_IRDETECT_>
+      <TypeNickNameDefault>红外检测模块</TypeNickNameDefault>
+      <TypeNickNameCHS>红外检测模块</TypeNickNameCHS>
+      <TypeNickNameCHT>红外检测模块</TypeNickNameCHT>
+      <TypeDesDefault>红外线检测</TypeDesDefault>
+      <TypeDesCHS>红外线检测</TypeDesCHS>
+      <TypeDesCHT>红外线检测</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--红外线检测</PinDesDefault0>
+      <PinDesCHS0>功能--红外线检测</PinDesCHS0>
+      <PinDesCHT0>功能--红外线检测</PinDesCHT0>
+      <HardwareInstance />
+    </_IRDETECT_>
+    <_LED_>
+      <TypeNickNameDefault>发光模块</TypeNickNameDefault>
+      <TypeNickNameCHS>发光模块</TypeNickNameCHS>
+      <TypeNickNameCHT>发光模块</TypeNickNameCHT>
+      <TypeDesDefault>发光</TypeDesDefault>
+      <TypeDesCHS>发光</TypeDesCHS>
+      <TypeDesCHT>发光</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--发光控制</PinDesDefault0>
+      <PinDesCHS0>功能--发光控制</PinDesCHS0>
+      <PinDesCHT0>功能--发光控制</PinDesCHT0>
+      <HardwareInstance>
+        <_LED_shoot_>
+          <TypeName>_LED_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>7 </CtrlPin>
+          <GNDPin>7 </GNDPin>
+          <VccPin>7 </VccPin>
+        </_LED_shoot_>
+      </HardwareInstance>
+    </_LED_>
+    <_SWITCH_>
+      <TypeNickNameDefault>电子开关模块</TypeNickNameDefault>
+      <TypeNickNameCHS>电子开关模块</TypeNickNameCHS>
+      <TypeNickNameCHT>电子开关模块</TypeNickNameCHT>
+      <TypeDesDefault>电子开关</TypeDesDefault>
+      <TypeDesCHS>电子开关</TypeDesCHS>
+      <TypeDesCHT>电子开关</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit />
+      <VccLimit />
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--控制控制</PinDesDefault0>
+      <PinDesCHS0>功能--控制控制</PinDesCHS0>
+      <PinDesCHT0>功能--控制控制</PinDesCHT0>
+      <HardwareInstance />
+    </_SWITCH_>
+    <_IRAUTO_>
+      <TypeNickNameDefault>红外发射模块</TypeNickNameDefault>
+      <TypeNickNameCHS>红外发射模块</TypeNickNameCHS>
+      <TypeNickNameCHT>红外发射模块</TypeNickNameCHT>
+      <TypeDesDefault>脉冲红外线发射</TypeDesDefault>
+      <TypeDesCHS>脉冲红外线发射</TypeDesCHS>
+      <TypeDesCHT>脉冲红外线发射</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--发射控制</PinDesDefault0>
+      <PinDesCHS0>功能--发射控制</PinDesCHS0>
+      <PinDesCHT0>功能--发射控制</PinDesCHT0>
+      <HardwareInstance />
+    </_IRAUTO_>
+    <_MOTOR_>
+      <TypeNickNameDefault>马达模块</TypeNickNameDefault>
+      <TypeNickNameCHS>马达模块</TypeNickNameCHS>
+      <TypeNickNameCHT>马达模块</TypeNickNameCHT>
+      <TypeDesDefault>马达</TypeDesDefault>
+      <TypeDesCHS>马达</TypeDesCHS>
+      <TypeDesCHT>马达</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,16 ,17 ,18 ,19 </CtrlLimit>
+      <GNDLimit>21 ,23 </GNDLimit>
+      <VccLimit>21 ,23 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--马达控制线1</PinDesDefault0>
+      <PinDesCHS0>功能--马达控制线1</PinDesCHS0>
+      <PinDesCHT0>功能--马达控制线1</PinDesCHT0>
+      <PinDesDefault1>功能--马达控制线2</PinDesDefault1>
+      <PinDesCHS1>功能--马达控制线2</PinDesCHS1>
+      <PinDesCHT1>功能--马达控制线2</PinDesCHT1>
+      <HardwareInstance>
+        <_MOTOR_M1_>
+          <TypeName>_MOTOR_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>24 ,25 </CtrlPin>
+          <GNDPin>24 </GNDPin>
+          <VccPin>24 </VccPin>
+        </_MOTOR_M1_>
+        <_MOTOR_M2_>
+          <TypeName>_MOTOR_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>26 ,27 </CtrlPin>
+          <GNDPin>26 </GNDPin>
+          <VccPin>26 </VccPin>
+        </_MOTOR_M2_>
+        <_MOTOR_M3_>
+          <TypeName>_MOTOR_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>28 ,29 </CtrlPin>
+          <GNDPin>28 </GNDPin>
+          <VccPin>28 </VccPin>
+        </_MOTOR_M3_>
+        <_MOTOR_M4_>
+          <TypeName>_MOTOR_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>30 ,31 </CtrlPin>
+          <GNDPin>30 </GNDPin>
+          <VccPin>30 </VccPin>
+        </_MOTOR_M4_>
+      </HardwareInstance>
+    </_MOTOR_>
+    <_PHOTOSENSOR_>
+      <TypeNickNameDefault>环境光测量模块</TypeNickNameDefault>
+      <TypeNickNameCHS>环境光测量模块</TypeNickNameCHS>
+      <TypeNickNameCHT>环境光测量模块</TypeNickNameCHT>
+      <TypeDesDefault>测量环境光强度</TypeDesDefault>
+      <TypeDesCHS>测量环境光强度</TypeDesCHS>
+      <TypeDesCHT>测量环境光强度</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--环境光测量</PinDesDefault0>
+      <PinDesCHS0>功能--环境光测量</PinDesCHS0>
+      <PinDesCHT0>功能--环境光测量</PinDesCHT0>
+      <HardwareInstance />
+    </_PHOTOSENSOR_>
+    <_FLAMEDETECT_>
+      <TypeNickNameDefault>火焰测量模块</TypeNickNameDefault>
+      <TypeNickNameCHS>火焰测量模块</TypeNickNameCHS>
+      <TypeNickNameCHT>火焰测量模块</TypeNickNameCHT>
+      <TypeDesDefault>火焰强度测量</TypeDesDefault>
+      <TypeDesCHS>火焰强度测量</TypeDesCHS>
+      <TypeDesCHT>火焰强度测量</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--火焰测量</PinDesDefault0>
+      <PinDesCHS0>功能--火焰测量</PinDesCHS0>
+      <PinDesCHT0>功能--火焰测量</PinDesCHT0>
+      <HardwareInstance>
+        <_FLAMEDETECT_fire_>
+          <TypeName>_FLAMEDETECT_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>1 </CtrlPin>
+          <GNDPin>1 </GNDPin>
+          <VccPin>1 </VccPin>
+        </_FLAMEDETECT_fire_>
+      </HardwareInstance>
+    </_FLAMEDETECT_>
+    <_SCABLEAD_>
+      <TypeNickNameDefault>灰度测量模块</TypeNickNameDefault>
+      <TypeNickNameCHS>灰度测量模块</TypeNickNameCHS>
+      <TypeNickNameCHT>灰度测量模块</TypeNickNameCHT>
+      <TypeDesDefault>灰度值测量</TypeDesDefault>
+      <TypeDesCHS>灰度值测量</TypeDesCHS>
+      <TypeDesCHT>灰度值测量</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--灰度值测量</PinDesDefault0>
+      <PinDesCHS0>功能--灰度值测量</PinDesCHS0>
+      <PinDesCHT0>功能--灰度值测量</PinDesCHT0>
+      <HardwareInstance>
+        <_SCABLEAD_gInnerBack_>
+          <TypeName>_SCABLEAD_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>11 </CtrlPin>
+          <GNDPin>11 </GNDPin>
+          <VccPin>11 </VccPin>
+        </_SCABLEAD_gInnerBack_>
+        <_SCABLEAD_gFront_>
+          <TypeName>_SCABLEAD_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>6 </CtrlPin>
+          <GNDPin>6 </GNDPin>
+          <VccPin>6 </VccPin>
+        </_SCABLEAD_gFront_>
+        <_SCABLEAD_gInnerLeft_>
+          <TypeName>_SCABLEAD_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>10 </CtrlPin>
+          <GNDPin>10 </GNDPin>
+          <VccPin>10 </VccPin>
+        </_SCABLEAD_gInnerLeft_>
+        <_SCABLEAD_gInnerRight_>
+          <TypeName>_SCABLEAD_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>9 </CtrlPin>
+          <GNDPin>9 </GNDPin>
+          <VccPin>9 </VccPin>
+        </_SCABLEAD_gInnerRight_>
+        <_SCABLEAD_gOutterLeft_>
+          <TypeName>_SCABLEAD_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>5 </CtrlPin>
+          <GNDPin>5 </GNDPin>
+          <VccPin>5 </VccPin>
+        </_SCABLEAD_gOutterLeft_>
+        <_SCABLEAD_gOutterRight_>
+          <TypeName>_SCABLEAD_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>8 </CtrlPin>
+          <GNDPin>8 </GNDPin>
+          <VccPin>8 </VccPin>
+        </_SCABLEAD_gOutterRight_>
+        <_SCABLEAD_gOutterBack_>
+          <TypeName>_SCABLEAD_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>4 </CtrlPin>
+          <GNDPin>4 </GNDPin>
+          <VccPin>4 </VccPin>
+        </_SCABLEAD_gOutterBack_>
+      </HardwareInstance>
+    </_SCABLEAD_>
+    <_SCABLEAD3C_>
+      <TypeNickNameDefault>3色灰度测量模块</TypeNickNameDefault>
+      <TypeNickNameCHS>3色灰度测量模块</TypeNickNameCHS>
+      <TypeNickNameCHT>3色灰度测量模块</TypeNickNameCHT>
+      <TypeDesDefault>灰度值测量</TypeDesDefault>
+      <TypeDesCHS>灰度值测量</TypeDesCHS>
+      <TypeDesCHT>灰度值测量</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--灰度值测量</PinDesDefault0>
+      <PinDesCHS0>功能--灰度值测量</PinDesCHS0>
+      <PinDesCHT0>功能--灰度值测量</PinDesCHT0>
+      <PinDesDefault1>功能--发光灯控制</PinDesDefault1>
+      <PinDesCHS1>功能--发光灯控制</PinDesCHS1>
+      <PinDesCHT1>功能--发光灯控制</PinDesCHT1>
+      <HardwareInstance />
+    </_SCABLEAD3C_>
+    <_SELECTOR_>
+      <TypeNickNameDefault>程序选择器</TypeNickNameDefault>
+      <TypeNickNameCHS>程序选择器</TypeNickNameCHS>
+      <TypeNickNameCHT>程序选择器</TypeNickNameCHT>
+      <TypeDesDefault>程序选择器</TypeDesDefault>
+      <TypeDesCHS>程序选择器</TypeDesCHS>
+      <TypeDesCHT>程序选择器</TypeDesCHT>
+      <CtrlLimit />
+      <GNDLimit />
+      <VccLimit />
+      <IsDefault>true</IsDefault>
+      <PinCount>4</PinCount>
+      <PinDesDefault0>功能--选择检测1</PinDesDefault0>
+      <PinDesCHS0>功能--选择检测1</PinDesCHS0>
+      <PinDesCHT0>功能--选择检测1</PinDesCHT0>
+      <PinDesDefault1>功能--选择检测2</PinDesDefault1>
+      <PinDesCHS1>功能--选择检测2</PinDesCHS1>
+      <PinDesCHT1>功能--选择检测2</PinDesCHT1>
+      <PinDesDefault2>功能--选择检测3</PinDesDefault2>
+      <PinDesCHS2>功能--选择检测3</PinDesCHS2>
+      <PinDesCHT2>功能--选择检测3</PinDesCHT2>
+      <PinDesDefault3>功能--选择检测4</PinDesDefault3>
+      <PinDesCHS3>功能--选择检测4</PinDesCHS3>
+      <PinDesCHT3>功能--选择检测4</PinDesCHT3>
+      <HardwareInstance />
+    </_SELECTOR_>
+    <_SERVO_>
+      <TypeNickNameDefault>伺服马达</TypeNickNameDefault>
+      <TypeNickNameCHS>伺服马达</TypeNickNameCHS>
+      <TypeNickNameCHT>伺服马达</TypeNickNameCHT>
+      <TypeDesDefault>伺服马达</TypeDesDefault>
+      <TypeDesCHS>伺服马达</TypeDesCHS>
+      <TypeDesCHT>伺服马达</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,16 ,17 ,18 ,19 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--伺服马达控制</PinDesDefault0>
+      <PinDesCHS0>功能--伺服马达控制</PinDesCHS0>
+      <PinDesCHT0>功能--伺服马达控制</PinDesCHT0>
+      <HardwareInstance />
+    </_SERVO_>
+    <_TOUCH_>
+      <TypeNickNameDefault>触碰模块</TypeNickNameDefault>
+      <TypeNickNameCHS>触碰模块</TypeNickNameCHS>
+      <TypeNickNameCHT>触碰模块</TypeNickNameCHT>
+      <TypeDesDefault>触碰模块</TypeDesDefault>
+      <TypeDesCHS>触碰模块</TypeDesCHS>
+      <TypeDesCHT>触碰模块</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--触碰检测</PinDesDefault0>
+      <PinDesCHS0>功能--触碰检测</PinDesCHS0>
+      <PinDesCHT0>功能--触碰检测</PinDesCHT0>
+      <HardwareInstance />
+    </_TOUCH_>
+    <_MICROPHONE_>
+      <TypeNickNameDefault>音量测量模块</TypeNickNameDefault>
+      <TypeNickNameCHS>音量测量模块</TypeNickNameCHS>
+      <TypeNickNameCHT>音量测量模块</TypeNickNameCHT>
+      <TypeDesDefault>音量测量</TypeDesDefault>
+      <TypeDesCHS>音量测量</TypeDesCHS>
+      <TypeDesCHT>音量测量</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--音量测量</PinDesDefault0>
+      <PinDesCHS0>功能--音量测量</PinDesCHS0>
+      <PinDesCHT0>功能--音量测量</PinDesCHT0>
+      <HardwareInstance />
+    </_MICROPHONE_>
+    <_TEMPERATURE_>
+      <TypeNickNameDefault>温度测量模块</TypeNickNameDefault>
+      <TypeNickNameCHS>温度测量模块</TypeNickNameCHS>
+      <TypeNickNameCHT>温度测量模块</TypeNickNameCHT>
+      <TypeDesDefault>温度测量</TypeDesDefault>
+      <TypeDesCHS>温度测量</TypeDesCHS>
+      <TypeDesCHT>温度测量</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--温度测量</PinDesDefault0>
+      <PinDesCHS0>功能--温度测量</PinDesCHS0>
+      <PinDesCHT0>功能--温度测量</PinDesCHT0>
+      <HardwareInstance />
+    </_TEMPERATURE_>
+    <_COMPASS_>
+      <TypeNickNameDefault>角度测量模块</TypeNickNameDefault>
+      <TypeNickNameCHS>角度测量模块</TypeNickNameCHS>
+      <TypeNickNameCHT>角度测量模块</TypeNickNameCHT>
+      <TypeDesDefault>角度测量</TypeDesDefault>
+      <TypeDesCHS>角度测量</TypeDesCHS>
+      <TypeDesCHT>角度测量</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance>
+        <_COMPASS_compass_>
+          <TypeName>_COMPASS_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>22 ,23 </CtrlPin>
+          <GNDPin>22 </GNDPin>
+          <VccPin>22 </VccPin>
+        </_COMPASS_compass_>
+      </HardwareInstance>
+    </_COMPASS_>
+    <_SERVOCTRL_>
+      <TypeNickNameDefault>伺服马达板</TypeNickNameDefault>
+      <TypeNickNameCHS>伺服马达板</TypeNickNameCHS>
+      <TypeNickNameCHT>伺服马达板</TypeNickNameCHT>
+      <TypeDesDefault>伺服马达控制板</TypeDesDefault>
+      <TypeDesCHS>伺服马达控制板</TypeDesCHS>
+      <TypeDesCHT>伺服马达控制板</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_SERVOCTRL_>
+    <_COMPOUNDEYE_>
+      <TypeNickNameDefault>复眼模块</TypeNickNameDefault>
+      <TypeNickNameCHS>复眼模块</TypeNickNameCHS>
+      <TypeNickNameCHT>复眼模块</TypeNickNameCHT>
+      <TypeDesDefault>复合火焰测量</TypeDesDefault>
+      <TypeDesCHS>复合火焰测量</TypeDesCHS>
+      <TypeDesCHT>复合火焰测量</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_COMPOUNDEYE_>
+    <_ULTRASOUND_>
+      <TypeNickNameDefault>超声测距模块</TypeNickNameDefault>
+      <TypeNickNameCHS>超声测距模块</TypeNickNameCHS>
+      <TypeNickNameCHT>超声测距模块</TypeNickNameCHT>
+      <TypeDesDefault>超声测距</TypeDesDefault>
+      <TypeDesCHS>超声测距</TypeDesCHS>
+      <TypeDesCHT>超声测距</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_ULTRASOUND_>
+    <_ADULTRASOUND_>
+      <TypeNickNameDefault>超声测距模块</TypeNickNameDefault>
+      <TypeNickNameCHS>超声测距模块</TypeNickNameCHS>
+      <TypeNickNameCHT>超声测距模块</TypeNickNameCHT>
+      <TypeDesDefault>超声测距(模拟)</TypeDesDefault>
+      <TypeDesCHS>超声测距(模拟)</TypeDesCHS>
+      <TypeDesCHT>超声测距(模拟)</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <HardwareInstance>
+        <_ADULTRASOUND_uBack_>
+          <TypeName>_ADULTRASOUND_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>15 </CtrlPin>
+          <GNDPin>15 </GNDPin>
+          <VccPin>15 </VccPin>
+        </_ADULTRASOUND_uBack_>
+        <_ADULTRASOUND_uLeft_>
+          <TypeName>_ADULTRASOUND_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>0 </CtrlPin>
+          <GNDPin>0 </GNDPin>
+          <VccPin>0 </VccPin>
+        </_ADULTRASOUND_uLeft_>
+        <_ADULTRASOUND_uRight_>
+          <TypeName>_ADULTRASOUND_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>14 </CtrlPin>
+          <GNDPin>14 </GNDPin>
+          <VccPin>14 </VccPin>
+        </_ADULTRASOUND_uRight_>
+        <_ADULTRASOUND_uFront_>
+          <TypeName>_ADULTRASOUND_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>2 </CtrlPin>
+          <GNDPin>2 </GNDPin>
+          <VccPin>2 </VccPin>
+        </_ADULTRASOUND_uFront_>
+      </HardwareInstance>
+    </_ADULTRASOUND_>
+    <_WIRELESS_>
+      <TypeNickNameDefault>无线收发模块</TypeNickNameDefault>
+      <TypeNickNameCHS>无线收发模块</TypeNickNameCHS>
+      <TypeNickNameCHT>无线收发模块</TypeNickNameCHT>
+      <TypeDesDefault>无线收发射数据</TypeDesDefault>
+      <TypeDesCHS>无线收发射数据</TypeDesCHS>
+      <TypeDesCHT>无线收发射数据</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_WIRELESS_>
+    <_PS2_>
+      <TypeNickNameDefault>PS2无线手柄</TypeNickNameDefault>
+      <TypeNickNameCHS>PS2无线手柄</TypeNickNameCHS>
+      <TypeNickNameCHT>PS2无线手柄</TypeNickNameCHT>
+      <TypeDesDefault>PS2无线手柄</TypeDesDefault>
+      <TypeDesCHS>PS2无线手柄</TypeDesCHS>
+      <TypeDesCHT>PS2无线手柄</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_PS2_>
+    <_ADEXTEND_>
+      <TypeNickNameDefault>AD扩展模块</TypeNickNameDefault>
+      <TypeNickNameCHS>AD扩展模块</TypeNickNameCHS>
+      <TypeNickNameCHT>AD扩展模块</TypeNickNameCHT>
+      <TypeDesDefault>模拟量测量</TypeDesDefault>
+      <TypeDesCHS>模拟量测量</TypeDesCHS>
+      <TypeDesCHT>模拟量测量</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_ADEXTEND_>
+    <_CALENDAR_>
+      <TypeNickNameDefault>时钟日历模块</TypeNickNameDefault>
+      <TypeNickNameCHS>时钟日历模块</TypeNickNameCHS>
+      <TypeNickNameCHT>时钟日历模块</TypeNickNameCHT>
+      <TypeDesDefault>时钟日历的读取和设置</TypeDesDefault>
+      <TypeDesCHS>时钟日历的读取和设置</TypeDesCHS>
+      <TypeDesCHT>时钟日历的读取和设置</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_CALENDAR_>
+    <_RFID_>
+      <TypeNickNameDefault>RFID模块</TypeNickNameDefault>
+      <TypeNickNameCHS>RFID模块</TypeNickNameCHS>
+      <TypeNickNameCHT>RFID模块</TypeNickNameCHT>
+      <TypeDesDefault>RFID读写数据</TypeDesDefault>
+      <TypeDesCHS>RFID读写数据</TypeDesCHS>
+      <TypeDesCHT>RFID读写数据</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_RFID_>
+    <_MP3_>
+      <TypeNickNameDefault>MP3模块</TypeNickNameDefault>
+      <TypeNickNameCHS>MP3模块</TypeNickNameCHS>
+      <TypeNickNameCHT>MP3模块</TypeNickNameCHT>
+      <TypeDesDefault>MP3读写数据</TypeDesDefault>
+      <TypeDesCHS>MP3读写数据</TypeDesCHS>
+      <TypeDesCHT>MP3读写数据</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_MP3_>
+    <_PYIFRARED_>
+      <TypeNickNameDefault>热析红外模块</TypeNickNameDefault>
+      <TypeNickNameCHS>热析红外模块</TypeNickNameCHS>
+      <TypeNickNameCHT>热析红外模块</TypeNickNameCHT>
+      <TypeDesDefault>热析红外值测量</TypeDesDefault>
+      <TypeDesCHS>热析红外值测量</TypeDesCHS>
+      <TypeDesCHT>热析红外值测量</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--热析红外值测量</PinDesDefault0>
+      <PinDesCHS0>功能--热析红外值测量</PinDesCHS0>
+      <PinDesCHT0>功能--热析红外值测量</PinDesCHT0>
+      <HardwareInstance />
+    </_PYIFRARED_>
+    <_HUMIDITY_>
+      <TypeNickNameDefault>湿度模块</TypeNickNameDefault>
+      <TypeNickNameCHS>湿度模块</TypeNickNameCHS>
+      <TypeNickNameCHT>湿度模块</TypeNickNameCHT>
+      <TypeDesDefault>湿度值测量</TypeDesDefault>
+      <TypeDesCHS>湿度值测量</TypeDesCHS>
+      <TypeDesCHT>湿度值测量</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--湿度值测量</PinDesDefault0>
+      <PinDesCHS0>功能--湿度值测量</PinDesCHS0>
+      <PinDesCHT0>功能--湿度值测量</PinDesCHT0>
+      <HardwareInstance />
+    </_HUMIDITY_>
+    <_SLOPE_>
+      <TypeNickNameDefault>倾斜检测</TypeNickNameDefault>
+      <TypeNickNameCHS>倾斜检测</TypeNickNameCHS>
+      <TypeNickNameCHT>倾斜检测</TypeNickNameCHT>
+      <TypeDesDefault>倾斜检测</TypeDesDefault>
+      <TypeDesCHS>倾斜检测</TypeDesCHS>
+      <TypeDesCHT>倾斜检测</TypeDesCHT>
+      <CtrlLimit>16 ,17 ,18 ,19 ,20 ,21 ,22 ,23 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--选择检测1</PinDesDefault0>
+      <PinDesCHS0>功能--选择检测1</PinDesCHS0>
+      <PinDesCHT0>功能--选择检测1</PinDesCHT0>
+      <PinDesDefault1>功能--选择检测2</PinDesDefault1>
+      <PinDesCHS1>功能--选择检测2</PinDesCHS1>
+      <PinDesCHT1>功能--选择检测2</PinDesCHT1>
+      <HardwareInstance />
+    </_SLOPE_>
+    <_ACCELERATION_>
+      <TypeNickNameDefault>ACCELERATION模块</TypeNickNameDefault>
+      <TypeNickNameCHS>ACCELERATION模块</TypeNickNameCHS>
+      <TypeNickNameCHT>ACCELERATION模块</TypeNickNameCHT>
+      <TypeDesDefault>重力加速度传感器</TypeDesDefault>
+      <TypeDesCHS>重力加速度传感器</TypeDesCHS>
+      <TypeDesCHT>重力加速度传感器</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_ACCELERATION_>
+    <_TRACE_>
+      <TypeNickNameDefault>智能寻迹模块</TypeNickNameDefault>
+      <TypeNickNameCHS>智能寻迹模块</TypeNickNameCHS>
+      <TypeNickNameCHT>智能寻迹模块</TypeNickNameCHT>
+      <TypeDesDefault>地面检测</TypeDesDefault>
+      <TypeDesCHS>地面检测</TypeDesCHS>
+      <TypeDesCHT>地面检测</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_TRACE_>
+    <_COMPOUNDEYE2_>
+      <TypeNickNameDefault>2代复眼模块</TypeNickNameDefault>
+      <TypeNickNameCHS>2代复眼模块</TypeNickNameCHS>
+      <TypeNickNameCHT>2代复眼模块</TypeNickNameCHT>
+      <TypeDesDefault>2代复眼测量</TypeDesDefault>
+      <TypeDesCHS>2代复眼测量</TypeDesCHS>
+      <TypeDesCHT>2代复眼测量</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_COMPOUNDEYE2_>
+    <_COMPOUNDEYE3_>
+      <TypeNickNameDefault>3代复眼模块</TypeNickNameDefault>
+      <TypeNickNameCHS>3代复眼模块</TypeNickNameCHS>
+      <TypeNickNameCHT>3代复眼模块</TypeNickNameCHT>
+      <TypeDesDefault>3代复眼测量</TypeDesDefault>
+      <TypeDesCHS>3代复眼测量</TypeDesCHS>
+      <TypeDesCHT>3代复眼测量</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance>
+        <_COMPOUNDEYE3_leftEye_>
+          <TypeName>_COMPOUNDEYE3_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>18 ,19 </CtrlPin>
+          <GNDPin>18 </GNDPin>
+          <VccPin>18 </VccPin>
+        </_COMPOUNDEYE3_leftEye_>
+        <_COMPOUNDEYE3_rightEye_>
+          <TypeName>_COMPOUNDEYE3_</TypeName>
+          <TypeNum>0</TypeNum>
+          <CtrlPin>20 ,21 </CtrlPin>
+          <GNDPin>20 </GNDPin>
+          <VccPin>20 </VccPin>
+        </_COMPOUNDEYE3_rightEye_>
+      </HardwareInstance>
+    </_COMPOUNDEYE3_>
+    <_COMPOUNDEYE16_>
+      <TypeNickNameDefault>16位复眼模块</TypeNickNameDefault>
+      <TypeNickNameCHS>16位复眼模块</TypeNickNameCHS>
+      <TypeNickNameCHT>16位复眼模块</TypeNickNameCHT>
+      <TypeDesDefault>16位复眼测量</TypeDesDefault>
+      <TypeDesCHS>16位复眼测量</TypeDesCHS>
+      <TypeDesCHT>16位复眼测量</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_COMPOUNDEYE16_>
+    <_KICK_>
+      <TypeNickNameDefault>KICK模块</TypeNickNameDefault>
+      <TypeNickNameCHS>KICK模块</TypeNickNameCHS>
+      <TypeNickNameCHT>KICK模块</TypeNickNameCHT>
+      <TypeDesDefault>射球</TypeDesDefault>
+      <TypeDesCHS>射球</TypeDesCHS>
+      <TypeDesCHT>射球</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--数据线</PinDesDefault1>
+      <PinDesCHS1>功能--数据线</PinDesCHS1>
+      <PinDesCHT1>功能--数据线</PinDesCHT1>
+      <HardwareInstance />
+    </_KICK_>
+    <_MICROTRACE_>
+      <TypeNickNameDefault>小型智能寻迹模块</TypeNickNameDefault>
+      <TypeNickNameCHS>小型智能寻迹模块</TypeNickNameCHS>
+      <TypeNickNameCHT>小型智能寻迹模块</TypeNickNameCHT>
+      <TypeDesDefault>地面检测</TypeDesDefault>
+      <TypeDesCHS>地面检测</TypeDesCHS>
+      <TypeDesCHT>地面检测</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_MICROTRACE_>
+    <_ADEXTEND14_>
+      <TypeNickNameDefault>14路模拟量采集模块</TypeNickNameDefault>
+      <TypeNickNameCHS>14路模拟量采集模块</TypeNickNameCHS>
+      <TypeNickNameCHT>14路模拟量采集模块</TypeNickNameCHT>
+      <TypeDesDefault>模拟量采集</TypeDesDefault>
+      <TypeDesCHS>模拟量采集</TypeDesCHS>
+      <TypeDesCHT>模拟量采集</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_ADEXTEND14_>
+    <_SMOKE_>
+      <TypeNickNameDefault>烟雾检测模块</TypeNickNameDefault>
+      <TypeNickNameCHS>烟雾检测模块</TypeNickNameCHS>
+      <TypeNickNameCHT>烟雾检测模块</TypeNickNameCHT>
+      <TypeDesDefault>烟雾检测</TypeDesDefault>
+      <TypeDesCHS>烟雾检测</TypeDesCHS>
+      <TypeDesCHT>烟雾检测</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--烟雾检测</PinDesDefault0>
+      <PinDesCHS0>功能--烟雾检测</PinDesCHS0>
+      <PinDesCHT0>功能--烟雾检测</PinDesCHT0>
+      <HardwareInstance />
+    </_SMOKE_>
+    <_DOOR_>
+      <TypeNickNameDefault>光闸检测模块</TypeNickNameDefault>
+      <TypeNickNameCHS>光闸检测模块</TypeNickNameCHS>
+      <TypeNickNameCHT>光闸检测模块</TypeNickNameCHT>
+      <TypeDesDefault>光闸检测</TypeDesDefault>
+      <TypeDesCHS>光闸检测</TypeDesCHS>
+      <TypeDesCHT>光闸检测</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--光闸检测</PinDesDefault0>
+      <PinDesCHS0>功能--光闸检测</PinDesCHS0>
+      <PinDesCHT0>功能--光闸检测</PinDesCHT0>
+      <HardwareInstance />
+    </_DOOR_>
+    <_CLOSE_>
+      <TypeNickNameDefault>接近检测模块</TypeNickNameDefault>
+      <TypeNickNameCHS>接近检测模块</TypeNickNameCHS>
+      <TypeNickNameCHT>接近检测模块</TypeNickNameCHT>
+      <TypeDesDefault>接近检测</TypeDesDefault>
+      <TypeDesCHS>接近检测</TypeDesCHS>
+      <TypeDesCHT>接近检测</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--接近检测</PinDesDefault0>
+      <PinDesCHS0>功能--接近检测</PinDesCHS0>
+      <PinDesCHT0>功能--接近检测</PinDesCHT0>
+      <HardwareInstance />
+    </_CLOSE_>
+    <_DIGITALTEMPERATURE_>
+      <TypeNickNameDefault>温度测量模块</TypeNickNameDefault>
+      <TypeNickNameCHS>温度测量模块</TypeNickNameCHS>
+      <TypeNickNameCHT>温度测量模块</TypeNickNameCHT>
+      <TypeDesDefault>温度测量</TypeDesDefault>
+      <TypeDesCHS>温度测量</TypeDesCHS>
+      <TypeDesCHT>温度测量</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--温度测量</PinDesDefault0>
+      <PinDesCHS0>功能--温度测量</PinDesCHS0>
+      <PinDesCHT0>功能--温度测量</PinDesCHT0>
+      <HardwareInstance />
+    </_DIGITALTEMPERATURE_>
+    <_IRONE_>
+      <TypeNickNameDefault>红外一体检测模块</TypeNickNameDefault>
+      <TypeNickNameCHS>红外一体检测模块</TypeNickNameCHS>
+      <TypeNickNameCHT>红外一体检测模块</TypeNickNameCHT>
+      <TypeDesDefault>红外线一体检测</TypeDesDefault>
+      <TypeDesCHS>红外线一体检测</TypeDesCHS>
+      <TypeDesCHT>红外线一体检测</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--红外线一体检测</PinDesDefault0>
+      <PinDesCHS0>功能--红外线一体检测</PinDesCHS0>
+      <PinDesCHT0>功能--红外线一体检测</PinDesCHT0>
+      <HardwareInstance />
+    </_IRONE_>
+    <_MUSICPLAYER_>
+      <TypeNickNameDefault>音乐播放器</TypeNickNameDefault>
+      <TypeNickNameCHS>音乐播放器</TypeNickNameCHS>
+      <TypeNickNameCHT>音乐播放器</TypeNickNameCHT>
+      <TypeDesDefault>播放音乐</TypeDesDefault>
+      <TypeDesCHS>播放音乐</TypeDesCHS>
+      <TypeDesCHT>播放音乐</TypeDesCHT>
+      <CtrlLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>1</PinCount>
+      <PinDesDefault0>功能--播放控制</PinDesDefault0>
+      <PinDesCHS0>功能--播放控制</PinDesCHS0>
+      <PinDesCHT0>功能--播放控制</PinDesCHT0>
+      <HardwareInstance />
+    </_MUSICPLAYER_>
+    <_TRACEV2_>
+      <TypeNickNameDefault>智能寻迹模块</TypeNickNameDefault>
+      <TypeNickNameCHS>智能寻迹模块</TypeNickNameCHS>
+      <TypeNickNameCHT>智能寻迹模块</TypeNickNameCHT>
+      <TypeDesDefault>地面检测</TypeDesDefault>
+      <TypeDesCHS>地面检测</TypeDesCHS>
+      <TypeDesCHT>地面检测</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_TRACEV2_>
+    <_EXTGSENSOR_>
+      <TypeNickNameDefault>3轴加速度模块</TypeNickNameDefault>
+      <TypeNickNameCHS>3轴加速度模块</TypeNickNameCHS>
+      <TypeNickNameCHT>3轴加速度模块</TypeNickNameCHT>
+      <TypeDesDefault>3轴加速度测量</TypeDesDefault>
+      <TypeDesCHS>3轴加速度测量</TypeDesCHS>
+      <TypeDesCHT>3轴加速度测量</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_EXTGSENSOR_>
+    <_INTEGRATE_>
+      <TypeNickNameDefault>一体板模块</TypeNickNameDefault>
+      <TypeNickNameCHS>一体板模块</TypeNickNameCHS>
+      <TypeNickNameCHT>一体板模块</TypeNickNameCHT>
+      <TypeDesDefault>一体板</TypeDesDefault>
+      <TypeDesCHS>一体板</TypeDesCHS>
+      <TypeDesCHT>一体板</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_INTEGRATE_>
+    <_COLOR_>
+      <TypeNickNameDefault>颜色检测模块</TypeNickNameDefault>
+      <TypeNickNameCHS>颜色检测模块</TypeNickNameCHS>
+      <TypeNickNameCHT>颜色检测模块</TypeNickNameCHT>
+      <TypeDesDefault>颜色检测</TypeDesDefault>
+      <TypeDesCHS>颜色检测</TypeDesCHS>
+      <TypeDesCHT>颜色检测</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_COLOR_>
+    <_AHRS_>
+      <TypeNickNameDefault>姿态传感器模块</TypeNickNameDefault>
+      <TypeNickNameCHS>姿态传感器模块</TypeNickNameCHS>
+      <TypeNickNameCHT>姿态传感器模块</TypeNickNameCHT>
+      <TypeDesDefault>姿态数据测量</TypeDesDefault>
+      <TypeDesCHS>姿态数据测量</TypeDesCHS>
+      <TypeDesCHT>姿态数据测量</TypeDesCHT>
+      <CtrlLimit>0 ,1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ,11 ,12 ,13 ,14 ,15 ,24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </CtrlLimit>
+      <GNDLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </GNDLimit>
+      <VccLimit>24 ,25 ,26 ,27 ,28 ,29 ,30 ,31 </VccLimit>
+      <IsDefault>true</IsDefault>
+      <PinCount>2</PinCount>
+      <PinDesDefault0>功能--数据线</PinDesDefault0>
+      <PinDesCHS0>功能--数据线</PinDesCHS0>
+      <PinDesCHT0>功能--数据线</PinDesCHT0>
+      <PinDesDefault1>功能--时钟线</PinDesDefault1>
+      <PinDesCHS1>功能--时钟线</PinDesCHS1>
+      <PinDesCHT1>功能--时钟线</PinDesCHT1>
+      <HardwareInstance />
+    </_AHRS_>
+  </HardwareType>
+</HardwareTable>
