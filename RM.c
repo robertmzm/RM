@@ -75,6 +75,9 @@
 	*0606:
 		*finish fitting the program to new hardware;
 		*add angleHighThres and angleLowThres;
+	*0608:
+		*calculated trig for new hardware in move();
+		*speed up when shooting in move() instead of shoot();
 
 */
 
@@ -94,20 +97,23 @@
 #define RIGHTGREY 4
 #define BACKGREY 5
 #define DISABLETHRES 0
+#define MINSPEED 0
 
 //select the hardware the program is using
-#if MACHINE==X2
+#if MACHINE==X2//define macro only for X2
 
 #include "X2.c"
+#define MAXSPEED 90
 
-#elif MACHINE==X3
+#elif MACHINE==X3//define macro only for X3
 
 #include "X3.c"
+#define MAXSPEED 95
 
 #endif
 
 
-//make sure _FLAMEDETECT_laser_ is defined
+//make sure _FLAMEDETECT_laser_ is defined to prevent compile error
 #ifndef _FLAMEDETECT_laser_
 #define _FLAMEDETECT_laser_ 0
 #endif
@@ -142,6 +148,7 @@
 #include <SetLCDSolidCircle.h>
 
 typedef struct Threshold{
+	//a struct containing all the treshold for a robot
 	int lowEyeThres;
 	int highEyeThres;
 	int gInnerLeftThres;
@@ -161,7 +168,7 @@ typedef struct Threshold{
 
 
 int speed;//the speed the robot is running on;
-int screenI;
+int screenI;//indicate what to display
 
 int main(void)
 {
@@ -252,7 +259,6 @@ int shoot(int lastShootTime,Threshold thres){
 	}
 
 	if(timeDiff<thres.shootTimeThres){
-		speed = 90;
 		SetLED(_LED_shoot_,1);
 		return 1;
 	}
@@ -426,6 +432,14 @@ int getGreyPort(int targetAngle, Threshold thres){
 }
 
 int whiteLineStrategy(int d, int greyPort,Threshold thres){
+	/*intake the port which touching the whiteline and prevent the robot from going out;
+	 *use backposition if the middle sensors detect the whiteline
+	 *go to the opposite position if the outer sensors detect the whiteline
+	 *refresh the timer if any sensor detects the whiteline;
+	 *refresh the timer when dangerous and all the ultrasonic sensors are blocked;
+	 *refresh the timer when if the direction of whiteline is close to the wall;
+
+	*/
 	int direction = d;
 	int startTime = GetSysTime();
 
@@ -664,128 +678,16 @@ int getEyePort(Threshold thres){
 
 /*
 
-void move(int direction, int v){
-    int degree1 = 0;
-    int degree2 = 0;
-    int slowerV = 0;
-    int motorSpeed[] = {0,0,0,0};
-    int motorDirection[] = {0,0,0,0};
-
-    if(direction<50){
-        degree1 = 50-direction;
-        degree2 = 50+direction;
-        slowerV = sinLaw(degree1,degree2,v);
-        motorDirection[0] = 0;
-        motorDirection[1] = 0;
-        motorDirection[2] = 2;
-        motorDirection[3] = 2;
-        motorSpeed[0] = slowerV;
-        motorSpeed[1] = v;
-        motorSpeed[2] = slowerV;
-        motorSpeed[3] = v;
-    }
-    else if(direction<90){
-        degree1 = direction-50;
-        degree2 = 130-direction;
-        slowerV = sinLaw(degree1,degree2,v);
-        motorDirection[0] = 2;
-        motorDirection[1] = 0;
-        motorDirection[2] = 0;
-        motorDirection[3] = 2;
-        motorSpeed[0] = slowerV;
-        motorSpeed[1] = v;
-        motorSpeed[2] = slowerV;
-        motorSpeed[3] = v;
-    }
-    else if(direction<130){
-        degree1 = 130-direction;
-        degree2 = direction-50;
-        slowerV = sinLaw(degree1,degree2,v);
-        motorDirection[0] = 2;
-        motorDirection[1] = 0;
-        motorDirection[2] = 0;
-        motorDirection[3] = 2;
-        motorSpeed[0] = v;
-        motorSpeed[1] = slowerV;
-        motorSpeed[2] = v;
-        motorSpeed[3] = slowerV;
-    }
-    else if(direction<180){
-            degree1 = direction-130;
-            degree2 = 230-direction;
-            slowerV = sinLaw(degree1,degree2,v);
-            motorDirection[0] = 2;
-            motorDirection[1] = 2;
-            motorDirection[2] = 0;
-            motorDirection[3] = 0;
-            motorSpeed[0] = v;
-            motorSpeed[1] = slowerV;
-            motorSpeed[2] = v;
-            motorSpeed[3] = slowerV;
-    }
-    else if(direction<230){
-            degree1 = 230-direction;
-            degree2 = direction-130;
-            slowerV = sinLaw(degree1,degree2,v);
-            motorDirection[0] = 2;
-            motorDirection[1] = 2;
-            motorDirection[2] = 0;
-            motorDirection[3] = 0;
-            motorSpeed[0] = slowerV;
-            motorSpeed[1] = v;
-            motorSpeed[2] = slowerV;
-            motorSpeed[3] = v;
-    }
-    else if(direction<270){
-            degree1 = direction-230;
-            degree2 = 310-direction;
-            slowerV = sinLaw(degree1,degree2,v);
-            motorDirection[0] = 0;
-            motorDirection[1] = 2;
-            motorDirection[2] = 2;
-            motorDirection[3] = 0;
-            motorSpeed[0] = slowerV;
-            motorSpeed[1] = v;
-            motorSpeed[2] = slowerV;
-            motorSpeed[3] = v;
-    }
-    else if(direction<310){
-            degree1 = 310-direction;
-            degree2 = direction-230;
-            slowerV = sinLaw(degree1,degree2,v);
-            motorDirection[0] = 0;
-            motorDirection[1] = 2;
-            motorDirection[2] = 2;
-            motorDirection[3] = 0;
-            motorSpeed[0] = v;
-            motorSpeed[1] = slowerV;
-            motorSpeed[2] = v;
-            motorSpeed[3] = slowerV;
-    }
-    else if(direction<360){
-            degree1 = direction-310;
-            degree2 = 410-direction;
-            slowerV = sinLaw(degree1,degree2,v);
-            motorDirection[0] = 0;
-            motorDirection[1] = 0;
-            motorDirection[2] = 2;
-            motorDirection[3] = 2;
-            motorSpeed[0] = v;
-            motorSpeed[1] = slowerV;
-            motorSpeed[2] = v;
-            motorSpeed[3] = slowerV;
-    }
-
-    printMotorDirection(motorDirection);
-    printMotorSpeed(motorSpeed);
-}
-
+*/
 int sinLaw(int degree1,int degree2,int speed2){
+	/*intake both angle and one of the length
+	 *output the other length
+	*/
     double radian1 = toRadian(degree1);
     double radian2 = toRadian(degree2);
     return (sin(radian1)*speed2)/sin(radian2);
 }
-*/
+
 
 
 double toRadian(int degree){
@@ -810,7 +712,8 @@ void move(int d,int s,int targetAngle,int shooting,Threshold thres){
 	int angle,angleDif;
 	int extern screenI;
 	double radian;
-		if(MACHINE == X2){
+	v = shooting?MAXSPEED:v;
+	if(MACHINE == X2){
 		if (d<45){
 			//set up the direction of each motor
 			direction1 = 0;
@@ -911,10 +814,116 @@ void move(int d,int s,int targetAngle,int shooting,Threshold thres){
 			speed4=slowerSpeed;
 		}
 	}
-	else if(d == STOP||d == BLOCKED){
+	else if(MACHINE == X3){
+	    if(d<50){
+	        degree1 = 50-direction;
+	        degree2 = 50+direction;
+	        slowerspeed = sinLaw(degree1,degree2,s);
+	        direction1 = 0;
+	        direction2 = 0;
+	        direction3 = 2;
+	        direction4 = 2;
+	        speed1 = slowerspeed;
+	        speed2 = s;
+	        speed3 = slowerspeed;
+	        speed4 = s;
+	    }
+	    else if(d<90){
+	        degree1 = direction-50;
+	        degree2 = 130-direction;
+	        slowerspeed = sinLaw(degree1,degree2,v);
+	        direction1 = 2;
+	        direction2 = 0;
+	        direction3 = 0;
+	        direction4 = 2;
+	        speed1 = slowerspeed;
+	        speed2 = s;
+	        speed3 = slowerspeed;
+	        speed4 = s;
+	    }
+	    else if(d<130){
+	        degree1 = 130-direction;
+	        degree2 = direction-50;
+	        slowerspeed = sinLaw(degree1,degree2,v);
+	        direction1 = 2;
+	        direction2 = 0;
+	        direction3 = 0;
+	        direction4 = 2;
+	        speed1 = s;
+	        speed2 = slowerspeed;
+	        speed3 = s;
+	        speed4 = slowerspeed;
+	    }
+	    else if(d<180){
+	            degree1 = direction-130;
+	            degree2 = 230-direction;
+	            slowerspeed = sinLaw(degree1,degree2,v);
+	            direction1 = 2;
+	            direction2 = 2;
+	            direction3 = 0;
+	            direction4 = 0;
+	            speed1 = s;
+	            speed2 = slowerspeed;
+	            speed3 = s;
+	            speed4 = slowerspeed;
+	    }
+	    else if(d<230){
+	            degree1 = 230-direction;
+	            degree2 = direction-130;
+	            slowerspeed = sinLaw(degree1,degree2,v);
+	            direction1 = 2;
+	            direction2 = 2;
+	            direction3 = 0;
+	            direction4 = 0;
+	            speed1 = slowerspeed;
+	            speed2 = s;
+	            speed3 = slowerspeed;
+	            speed4 = s;
+	    }
+	    else if(d<270){
+	            degree1 = direction-230;
+	            degree2 = 310-direction;
+	            slowerspeed = sinLaw(degree1,degree2,v);
+	            direction1 = 0;
+	            direction2 = 2;
+	            direction3 = 2;
+	            direction4 = 0;
+	            speed1 = slowerspeed;
+	            speed2 = s;
+	            speed3 = slowerspeed;
+	            speed4 = s;
+	    }
+	    else if(d<310){
+	            degree1 = 310-direction;
+	            degree2 = direction-230;
+	            slowerspeed = sinLaw(degree1,degree2,v);
+	            direction1 = 0;
+	            direction2 = 2;
+	            direction3 = 2;
+	            direction4 = 0;
+	            speed1 = s;
+	            speed2 = slowerspeed;
+	            speed3 = s;
+	            speed4 = slowerspeed;
+	    }
+	    else if(d<360){
+	            degree1 = direction-310;
+	            degree2 = 410-direction;
+	            slowerspeed = sinLaw(degree1,degree2,v);
+	            direction1 = 0;
+	            direction2 = 0;
+	            direction3 = 2;
+	            direction4 = 2;
+	            speed1 = s;
+	            speed2 = slowerspeed;
+	            speed3 = s;
+	            speed4 = slowerspeed;
+	    }
+	}
+	if(d == STOP||d == BLOCKED){
 		//stop
 		direction1=1;
-		direction2 = 1;
+		direction2=1;
 		direction3=1;
 		direction4=1;
 		speed1=s;
@@ -1484,7 +1493,7 @@ int maxMin(int n,int max, int min){
 }
 
 int checkSpeed(int speed){
-	return maxMin(speed,90,0);
+	return maxMin(speed,MAXSPEED,0);
 }
 
 int getAngleDif(int target){
