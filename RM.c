@@ -86,7 +86,7 @@
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define MACHINE X3
+												#define MACHINE X2
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
 #define BLOCKED 361
@@ -170,6 +170,7 @@ typedef struct Threshold{
 int speed;//the speed the robot is running on;
 int screenI;//indicate what to display
 
+
 int main(void)
 {
 	initRCU();//initialize the RCU;
@@ -181,8 +182,10 @@ int main(void)
 	int direction=STOP;//the direcion robot goes,360 means stop;
 
 	int greyPort = 0;
-	int pressing = 0;//indicate if the button is being pressed
-	int pressed = 0;//indicate if the button was pressed in the previous loop
+	int pressing1 = 0;//indicate if the button is being pressed
+	int pressed1 = 0;//indicate if the button was pressed in the previous loop
+	int pressing2 = 0;
+	int pressed2 = 0;
 	int targetAngle = 0;//the angle the robot wants to face
 	int lastShootTime= -300;//the time of the last shot
 	int eyePort = 0;
@@ -194,7 +197,6 @@ int main(void)
 
 
 	//logIn();
-
 	while (1){//forever running loop;
 
 		screen(screenI,thres);//display everything;
@@ -202,12 +204,17 @@ int main(void)
 		/*detect if the first button is pressed in order to switch to
 		  different pages;
 		 */
-		pressing = GetButton1();
-		if(pressing ==0&&pressed == 1){//swich pages only when the button is released
+		pressing1 = GetButton1();
+		pressing2 = GetButton2();
+		if(pressing1 ==1&&pressed1 == 0){//swich pages only when the button is released
 			screenI=(screenI+1)%4;
 			SetLCDClear(BLACK);
 		}
-		pressed = pressing;
+		if(pressing2 ==1&&pressed2 ==0){
+			goToDirection();
+		}
+		pressed1 = pressing1;
+		pressed2 = pressing2;
 
 
 
@@ -679,6 +686,10 @@ int getEyePort(Threshold thres){
 /*
 
 */
+int toDegree(double radian){
+	return radian*180/M_PI;
+}
+
 double toRadian(int degree){
 	/*intake a degree;
 	 *return the degree in radian;
@@ -1086,10 +1097,10 @@ int closeStrategyX2(int p){
 		output = 210;
 	}
 	else if(p ==4){
-		output=230;//change from 240 to 230
+		output=240;//change from 240 to 230
 	}
 	else if(p ==5){
-		output=290;//change from 300 to 290
+		output=300;//change from 300 to 290
 	}
 	else if(p ==6){
 		output=330;
@@ -1679,7 +1690,38 @@ int getCode(){
 	}
 }
 
+void goToDirection(){
 
+	SetLCDClear(BLACK);
+	double originX = 110;
+	double originY = 85;
+	double x = GetTouchScreenX();//max 220
+	double y = GetTouchScreenY();//max170
+	double radian = 0;
+	int degree = 0;
+	int button = 0;
+	
+	Threshold thres;
+	initThres(&thres);
+	
+	SetLCDSolidCircle(originX,originY,10,RED);
+
+	while(button == 0){
+		x=GetTouchScreenX();
+		y=GetTouchScreenY();
+		button = GetButton3();
+		if(x!=0&&y!=0){
+			SetLCD5Char(50,0,x,YELLOW,BLACK);
+			SetLCD5Char(100,0,y,YELLOW,BLACK);
+			radian = atan((originY-y)/(originX-x));
+			degree = 90-toDegree(radian);
+			degree = x>originX?degree:degree+180;
+			SetLCD5Char(50,20,degree,RED,BLACK);
+			move(degree,30,0,0,thres);	
+		}
+	}
+	SetLCDClear(BLACK);
+}
 
 void testShooting1(){
 	/*easist shooting
