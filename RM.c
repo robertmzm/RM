@@ -482,7 +482,7 @@ int whiteLineStrategy(int d, int greyPort,Threshold thres){
 		}
 	}
 	else if(greyPort == LEFTGREY){
-		direction = 90;
+		direction = 100;//change from 90 to 100
 		int uBack = 0;
 		int uFront = 0;
 		int uLeft = 0;
@@ -497,7 +497,14 @@ int whiteLineStrategy(int d, int greyPort,Threshold thres){
 				direction = 30;//change from 60 to 30
 			}
 			else if(uFront<400){
-				direction = 150;
+			/*
+			albert is a sb?
+			yes or no
+			yes
+			no
+			define no yes
+			wrong*/
+				direction = 135;
 			}
 			move(direction,55,0,0);
 			if(getGreyPort(0,thres)!=0||uLeft<310){
@@ -506,7 +513,7 @@ int whiteLineStrategy(int d, int greyPort,Threshold thres){
 		}
 	}
 	else if(greyPort == RIGHTGREY){
-		direction = 270;
+		direction = 260;//change from 270 to 260;
 		int uBack = 0;
 		int uFront = 0;
 		int uRight = 0;
@@ -521,7 +528,7 @@ int whiteLineStrategy(int d, int greyPort,Threshold thres){
 				direction = 330;//change from 300 to 330
 			}
 			else if(uFront<400){
-				direction = 210;
+				direction = 225;
 			}
 			move(direction,55,0,0);
 			if(getGreyPort(0,thres)!=0||uRight<310){
