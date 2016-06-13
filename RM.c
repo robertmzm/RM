@@ -325,8 +325,6 @@ int getShootTime(int lastShootTime,int eyePort,int targetAngle,Threshold thres){
 	 */
 	int output = lastShootTime;
 
-
-
 	if(eyePort == 21|| eyePort ==22){
 
 		int fire = GetRemoIR(MACHINE==X2?_FLAMEDETECT_fire_:_FLAMEDETECT_laser_);
@@ -795,7 +793,7 @@ void move(int d,int s,int targetAngle,int shooting,Threshold thres){
 			speed2=s;
 			speed3=slowerSpeed;
 			speed4=s;
-	
+
 		}
 		else if(d<270){
 			direction1 = 0;
@@ -1707,10 +1705,10 @@ void goToDirection(){
 	double radian = 0;
 	int degree = 0;
 	int button = 0;
-	
+
 	Threshold thres;
 	initThres(&thres);
-	
+
 	SetLCDSolidCircle(originX,originY,10,RED);
 
 	while(button == 0){
@@ -1724,7 +1722,7 @@ void goToDirection(){
 			degree = 90-toDegree(radian);
 			degree = x>originX?degree:degree+180;
 			SetLCD5Char(50,20,degree,RED,BLACK);
-			move(degree,30,0,0,thres);	
+			move(degree,30,0,0,thres);
 		}
 	}
 	SetLCDClear(BLACK);
