@@ -78,14 +78,22 @@
 	*0608:
 		*calculated trig for new hardware in move();
 		*speed up when shooting in move() instead of shoot();
+	*0612:
+		*fixed bug in getTargetAngle();
+		*the program now works on every machine;
 
 */
 
 #define X2 0
 #define X3 1
+#define NIKO 0
+#define BRYAN 1
+#define ALBERT 2
+#define SHAOBO 3
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+												#define NAME NIKO
 												#define MACHINE X2
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
@@ -101,15 +109,15 @@
 
 //select the hardware the program is using
 #if MACHINE==X2//define macro only for X2
-
-#include "X2.c"
-#define MAXSPEED 90
-
+	#define MAXSPEED 90
+	#if NAME==NIKO
+		#include "X2NIKO.c"
+	#endif	
 #elif MACHINE==X3//define macro only for X3
-
-#include "X3.c"
-#define MAXSPEED 95
-
+	#define MAXSPEED 95
+	#if NAME==NIKO
+		#include "X3NIKO.c"
+	#endif
 #endif
 
 
@@ -1755,35 +1763,39 @@ void testShooting2(){
 
 void initThres(Threshold *thres){
 	if(MACHINE==X2){
-		thres->lowEyeThres = 5;
-		thres->highEyeThres = 60;
-		thres->gInnerLeftThres = 800;
-		thres->gOutterLeftThres = 1600;
-		thres->gInnerRightThres = 1400;
-		thres->gOutterRightThres = 1500;
-		thres->gFrontThres = 1800;
-		thres->gInnerBackThres = 1700;
-		thres->gOutterBackThres = 1200;
-		thres->fireThres = 200;
-		thres->whiteLineTimeThres = 30;
-		thres->shootTimeThres = 15;
-		thres->angleHighThres = 40;
-		thres->angleLowThres = 20;
+		if(NAME==NIKO){
+			thres->lowEyeThres = 5;
+			thres->highEyeThres = 60;
+			thres->gInnerLeftThres = 800;
+			thres->gOutterLeftThres = 1600;
+			thres->gInnerRightThres = 1400;
+			thres->gOutterRightThres = 1500;
+			thres->gFrontThres = 1800;
+			thres->gInnerBackThres = 1700;
+			thres->gOutterBackThres = 1200;
+			thres->fireThres = 200;
+			thres->whiteLineTimeThres = 30;
+			thres->shootTimeThres = 15;
+			thres->angleHighThres = 40;
+			thres->angleLowThres = 20;
+		}
 	}
 	else if(MACHINE==X3){
-		thres->lowEyeThres = 5;
-		thres->highEyeThres = 40;
-		thres->gInnerLeftThres = 1250;
-		thres->gOutterLeftThres = 1400;
-		thres->gInnerRightThres = 1400;
-		thres->gOutterRightThres = 1600;
-		thres->gFrontThres = 1400;
-		thres->gInnerBackThres = 1350;
-		thres->gOutterBackThres = 1700;
-		thres->fireThres = 20;
-		thres->whiteLineTimeThres = 30;
-		thres->shootTimeThres = 15;
-		thres->angleHighThres = 40;
-		thres->angleLowThres = 20;
+		if(NAME==NIKO){
+			thres->lowEyeThres = 5;
+			thres->highEyeThres = 40;
+			thres->gInnerLeftThres = 1250;
+			thres->gOutterLeftThres = 1400;
+			thres->gInnerRightThres = 1400;
+			thres->gOutterRightThres = 1600;
+			thres->gFrontThres = 1400;
+			thres->gInnerBackThres = 1350;
+			thres->gOutterBackThres = 1700;
+			thres->fireThres = 20;
+			thres->whiteLineTimeThres = 30;
+			thres->shootTimeThres = 15;
+			thres->angleHighThres = 40;
+			thres->angleLowThres = 20;
+		}
 	}
 }
