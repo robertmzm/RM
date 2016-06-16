@@ -294,7 +294,7 @@ int getTargetAngle(int previousTarget,int eyePort){
 		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 		int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
-		if(uLeft+uBack>1200){//nothing is blocking on the left and right;
+		if(uLeft+uRight>1200){//nothing is blocking on the left and right;
 			if(uBack>800&&uFront<1200){
 				if(uLeft<550){
 					output = 30;
@@ -1458,7 +1458,7 @@ int backPosition(){
 	}
 	else{
 		//left and right are blocked;
-		if(uFront +uBack>600){
+		if(uFront +uBack>800){
 			/*front and back are not blocked;
 			//////////////////
 			//				//
@@ -1703,7 +1703,7 @@ void goToDirection(){
 	double x = GetTouchScreenX();//max 220
 	double y = GetTouchScreenY();//max170
 	double radian = 0;
-	int degree = 0;
+	int degree = STOP;
 	int button = 0;
 
 	Threshold thres;
@@ -1722,8 +1722,9 @@ void goToDirection(){
 			degree = 90-toDegree(radian);
 			degree = x>originX?degree:degree+180;
 			SetLCD5Char(50,20,degree,RED,BLACK);
-			move(degree,30,0,0,thres);
+			
 		}
+		move(degree,30,0,0,thres);
 	}
 	SetLCDClear(BLACK);
 }
