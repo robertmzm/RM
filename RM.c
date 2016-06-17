@@ -90,10 +90,11 @@
 #define BRYAN 1
 #define ALBERT 2
 #define SHAOBO 3
+#define JACK 4
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define NAME NIKO
+												#define NAME JACK
 												#define MACHINE X2
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
@@ -112,7 +113,9 @@
 	#define MAXSPEED 90
 	#if NAME==NIKO
 		#include "X2NIKO.c"
-	#endif	
+	#elif NAME==JACK
+		#include "X2JACK.c"
+	#endif
 #elif MACHINE==X3//define macro only for X3
 	#define MAXSPEED 95
 	#if NAME==NIKO
@@ -126,6 +129,9 @@
 #define _FLAMEDETECT_laser_ 0
 #endif
 
+#ifndef _LED_shoot_
+#define _LED_shoot_ 0
+#endif
 
 
 #include <stdio.h>
@@ -421,7 +427,7 @@ int getGreyPort(int targetAngle, Threshold thres){
 				output = RIGHTGREY;
 			}
 
-			else if (gOutterBack<1200){
+			else if (gOutterBack<gOutterBack){
 				output = BACKGREY;
 			}
 		}
@@ -1774,6 +1780,22 @@ void initThres(Threshold *thres){
 			thres->gInnerBackThres = 1700;
 			thres->gOutterBackThres = 1200;
 			thres->fireThres = 200;
+			thres->whiteLineTimeThres = 30;
+			thres->shootTimeThres = 15;
+			thres->angleHighThres = 40;
+			thres->angleLowThres = 20;
+		}
+		else if(NAME==JACK){
+			thres->lowEyeThres = 5;
+			thres->highEyeThres = 60;
+			thres->gInnerLeftThres = 2400;
+			thres->gOutterLeftThres = 1400;
+			thres->gInnerRightThres = 1100;
+			thres->gOutterRightThres = 1400;
+			thres->gFrontThres = 900;
+			thres->gInnerBackThres = 1400;
+			thres->gOutterBackThres = 1500;
+			thres->fireThres = 0;
 			thres->whiteLineTimeThres = 30;
 			thres->shootTimeThres = 15;
 			thres->angleHighThres = 40;
