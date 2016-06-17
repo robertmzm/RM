@@ -1,17 +1,17 @@
 /**0224:
 		*combine further() and closer() strategy into one function attackStrategy();
-		*tried smooth turn between different direction. worked but notas good as ideal;
+		*tried smooth turn between different direction. worked but not as good as hoped 
     *0226:
-		*add turning into move() instead of doing it explicitly;
+		*added turn into move() instead of doing it explicitly;
     *0304:
 		*implement displayAll();
 		*implement backPostion
     *0312:
 		*implement wheels for function related for white line(did not work well);
-		*inhence the turning functionality in move();
+		*enhance the turning functionality in move();
     *0315:
-		*trying using andy's attack strategy in attackStrategy();
-		*add some more documentry for functions;
+		*tried using andy's attack strategy in attackStrategy();
+		*added some more documentry for functions;
 		*define STOP as 360
     *0318:
 		*new idea for white line;
@@ -28,7 +28,7 @@
         *making changes from mac!!!!!!!;
 		*making changes from windows!!!!;
 	*0419:
-		*change all the direction in AttackStrategy();
+		*changed all the direction in AttackStrategy();
 		*enhance whitelineStratey();
 		*implement getTargetAngle();
 		*optimize getGreyPort():
@@ -45,9 +45,9 @@
 	*0426:
 		*just installed a atom plugin!!!it's soooo cooool;
 	*0507:
-		*change the threshold of the turning depends on the targetAngle;
+		*changed the threshold of the turning depends on the targetAngle;
 		*flipped the fly eye on the left;
-		*change some direction of closerStrategy;
+		*changed some direction of closerStrategy;
 		*optimize the display on the screen;
 	*0508:
 		*added comment;
@@ -207,7 +207,9 @@ int main(void)
 
 	Threshold thres;
 	initThres(&thres);
-
+	
+	int farStrategyDirections[15];
+	int closeStrategyDirections[15];
 
 
 	//logIn();
@@ -286,6 +288,73 @@ int shoot(int lastShootTime,Threshold thres){
 	else{
 		SetLED(_LED_shoot_,0);
 		return 0;
+	}
+}
+
+void initFarStrategyDirections(int *farStrageDirections){
+	farStrategy[0] = STOP;
+	if(MACHINE == X2){
+		if(NAME==NIKO){
+			farStrategyDirections[1]=210;
+			farStrategyDirections[2]=180;
+			farStrategyDirections[3]=210;
+			farStrategyDirections[4]=240;
+			farStrategyDirections[5]=270;
+			farStrategyDirections[6]=300;
+			farStrategyDirections[7]=0;
+			farStrategyDirections[8]=0;
+			farStrategyDirections[9]=60;
+			farStrategyDirections[10]=90;
+			farStrategyDirections[11]=120;
+			farStrategyDirections[12]=150;
+			farStrategyDirections[13]=180;
+			farStrategyDirections[14]=150;
+		}
+		else if(NAME==JACK){
+			farStrategyDirections[1]=210;
+			farStrategyDirections[2]=180;
+			farStrategyDirections[3]=210;
+			farStrategyDirections[4]=240;
+			farStrategyDirections[5]=270;
+			farStrategyDirections[6]=300;
+			farStrategyDirections[7]=0;
+			farStrategyDirections[8]=0;
+			farStrategyDirections[9]=60;
+			farStrategyDirections[10]=90;
+			farStrategyDirections[11]=120;
+			farStrategyDirections[12]=150;
+			farStrategyDirections[13]=180;
+			farStrategyDirections[14]=150;
+		}
+	}
+	else if(MACHINE == X3){	
+		if(NAME==NIKO){
+			farStrategyDirections[1]=210;
+			farStrategyDirections[2]=180;
+			farStrategyDirections[3]=210;
+			farStrategyDirections[4]=240;
+			farStrategyDirections[5]=270;
+			farStrategyDirections[6]=300;
+			farStrategyDirections[7]=0;
+			farStrategyDirections[8]=0;
+			farStrategyDirections[9]=60;
+			farStrategyDirections[10]=90;
+			farStrategyDirections[11]=120;
+			farStrategyDirections[12]=150;
+			farStrategyDirections[13]=180;
+			farStrategyDirections[14]=150;
+		}
+	}
+}
+
+
+void initCloseStrategyDirections(int *closeStrategyDirections){
+	closeStrategyDirections[0] = STOP;
+	if(MACHINE==X2){
+		
+	}
+	else if(MACHINE==X3){
+	
 	}
 }
 
