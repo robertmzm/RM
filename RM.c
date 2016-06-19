@@ -94,7 +94,7 @@
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define NAME NIKO
+												#define NAME JACK
 												#define MACHINE X2
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
@@ -240,7 +240,7 @@ int main(void)
 
 		if(eyePort){//ball is detected
 			speed = TESTSPEED;
-			direction = attackStrategy(eyePort,direction);
+			direction = attackStrategy(eyePort,direction,farStrategyDirections,closeStrategyDirections);
 		}
 		else{//no ball
 			speed = 50;
@@ -353,37 +353,56 @@ void initFarStrategyDirections(int *farStrategyDirections){
 void initCloseStrategyDirections(int *closeStrategyDirections){
 	closeStrategyDirections[0] = STOP;
 	if(MACHINE==X2){
-		closeStrategyDirections[1] = STOP;
-		closeStrategyDirections[2] = STOP;
-		closeStrategyDirections[3] = STOP;
-		closeStrategyDirections[4] = STOP;
-		closeStrategyDirections[5] = STOP;
-		closeStrategyDirections[6] = STOP;
-		closeStrategyDirections[7] = STOP;
-		closeStrategyDirections[8] = STOP;
-		closeStrategyDirections[9] = STOP;
-		closeStrategyDirections[10] = STOP;
-		closeStrategyDirections[11] = STOP;
-		closeStrategyDirections[12] = STOP;
-		closeStrategyDirections[13] = STOP;
-		closeStrategyDirections[14] = STOP;
+		if(NAME==NIKO){
+			closeStrategyDirections[1] = 110;
+			closeStrategyDirections[2] = 180;
+			closeStrategyDirections[3] = 210;
+			closeStrategyDirections[4] = 230;
+			closeStrategyDirections[5] = 300;
+			closeStrategyDirections[6] = 330;
+			closeStrategyDirections[7] = 0;
+			closeStrategyDirections[8] = 0;
+			closeStrategyDirections[9] = 20;
+			closeStrategyDirections[10] = 50;
+			closeStrategyDirections[11] = 120;
+			closeStrategyDirections[12] = 150;
+			closeStrategyDirections[13] = 180;
+			closeStrategyDirections[14] = 250;
+		}
+		else if(NAME==JACK){
+			closeStrategyDirections[1] = 110;
+			closeStrategyDirections[2] = 180;
+			closeStrategyDirections[3] = 210;
+			closeStrategyDirections[4] = 230;
+			closeStrategyDirections[5] = 300;
+			closeStrategyDirections[6] = 330;
+			closeStrategyDirections[7] = 0;
+			closeStrategyDirections[8] = 0;
+			closeStrategyDirections[9] = 20;
+			closeStrategyDirections[10] = 50;
+			closeStrategyDirections[11] = 120;
+			closeStrategyDirections[12] = 150;
+			closeStrategyDirections[13] = 180;
+			closeStrategyDirections[14] = 250;
+		
+		}
 	}
 	else if(MACHINE==X3){
 		
-		closeStrategyDirections[1] = STOP;
-		closeStrategyDirections[2] = STOP;
-		closeStrategyDirections[3] = STOP;
-		closeStrategyDirections[4] = STOP;
-		closeStrategyDirections[5] = STOP;
-		closeStrategyDirections[6] = STOP;
-		closeStrategyDirections[7] = STOP;
-		closeStrategyDirections[8] = STOP;
-		closeStrategyDirections[9] = STOP;
-		closeStrategyDirections[10] = STOP;
-		closeStrategyDirections[11] = STOP;
-		closeStrategyDirections[12] = STOP;
-		closeStrategyDirections[13] = STOP;
-		closeStrategyDirections[14] = STOP;
+		closeStrategyDirections[1] = 110;
+		closeStrategyDirections[2] = 180;
+		closeStrategyDirections[3] = 210;
+		closeStrategyDirections[4] = 230;
+		closeStrategyDirections[5] = 290;
+		closeStrategyDirections[6] = 330;
+		closeStrategyDirections[7] = 0;
+		closeStrategyDirections[8] = 0;
+		closeStrategyDirections[9] = 30;
+		closeStrategyDirections[10] = 70;
+		closeStrategyDirections[11] = 130;
+		closeStrategyDirections[12] = 150;
+		closeStrategyDirections[13] = 180;
+		closeStrategyDirections[14] = 250;
 	}
 }
 
@@ -1160,30 +1179,30 @@ void move(int d,int s,int targetAngle,int shooting,Threshold thres){
 	SetMotor(_MOTOR_M4_,direction4,speed4);
 }
 
-int attackStrategy(int p,int previousDirection){
+int attackStrategy(int p,int previousDirection,int *farStrategyDirections, int *closeStrategyDirections){
 	/**intake the port which has the largest value;
 	    *output the direction the robot should go;
 	    *the strategy works when ball is both far or close;
 	    */
 	if(MACHINE==X2){
 		if (p<15){
-			return farStrategyX2(p);
+			return farStrategyX2(p,farStrategyDirections);
 		}
 		else{
-			return closeStrategyX2(p-14);
+			return closeStrategyX2(p-14,closeStrategyDirections);
 		}
 	}
 	else if (MACHINE==X3){
 		if (p<15){
-			return farStrategyX3(p);
+			return farStrategyX3(p,farStrategyDirections);
 		}
 		else{
-			return closeStrategyX3(p-14);
+			return closeStrategyX3(p-14,closeStrategyDirections);
 		}
 	}
 }
 
-int closeStrategyX2(int p){
+int closeStrategyX2(int p,int *closeStrategyDirections){
 	int output;
 	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
@@ -1207,43 +1226,13 @@ int closeStrategyX2(int p){
 			output = 110;
 		}
 	}
-	else if(p ==2){
-		output=180;
-	}
-	else if(p ==3){
-		output = 210;
-	}
-	else if(p ==4){
-		output=240;//change from 240 to 230
-	}
-	else if(p ==5){
-		output=300;//change from 300 to 290
-	}
-	else if(p ==6){
-		output=330;
-	}
-	else if(p ==7||p==8){
-		output=0;
-	}
-	else if (p==9){
-		output=30;
-	}
-	else if(p ==10){
-		output=60;
-	}
-	else if(p ==11){
-		output=120;
-	}
-	else if(p ==12){
-		output=150;
-	}
-	else if (p==13){
-		output=180;
+	else{
+		output = closeStrategyDirections[p];
 	}
 	return output;
 }
 
-int farStrategyX2(int p){
+int farStrategyX2(int p, int *farStrategyDirections){
 	int output = STOP;
 	if (p==1||p==14){
 		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
@@ -1255,43 +1244,13 @@ int farStrategyX2(int p){
 			output = 150;
 		}
 	}
-	else if(p ==2){
-		output= 180;
-	}
-	else if(p ==3){
-		output= 210;
-	}
-	else if(p ==4){
-		output= 240;
-	}
-	else if(p ==5){
-		output= 270;
-	}
-	else if(p ==6){
-		output =300;//change front 280 to 300
-	}
-	else if(p ==7||p==8){
-		output= 0;
-	}
-	else if(p ==9){
-		output= 60;
-	}
-	else if(p ==10){
-		output= 90;
-	}
-	else if(p ==11){
-		output= 120;
-	}
-	else if(p ==12){
-		output= 150;
-	}
-	else if(p ==13){
-		output= 180;
+	else{
+		output = farStrategyDirections[p];
 	}
 	return output;
 }
 
-int closeStrategyX3(int p){
+int closeStrategyX3(int p, int *closeStrategyDirections){
 	int output;
 	int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
@@ -1905,7 +1864,7 @@ void initThres(Threshold *thres){
 	if(MACHINE==X2){
 		if(NAME==NIKO){
 			thres->lowEyeThres = 5;
-			thres->highEyeThres = 60;
+			thres->highEyeThres = 50;
 			thres->gInnerLeftThres = 800;
 			thres->gOutterLeftThres = 1600;
 			thres->gInnerRightThres = 1400;
@@ -1921,7 +1880,7 @@ void initThres(Threshold *thres){
 		}
 		else if(NAME==JACK){
 			thres->lowEyeThres = 5;
-			thres->highEyeThres = 60;
+			thres->highEyeThres = 50;
 			thres->gInnerLeftThres = 2400;
 			thres->gOutterLeftThres = 1400;
 			thres->gInnerRightThres = 1100;
