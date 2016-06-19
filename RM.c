@@ -94,7 +94,7 @@
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define NAME JACK
+												#define NAME NIKO
 												#define MACHINE X2
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
@@ -210,12 +210,14 @@ int main(void)
 	
 	int farStrategyDirections[15];
 	int closeStrategyDirections[15];
-
-
+	
+	initFarStrategyDirections(farStrategyDirections);
+	initCloseStrategyDirections(closeStrategyDirections);
+	
 	//logIn();
 	while (1){//forever running loop;
 
-		screen(screenI,thres);//display everything;
+		screen(screenI,thres,farStrategyDirections,closeStrategyDirections);//display everything;
 
 		/*detect if the first button is pressed in order to switch to
 		  different pages;
@@ -223,7 +225,7 @@ int main(void)
 		pressing1 = GetButton1();
 		pressing2 = GetButton2();
 		if(pressing1 ==1&&pressed1 == 0){//swich pages only when the button is released
-			screenI=(screenI+1)%4;
+			screenI=(screenI+1)%6;
 			SetLCDClear(BLACK);
 		}
 		if(pressing2 ==1&&pressed2 ==0){
@@ -291,8 +293,8 @@ int shoot(int lastShootTime,Threshold thres){
 	}
 }
 
-void initFarStrategyDirections(int *farStrageDirections){
-	farStrategy[0] = STOP;
+void initFarStrategyDirections(int *farStrategyDirections){
+	farStrategyDirections[0] = STOP;
 	if(MACHINE == X2){
 		if(NAME==NIKO){
 			farStrategyDirections[1]=210;
@@ -351,10 +353,37 @@ void initFarStrategyDirections(int *farStrageDirections){
 void initCloseStrategyDirections(int *closeStrategyDirections){
 	closeStrategyDirections[0] = STOP;
 	if(MACHINE==X2){
-		
+		closeStrategyDirections[1] = STOP;
+		closeStrategyDirections[2] = STOP;
+		closeStrategyDirections[3] = STOP;
+		closeStrategyDirections[4] = STOP;
+		closeStrategyDirections[5] = STOP;
+		closeStrategyDirections[6] = STOP;
+		closeStrategyDirections[7] = STOP;
+		closeStrategyDirections[8] = STOP;
+		closeStrategyDirections[9] = STOP;
+		closeStrategyDirections[10] = STOP;
+		closeStrategyDirections[11] = STOP;
+		closeStrategyDirections[12] = STOP;
+		closeStrategyDirections[13] = STOP;
+		closeStrategyDirections[14] = STOP;
 	}
 	else if(MACHINE==X3){
-	
+		
+		closeStrategyDirections[1] = STOP;
+		closeStrategyDirections[2] = STOP;
+		closeStrategyDirections[3] = STOP;
+		closeStrategyDirections[4] = STOP;
+		closeStrategyDirections[5] = STOP;
+		closeStrategyDirections[6] = STOP;
+		closeStrategyDirections[7] = STOP;
+		closeStrategyDirections[8] = STOP;
+		closeStrategyDirections[9] = STOP;
+		closeStrategyDirections[10] = STOP;
+		closeStrategyDirections[11] = STOP;
+		closeStrategyDirections[12] = STOP;
+		closeStrategyDirections[13] = STOP;
+		closeStrategyDirections[14] = STOP;
 	}
 }
 
@@ -1620,7 +1649,7 @@ int getAngleDif(int target){
 	return output;
 }
 
-void screen(int i,Threshold thres){
+void screen(int i,Threshold thres,int *farStrategyDirections, int *closeStrategyDirections){
 
 	if(i==1){
 		int leftEyeValue;
@@ -1716,6 +1745,42 @@ void screen(int i,Threshold thres){
 		SetLCD5Char(100,20,thres.shootTimeThres,RED,BLACK);
 		SetLCD5Char(0,120,thres.angleHighThres,RED,BLACK);
 		SetLCD5Char(50,120,thres.angleLowThres,RED,BLACK);
+	}
+	
+	else if(i==4){
+		
+		SetLCD5Char( 0 ,0 ,farStrategyDirections[1] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,20 ,farStrategyDirections[2] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,40 ,farStrategyDirections[3] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,60 ,farStrategyDirections[4] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,80 ,farStrategyDirections[5] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,100 ,farStrategyDirections[6] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,120 ,farStrategyDirections[7] ,BLUE ,BLACK );
+
+		SetLCD5Char( 100 ,0 ,farStrategyDirections[8] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,20 ,farStrategyDirections[9] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,40 ,farStrategyDirections[10] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,60 ,farStrategyDirections[11] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,80 ,farStrategyDirections[12] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,100 ,farStrategyDirections[13] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,120 ,farStrategyDirections[14] ,BLUE ,BLACK );
+	}
+	else if(i==5){
+		SetLCD5Char( 0 ,0 ,closeStrategyDirections[1] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,20 ,closeStrategyDirections[2] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,40 ,closeStrategyDirections[3] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,60 ,closeStrategyDirections[4] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,80 ,closeStrategyDirections[5] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,100 ,closeStrategyDirections[6] ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,120 ,closeStrategyDirections[7] ,BLUE ,BLACK );
+
+		SetLCD5Char( 100 ,0 ,closeStrategyDirections[8] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,20 ,closeStrategyDirections[9] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,40 ,closeStrategyDirections[10] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,60 ,closeStrategyDirections[11] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,80 ,closeStrategyDirections[12] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,100 ,closeStrategyDirections[13] ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,120 ,closeStrategyDirections[14] ,BLUE ,BLACK );
 	}
 
 }
@@ -1830,7 +1895,7 @@ void testShooting2(){
 	initThres(&thres);
 	int lastShootTime = -300;
 	while(1){
-		screen(1,thres);
+		//screen(1,thres);
 		lastShootTime = getShootTime(lastShootTime,21,0,thres);
 		shoot(lastShootTime,thres);
 	}
