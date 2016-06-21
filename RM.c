@@ -94,8 +94,8 @@
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define NAME JACK
-												#define MACHINE X2
+												#define NAME NIKO
+												#define MACHINE X3
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
 #define BLOCKED 361
@@ -224,11 +224,11 @@ int main(void)
 		 */
 		pressing1 = GetButton1();
 		pressing2 = GetButton2();
-		if(pressing1 ==1&&pressed1 == 0){//swich pages only when the button is released
+		if(pressing1 ==0&&pressed1 == 1){//swich pages only when the button is released
 			screenI=(screenI+1)%6;
 			SetLCDClear(BLACK);
 		}
-		if(pressing2 ==1&&pressed2 ==0){
+		if(pressing2 ==0&&pressed2 ==1){
 			testHelper();
 		}
 		pressed1 = pressing1;
@@ -1803,8 +1803,9 @@ int getCode(){
 }
 
 void testHelper(){
+	SetLCDClear(BLACK);
 	int pressing1=0;
-	int pressing2 = 0;
+	int pressing2=0;
 	while(pressing1==0&&pressing2==0){
 		pressing1 = GetButton1();
 		pressing2 = GetButton2();
@@ -1815,6 +1816,7 @@ void testHelper(){
 			testGreyPort();
 		}
 	}
+	SetLCDClear(BLACK);
 }
 
 void testGreyPort(){
@@ -1835,7 +1837,7 @@ void testGreyPort(){
 	
 	int pressing = 0;
 	
-	while(pressing = 0){
+	while(pressing == 0){
 		pressing = GetButton3();
 		gFront = GetADScable10(_SCABLEAD_gFront_);
 		gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
@@ -1960,13 +1962,13 @@ void initThres(Threshold *thres){
 		if(NAME==NIKO){
 			thres->lowEyeThres = 5;
 			thres->highEyeThres = 40;
-			thres->gInnerLeftThres = 1250;
-			thres->gOutterLeftThres = 1400;
-			thres->gInnerRightThres = 1400;
-			thres->gOutterRightThres = 1600;
-			thres->gFrontThres = 1400;
-			thres->gInnerBackThres = 1350;
-			thres->gOutterBackThres = 1700;
+			thres->gInnerLeftThres = 1200;
+			thres->gOutterLeftThres = 1350;
+			thres->gInnerRightThres = 1300;
+			thres->gOutterRightThres = 1500;
+			thres->gFrontThres = 1435;
+			thres->gInnerBackThres = 1250;
+			thres->gOutterBackThres = 1600;
 			thres->fireThres = 20;
 			thres->whiteLineTimeThres = 30;
 			thres->shootTimeThres = 15;
