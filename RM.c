@@ -229,7 +229,7 @@ int main(void)
 			SetLCDClear(BLACK);
 		}
 		if(pressing2 ==1&&pressed2 ==0){
-			goToDirection();
+			testHelper();
 		}
 		pressed1 = pressing1;
 		pressed2 = pressing2;
@@ -1799,6 +1799,67 @@ int getCode(){
 		pressed1 = pressing1;
 		pressed2 = pressing2;
 		pressed3 = pressing3;
+	}
+}
+
+void testHelper(){
+	int pressing1=0;
+	int pressing2 = 0;
+	while(pressing1==0&&pressing2==0){
+		pressing1 = GetButton1();
+		pressing2 = GetButton2();
+		if(pressing1==1){
+			goToDirection();
+		}
+		else if(pressing2==1){
+			testGreyPort();
+		}
+	}
+}
+
+void testGreyPort(){
+	int gFront = GetADScable10(_SCABLEAD_gFront_);
+	int gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
+	int gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
+	int gInnerRight = GetADScable10(_SCABLEAD_gInnerRight_);
+	int gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
+	int gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
+	int gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
+	int GF=9999;
+	int GIL=9999;
+	int GOL=9999;
+	int GIR=9999;
+	int GOR=9999;
+	int GIB=9999;
+	int GOB=9999;
+	
+	int pressing = 0;
+	
+	while(pressing = 0){
+		pressing = GetButton3();
+		gFront = GetADScable10(_SCABLEAD_gFront_);
+		gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
+		gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
+		gInnerRight = GetADScable10(_SCABLEAD_gInnerRight_);
+		gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
+		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
+		gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
+		
+		GF=gFront<GF?gFront:GF;
+		GIL = gInnerLeft<GIL?gInnerLeft:GIL;
+		GOL = gOutterLeft<GOL?gOutterLeft:GOL;
+		GIR = gInnerRight<GIR?gInnerRight:GIR;
+		GOR = gOutterRight<GOR?gOutterRight:GOR;
+		GIB = gInnerBack<GIB?gInnerBack:GIB;
+		GOB = gOutterBack<GOB?gOutterBack:GOB;
+		
+		SetLCD5Char( 70 ,40 ,GF ,BLUE ,BLACK );
+		SetLCD5Char( 0 ,60 ,GOL ,BLUE ,BLACK );
+		SetLCD5Char( 50 ,60 ,GIL ,BLUE ,BLACK );
+		SetLCD5Char( 100 ,60 ,GIR ,BLUE ,BLACK );
+		SetLCD5Char( 150 ,60 ,GOR ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,80 ,GIB ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,100 ,GOB ,BLUE ,BLACK );
 	}
 }
 
