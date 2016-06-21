@@ -81,6 +81,10 @@
 	*0612:
 		*fixed bug in getTargetAngle();
 		*the program now works on every machine;
+	*0615:
+		*implemented goToDirection() for debugging;
+	*0620:
+		*implemented testGrey() for debugging;
 
 */
 
