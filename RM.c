@@ -98,8 +98,8 @@
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define NAME NIKO
-												#define MACHINE X2
+												#define NAME SHAOBO
+												#define MACHINE X3
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
 #define BLOCKED 361
@@ -126,6 +126,8 @@
 		#include "X3NIKO.c"
 	#elif NAME==BRYAN
 		#include "X3BRYAN.c"
+	#elif NAME==SHAOBO
+		#include "X3SHAOBO.c"
 	#endif
 	
 #endif
@@ -369,6 +371,22 @@ void initFarStrategyDirections(int *farStrategyDirections){
 			farStrategyDirections[13]=180;
 			farStrategyDirections[14]=150;
 		}
+		else if(NAME==SHAOBO){
+			farStrategyDirections[1]=210;
+			farStrategyDirections[2]=180;
+			farStrategyDirections[3]=210;
+			farStrategyDirections[4]=240;
+			farStrategyDirections[5]=270;
+			farStrategyDirections[6]=300;
+			farStrategyDirections[7]=0;
+			farStrategyDirections[8]=0;
+			farStrategyDirections[9]=60;
+			farStrategyDirections[10]=90;
+			farStrategyDirections[11]=120;
+			farStrategyDirections[12]=150;
+			farStrategyDirections[13]=180;
+			farStrategyDirections[14]=150;
+		}
 	}
 }
 
@@ -428,6 +446,22 @@ void initCloseStrategyDirections(int *closeStrategyDirections){
 			closeStrategyDirections[14] = 250;
 		}
 		else if (NAME==BRYAN){
+			closeStrategyDirections[1] = 110;
+			closeStrategyDirections[2] = 180;
+			closeStrategyDirections[3] = 210;
+			closeStrategyDirections[4] = 230;
+			closeStrategyDirections[5] = 290;
+			closeStrategyDirections[6] = 330;
+			closeStrategyDirections[7] = 0;
+			closeStrategyDirections[8] = 0;
+			closeStrategyDirections[9] = 30;
+			closeStrategyDirections[10] = 70;
+			closeStrategyDirections[11] = 130;
+			closeStrategyDirections[12] = 150;
+			closeStrategyDirections[13] = 180;
+			closeStrategyDirections[14] = 250;
+		}
+		else if (NAME==SHAOBO){
 			closeStrategyDirections[1] = 110;
 			closeStrategyDirections[2] = 180;
 			closeStrategyDirections[3] = 210;
@@ -2137,13 +2171,29 @@ void initThres(Threshold *thres){
 		else if(NAME==BRYAN){
 			thres->lowEyeThres = 5;
 			thres->highEyeThres = 40;
-			thres->gInnerLeftThres = 0;
-			thres->gOutterLeftThres = 0;
-			thres->gInnerRightThres = 0;
-			thres->gOutterRightThres = 0;
-			thres->gFrontThres = 0;
-			thres->gInnerBackThres = 0;
-			thres->gOutterBackThres = 0;
+			thres->gInnerLeftThres = 1100;
+			thres->gOutterLeftThres = 1200;
+			thres->gInnerRightThres = 1050;
+			thres->gOutterRightThres = 1650;
+			thres->gFrontThres = 1400;
+			thres->gInnerBackThres = 1250;
+			thres->gOutterBackThres = 1400;
+			thres->fireThres = 20;
+			thres->whiteLineTimeThres = 30;
+			thres->shootTimeThres = 15;
+			thres->angleHighThres = 40;
+			thres->angleLowThres = 20;
+		}
+		else if(NAME==SHAOBO){
+			thres->lowEyeThres = 5;
+			thres->highEyeThres = 40;
+			thres->gInnerLeftThres = 1000;
+			thres->gOutterLeftThres = 750;
+			thres->gInnerRightThres = 1500;
+			thres->gOutterRightThres = 1200;
+			thres->gFrontThres = 800;
+			thres->gInnerBackThres = 1150;
+			thres->gOutterBackThres = 1350;
 			thres->fireThres = 20;
 			thres->whiteLineTimeThres = 30;
 			thres->shootTimeThres = 15;
