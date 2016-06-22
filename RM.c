@@ -85,7 +85,8 @@
 		*implemented goToDirection() for debugging;
 	*0620:
 		*implemented testGrey() for debugging;
-
+	*0622:
+		*added different color in testGreyPort();
 */
 
 #define X2 0
@@ -98,7 +99,7 @@
 
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-												#define NAME SHAOBO
+												#define NAME BRYAN
 												#define MACHINE X3
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
@@ -499,7 +500,7 @@ int getTargetAngle(int previousTarget,int eyePort){
 		int uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
 		int uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
 
-		if(uLeft+uRight>1200){//nothing is blocking on the left and right;
+		if(uLeft+uRight>1200){//nothing is blocking on the left and right;	
 			if(uBack>800&&uFront<1200){
 				if(uLeft<550){
 					output = 30;
@@ -2038,6 +2039,14 @@ void testGreyPort(Threshold thres){
 		gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
 		
 		
+		cFront = gFront<thres.gFrontThres?RED:cFront;
+		cInnerLeft = gInnerLeft<thres.gInnerLeftThres?RED:cInnerLeft;
+		cOutterLeft = gOutterLeft<thres.gOutterLeftThres?RED:cOutterLeft;
+		cInnerRight = gInnerRight<thres.gInnerRightThres?RED:cInnerRight;
+		cOutterRight = gOutterRight<thres.gOutterRightThres?RED:cOutterRight;
+		cInnerBack = gInnerBack<thres.gInnerBackThres?RED:cInnerBack;
+		cOutterBack = gOutterBack<thres.gOutterBackThres?RED:cOutterBack;
+	
 		
 		GF=gFront<GF?gFront:GF;
 		GIL = gInnerLeft<GIL?gInnerLeft:GIL;
@@ -2047,13 +2056,13 @@ void testGreyPort(Threshold thres){
 		GIB = gInnerBack<GIB?gInnerBack:GIB;
 		GOB = gOutterBack<GOB?gOutterBack:GOB;
 		
-		SetLCD5Char( 70 ,40 ,GF ,BLUE ,BLACK );
-		SetLCD5Char( 0 ,60 ,GOL ,BLUE ,BLACK );
-		SetLCD5Char( 50 ,60 ,GIL ,BLUE ,BLACK );
-		SetLCD5Char( 100 ,60 ,GIR ,BLUE ,BLACK );
-		SetLCD5Char( 150 ,60 ,GOR ,BLUE ,BLACK );
-		SetLCD5Char( 70 ,80 ,GIB ,BLUE ,BLACK );
-		SetLCD5Char( 70 ,100 ,GOB ,BLUE ,BLACK );
+		SetLCD5Char( 70 ,40 ,GF ,cFront ,BLACK );
+		SetLCD5Char( 0 ,60 ,GOL ,cOutterLeft ,BLACK );
+		SetLCD5Char( 50 ,60 ,GIL ,cInnerLeft ,BLACK );
+		SetLCD5Char( 100 ,60 ,GIR ,cInnerRight ,BLACK );
+		SetLCD5Char( 150 ,60 ,GOR ,cOutterRight ,BLACK );
+		SetLCD5Char( 70 ,80 ,GIB ,cInnerBack ,BLACK );
+		SetLCD5Char( 70 ,100 ,GOB , cOutterBack ,BLACK );
 	}
 }
 
@@ -2121,13 +2130,13 @@ void initThres(Threshold *thres){
 		if(NAME==NIKO){
 			thres->lowEyeThres = 5;
 			thres->highEyeThres = 50;
-			thres->gInnerLeftThres = 800;
-			thres->gOutterLeftThres = 1600;
-			thres->gInnerRightThres = 1400;
-			thres->gOutterRightThres = 1500;
-			thres->gFrontThres = 1800;
-			thres->gInnerBackThres = 1700;
-			thres->gOutterBackThres = 1200;
+			thres->gInnerLeftThres = 900;
+			thres->gOutterLeftThres = 1700;
+			thres->gInnerRightThres = 1500;
+			thres->gOutterRightThres = 1600;
+			thres->gFrontThres = 1700;
+			thres->gInnerBackThres = 1600;
+			thres->gOutterBackThres = 1300;
 			thres->fireThres = 200;
 			thres->whiteLineTimeThres = 30;
 			thres->shootTimeThres = 15;
@@ -2170,7 +2179,7 @@ void initThres(Threshold *thres){
 		}
 		else if(NAME==BRYAN){
 			thres->lowEyeThres = 5;
-			thres->highEyeThres = 40;
+			thres->highEyeThres = 60;
 			thres->gInnerLeftThres = 1100;
 			thres->gOutterLeftThres = 1200;
 			thres->gInnerRightThres = 1050;
