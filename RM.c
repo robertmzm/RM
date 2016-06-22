@@ -99,7 +99,7 @@
 //choose which hardware to use
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 												#define NAME NIKO
-												#define MACHINE X3
+												#define MACHINE X2
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 #define STOP 360
 #define BLOCKED 361
@@ -124,7 +124,10 @@
 	#define MAXSPEED 95
 	#if NAME==NIKO
 		#include "X3NIKO.c"
+	#elif NAME==BRYAN
+		#include "X3BRYAN.c"
 	#endif
+	
 #endif
 
 
@@ -233,7 +236,7 @@ int main(void)
 			SetLCDClear(BLACK);
 		}
 		if(pressing2 ==0&&pressed2 ==1){
-			testHelper();
+			testHelper(thres);
 		}
 		pressed1 = pressing1;
 		pressed2 = pressing2;
@@ -350,6 +353,22 @@ void initFarStrategyDirections(int *farStrategyDirections){
 			farStrategyDirections[13]=180;
 			farStrategyDirections[14]=150;
 		}
+		if(NAME==BRYAN){
+			farStrategyDirections[1]=210;
+			farStrategyDirections[2]=180;
+			farStrategyDirections[3]=210;
+			farStrategyDirections[4]=240;
+			farStrategyDirections[5]=270;
+			farStrategyDirections[6]=300;
+			farStrategyDirections[7]=0;
+			farStrategyDirections[8]=0;
+			farStrategyDirections[9]=60;
+			farStrategyDirections[10]=90;
+			farStrategyDirections[11]=120;
+			farStrategyDirections[12]=150;
+			farStrategyDirections[13]=180;
+			farStrategyDirections[14]=150;
+		}
 	}
 }
 
@@ -392,21 +411,38 @@ void initCloseStrategyDirections(int *closeStrategyDirections){
 		}
 	}
 	else if(MACHINE==X3){
-		
-		closeStrategyDirections[1] = 110;
-		closeStrategyDirections[2] = 180;
-		closeStrategyDirections[3] = 210;
-		closeStrategyDirections[4] = 230;
-		closeStrategyDirections[5] = 290;
-		closeStrategyDirections[6] = 330;
-		closeStrategyDirections[7] = 0;
-		closeStrategyDirections[8] = 0;
-		closeStrategyDirections[9] = 30;
-		closeStrategyDirections[10] = 70;
-		closeStrategyDirections[11] = 130;
-		closeStrategyDirections[12] = 150;
-		closeStrategyDirections[13] = 180;
-		closeStrategyDirections[14] = 250;
+		if(NAME==NIKO){
+			closeStrategyDirections[1] = 110;
+			closeStrategyDirections[2] = 180;
+			closeStrategyDirections[3] = 210;
+			closeStrategyDirections[4] = 230;
+			closeStrategyDirections[5] = 290;
+			closeStrategyDirections[6] = 330;
+			closeStrategyDirections[7] = 0;
+			closeStrategyDirections[8] = 0;
+			closeStrategyDirections[9] = 30;
+			closeStrategyDirections[10] = 70;
+			closeStrategyDirections[11] = 130;
+			closeStrategyDirections[12] = 150;
+			closeStrategyDirections[13] = 180;
+			closeStrategyDirections[14] = 250;
+		}
+		else if (NAME==BRYAN){
+			closeStrategyDirections[1] = 110;
+			closeStrategyDirections[2] = 180;
+			closeStrategyDirections[3] = 210;
+			closeStrategyDirections[4] = 230;
+			closeStrategyDirections[5] = 290;
+			closeStrategyDirections[6] = 330;
+			closeStrategyDirections[7] = 0;
+			closeStrategyDirections[8] = 0;
+			closeStrategyDirections[9] = 30;
+			closeStrategyDirections[10] = 70;
+			closeStrategyDirections[11] = 130;
+			closeStrategyDirections[12] = 150;
+			closeStrategyDirections[13] = 180;
+			closeStrategyDirections[14] = 250;
+		}
 	}
 }
 
@@ -695,46 +731,136 @@ int whiteLineStrategy(int d, int greyPort,Threshold thres){
 	}
 	return direction;
 }
-/*
-int whiteLineStrategy(int d, int greyPort){
-
-	/*the function is called only when white line is detected;
-	 *intake the direction the robot was going;
-	 *output the direction the robot is going;
 
 
+int whiteLineStrategy2(int d, int greyPort,Threshold thres){
+	/*intake the port which touching the whiteline and prevent the robot from going out;
+	 *use backposition if the middle sensors detect the whiteline
+	 *go to the opposite position if the outer sensors detect the whiteline
+	 *refresh the timer if any sensor detects the whiteline;
+	 *refresh the timer when dangerous and all the ultrasonic sensors are blocked;
+	 *refresh the timer when if the direction of whiteline is close to the wall;
 
-	int direction=d;
-	int startTime=GetSysTime();
+	*/
+	int direction = d;
+	int startTime = GetSysTime();
 
-	if (greyPort == DANGEROUS){
-		move(STOP,0,0);
-		while(GetSysTime()-startTime<100&&direction!=STOP){
+	if(greyPort == DANGEROUS){
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres+60&&direction!=STOP){
+			startTime = getGreyPort(0,thres)==0&&direction!=BLOCKED?startTime:GetSysTime();
 			direction = backPosition();
-			move(direction,55,0);
-		}
-	}
-
-	else if (greyPort == LEFTGREY){
-		direction = 90;
-		int uLeft = 0;
-		while(GetSysTime()-startTime<50||uLeft<300){
-			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
 			move(direction,55,0,0);
 		}
 	}
-	else{
-		direction = 270;
+	else if(greyPort == FRONTGREY){
+		direction = 180;
+		int uFront = 0;
 		int uRight = 0;
-		while(GetSysTime()-startTime<50||uRight<300){
+		int uLeft = 0;
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres){
+			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
 			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
-			greyPort = getGreyPort(0);
+			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+			if(uLeft+uRight<1000){
+				direction = 180;
+			}
+			else if(uLeft<400){
+				direction = 150;//change from 60 to 30
+			}
+			else if(uRight<400){
+				direction = 210;
+			}
 			move(direction,55,0,0);
+			if(getGreyPort(0,thres)!=0||uFront<310){
+				startTime = GetSysTime();
+			}
+		}
+	}
+	else if(greyPort == LEFTGREY){
+		direction = 100;//change from 90 to 100
+		int eyePort = getEyePort(thres);
+		int uBack = 0;
+		int uFront = 0;
+		int uLeft = 0;
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres&&eyePort!=0){
+			eyePort = getEyePort(thres);
+			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
+			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+			if(uFront+uBack<1000){
+				direction = 90;
+			}
+			else if(uBack<400){
+				direction = 30;//change from 60 to 30
+			}
+			else if(uFront<400){
+			/*
+			albert is a sb?
+			yes or no
+			yes
+			no
+			define no yes
+			wrong*/
+				direction = 135;
+			}
+			move(direction,55,0,0);
+			if(getGreyPort(0,thres)!=0||uLeft<310){
+				startTime = GetSysTime();
+			}
+		}
+	}
+	else if(greyPort == RIGHTGREY){
+		direction = 260;//change from 270 to 260;
+		int uBack = 0;
+		int uFront = 0;
+		int uRight = 0;
+		int eyePort = getEyePort(thres);
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres){
+			eyePort = getEyePort(thres);
+			uFront = GetAdUltrasound(_ADULTRASOUND_uFront_);
+			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+			if(uFront+uBack<1000){
+				direction = 270;
+			}
+			else if(uBack<400){
+				direction = 330;//change from 300 to 330
+			}
+			else if(uFront<400){
+				direction = 225;
+			}
+			move(direction,55,0,0);
+			if(getGreyPort(0,thres)!=0||uRight<310){
+				startTime = GetSysTime();
+			}
+		}
+	}
+	else if(greyPort == BACKGREY){
+		direction = 0;
+		int uLeft = 0;
+		int uRight = 0;
+		int uBack = 0;
+		while(GetSysTime()-startTime<thres.whiteLineTimeThres){
+			uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
+			uRight = GetAdUltrasound(_ADULTRASOUND_uRight_);
+			uBack = GetAdUltrasound(_ADULTRASOUND_uBack_);
+			if(uLeft+uRight<800){
+				direction = 0;
+			}
+			else if(uLeft<400){
+				direction = 45;
+			}
+			else if(uRight<400){
+				direction = 315;
+			}
+			move(direction,55,0,0);
+			if(getGreyPort(0,thres)!=0){
+				startTime = GetSysTime();
+			}
 		}
 	}
 	return direction;
 }
-*/
 int getLeftEye(int command){
 	/*intake a command one wants to put in GetCompoI3();
 	 *flip all the ports since the eye is psycally flipped;
@@ -1806,24 +1932,42 @@ int getCode(){
 	}
 }
 
-void testHelper(){
+void testHelper(Threshold thres){
+	stop();
 	SetLCDClear(BLACK);
+	int i = 0;
 	int pressing1=0;
 	int pressing2=0;
+	int pressing3 = 0;
+	int pressed3 = 0;
 	while(pressing1==0&&pressing2==0){
 		pressing1 = GetButton1();
 		pressing2 = GetButton2();
-		if(pressing1==1){
-			goToDirection();
+		pressing3 = GetButton3();
+		SetLCD5Char(0,0,i,YELLOW,BLACK);
+		if(pressing3 == 0&&pressed3==1){
+			i=(i+1)%2;
 		}
-		else if(pressing2==1){
-			testGreyPort();
+		if(i==0){
+			if(pressing1==1){
+				goToDirection();
+			}
+			else if(pressing2==1){
+				testGreyPort(thres);
+			}
 		}
+		else if(i==1){
+			if(pressing1==1){
+				testShooting();
+			}
+		}
+		
+		pressed3 = pressing3;
 	}
 	SetLCDClear(BLACK);
 }
 
-void testGreyPort(){
+void testGreyPort(Threshold thres){
 	int gFront = GetADScable10(_SCABLEAD_gFront_);
 	int gInnerLeft = GetADScable10(_SCABLEAD_gInnerLeft_);
 	int gInnerBack = GetADScable10(_SCABLEAD_gInnerBack_);
@@ -1839,6 +1983,14 @@ void testGreyPort(){
 	int GIB=9999;
 	int GOB=9999;
 	
+	int cFront = GREEN;
+	int cInnerLeft = GREEN;
+	int cOutterLeft = GREEN;
+	int cInnerRight = GREEN;
+	int cOutterRight = GREEN;
+	int cInnerBack = GREEN;
+	int cOutterBack = GREEN;
+	
 	int pressing = 0;
 	
 	while(pressing == 0){
@@ -1850,6 +2002,8 @@ void testGreyPort(){
 		gOutterLeft = GetADScable10(_SCABLEAD_gOutterLeft_);
 		gOutterBack = GetADScable10(_SCABLEAD_gOutterBack_);
 		gOutterRight = GetADScable10(_SCABLEAD_gOutterRight_);
+		
+		
 		
 		GF=gFront<GF?gFront:GF;
 		GIL = gInnerLeft<GIL?gInnerLeft:GIL;
@@ -1903,25 +2057,26 @@ void goToDirection(){
 	SetLCDClear(BLACK);
 }
 
-void testShooting1(){
-	/*easist shooting
-	 *shoot without any conditioning
-	 */
-	int count = 0;
-	while(count<20){
-		count = GetSysTime();
-		SetLED(_LED_shoot_,1);
-	}
-	while(1){
-
-	}
+void stop(){
+	SetMotor(_MOTOR_M1_,1,0);
+	SetMotor(_MOTOR_M2_,1,0);
+	SetMotor(_MOTOR_M3_,1,0);
+	SetMotor(_MOTOR_M4_,1,0);
+	
 }
-void testShooting2(){
+
+void testShooting(){
+	SetLCDString(0,0,"Shooting",RED,BLACK);
+	int pressing = 0;
 	Threshold thres;
 	initThres(&thres);
+
 	int lastShootTime = -300;
-	while(1){
-		//screen(1,thres);
+	
+	
+	while(pressing==0){
+		pressing = GetButton3();
+		SetLCD5Char(50,0,lastShootTime,BLUE,BLACK);
 		lastShootTime = getShootTime(lastShootTime,21,0,thres);
 		shoot(lastShootTime,thres);
 	}
@@ -1973,6 +2128,22 @@ void initThres(Threshold *thres){
 			thres->gFrontThres = 1435;
 			thres->gInnerBackThres = 1250;
 			thres->gOutterBackThres = 1600;
+			thres->fireThres = 20;
+			thres->whiteLineTimeThres = 30;
+			thres->shootTimeThres = 15;
+			thres->angleHighThres = 40;
+			thres->angleLowThres = 20;
+		}
+		else if(NAME==BRYAN){
+			thres->lowEyeThres = 5;
+			thres->highEyeThres = 40;
+			thres->gInnerLeftThres = 0;
+			thres->gOutterLeftThres = 0;
+			thres->gInnerRightThres = 0;
+			thres->gOutterRightThres = 0;
+			thres->gFrontThres = 0;
+			thres->gInnerBackThres = 0;
+			thres->gOutterBackThres = 0;
 			thres->fireThres = 20;
 			thres->whiteLineTimeThres = 30;
 			thres->shootTimeThres = 15;
