@@ -451,12 +451,12 @@ void initCloseStrategyDirections(int *closeStrategyDirections){
 			closeStrategyDirections[2] = 180;
 			closeStrategyDirections[3] = 210;
 			closeStrategyDirections[4] = 230;
-			closeStrategyDirections[5] = 290;
-			closeStrategyDirections[6] = 330;
+			closeStrategyDirections[5] = 300;
+			closeStrategyDirections[6] = 340;
 			closeStrategyDirections[7] = 0;
 			closeStrategyDirections[8] = 0;
-			closeStrategyDirections[9] = 30;
-			closeStrategyDirections[10] = 70;
+			closeStrategyDirections[9] = 20;
+			closeStrategyDirections[10] = 60;
 			closeStrategyDirections[11] = 130;
 			closeStrategyDirections[12] = 150;
 			closeStrategyDirections[13] = 180;
@@ -1439,43 +1439,14 @@ int closeStrategyX3(int p, int *closeStrategyDirections){
 			output = 110;
 		}
 	}
-	else if(p ==2){
-		output=180;
+	else{
+		output = closeStrategyDirections[p];
 	}
-	else if(p ==3){
-		output = 210;
-	}
-	else if(p ==4){
-		output=230;//change from 240 to 230
-	}
-	else if(p ==5){
-		output=290;//change from 300 to 290
-	}
-	else if(p ==6){
-		output=330;
-	}
-	else if(p ==7||p==8){
-		output=0;
-	}
-	else if (p==9){
-		output=30;
-	}
-	else if(p ==10){
-		output=70;
-	}
-	else if(p ==11){
-		output=130;
-	}
-	else if(p ==12){
-		output=150;
-	}
-	else if (p==13){
-		output=180;
-	}
+	
 	return output;
 }
 
-int farStrategyX3(int p){
+int farStrategyX3(int p,int *farStrategyDirections){
 	int output = STOP;
 	if (p==1||p==14){
 		int uLeft = GetAdUltrasound(_ADULTRASOUND_uLeft_);
@@ -1487,38 +1458,8 @@ int farStrategyX3(int p){
 			output = 150;
 		}
 	}
-	else if(p ==2){
-		output= 180;
-	}
-	else if(p ==3){
-		output= 210;
-	}
-	else if(p ==4){
-		output= 240;
-	}
-	else if(p ==5){
-		output= 270;
-	}
-	else if(p ==6){
-		output =300;//change front 280 to 300
-	}
-	else if(p ==7||p==8){
-		output= 0;
-	}
-	else if(p ==9){
-		output= 60;
-	}
-	else if(p ==10){
-		output= 90;
-	}
-	else if(p ==11){
-		output= 120;
-	}
-	else if(p ==12){
-		output= 150;
-	}
-	else if(p ==13){
-		output= 180;
+	else{
+		output = farStrategyDirections[p];
 	}
 	return output;
 }
@@ -2179,7 +2120,7 @@ void initThres(Threshold *thres){
 		}
 		else if(NAME==BRYAN){
 			thres->lowEyeThres = 5;
-			thres->highEyeThres = 60;
+			thres->highEyeThres = 70;
 			thres->gInnerLeftThres = 1100;
 			thres->gOutterLeftThres = 1200;
 			thres->gInnerRightThres = 1050;
